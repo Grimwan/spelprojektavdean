@@ -1,5 +1,6 @@
-﻿  compilation object save succeeded; see H:\programming\3d project\test\Debug\Fragment.cso
-  compilation object save succeeded; see H:\programming\3d project\test\Debug\Vertex.cso
+﻿  Render.cpp
   main.cpp
+  Gameobject.cpp
+  Generating Code...
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.exe
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.pdb (Full PDB)
