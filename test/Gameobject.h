@@ -16,8 +16,9 @@ ID3D11Buffer* VertexBuffer = nullptr;
 
 
 public:
-	 GameObject(ID3D11Device* gDevice);
+	 GameObject(ID3D11Device * gDevice);
 	~GameObject();
-
+	GameObject();
+	ID3D11Buffer& getVertexbuffer();
 
 };

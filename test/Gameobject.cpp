@@ -1,6 +1,7 @@
 #include "Gameobject.h"
 
 
+
 GameObject::GameObject(ID3D11Device* gDevice)
 {
 	struct TriangleVertex
@@ -34,4 +35,14 @@ GameObject::GameObject(ID3D11Device* gDevice)
 
 GameObject::~GameObject()
 {
+	VertexBuffer->Release();
+}
+
+GameObject::GameObject()
+{
+}
+
+ID3D11Buffer & GameObject::getVertexbuffer()
+{
+	return *VertexBuffer;
 }
