@@ -149,10 +149,6 @@ void Render()
 
 int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
-//	pointertest = &test;
-//	std::cout << pointertest[0] << std::endl;
-//	std::cout << "Test" << test << std::endl;
-	std::cout << "test" << std::endl;
 	MSG msg = { 0 };
 	HWND wndHandle = InitWindow(hInstance); //1. Skapa fönster
 	
@@ -163,8 +159,6 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 		SetViewport(); //3. Sätt viewport
 
 		CreateShaders(); //4. Skapa vertex- och pixel-shaders
-	//	test(gDevice, gVertexBuffer);
-	//	CreateTriangleData(); //5. Definiera triangelvertiser, 6. Skapa vertex buffer, 7. Skapa input layout
 		GameObject Triangle(gDevice);
 		GameObject * triangletest = &Triangle;
 		renderingsfuntionen.Gameobjectpush(triangletest);
