@@ -13,12 +13,14 @@ class GameObject
 {
 private:
 ID3D11Buffer* VertexBuffer = nullptr;
-
+int testet = 0;
 
 public:
-	 GameObject(ID3D11Device * gDevice);
+	 GameObject(ID3D11Device * gDevice, int * test);
 	~GameObject();
 	GameObject();
-	ID3D11Buffer& getVertexbuffer();
+	ID3D11Buffer * getVertexbuffer();
+	void draw(ID3D11DeviceContext* gDeviceContext, ID3D11InputLayout* gVertexLayout);
+	void update();
 
 };

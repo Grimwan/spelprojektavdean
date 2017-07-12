@@ -8,16 +8,16 @@
 #pragma comment (lib, "d3dcompiler.lib")
 
 
-class Render
+class DeansRender
 {
 private:
 	std::vector<GameObject> test;
 
 public:
 
-	Render();
-	void update();
-	~Render();
-
+	DeansRender();
+	void update(ID3D11DeviceContext* gDeviceContext,ID3D11RenderTargetView* gBackbufferRTV, ID3D11VertexShader* gVertexShader,ID3D11PixelShader* gPixelShader, ID3D11InputLayout* gVertexLayout);
+	~DeansRender();
+	void Gameobjectpush(GameObject objectfile);
 
 };

@@ -2,7 +2,7 @@
 
 
 
-GameObject::GameObject(ID3D11Device* gDevice)
+GameObject::GameObject(ID3D11Device* gDevice, int * test)
 {
 	struct TriangleVertex
 	{
@@ -27,10 +27,13 @@ GameObject::GameObject(ID3D11Device* gDevice)
 	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	bufferDesc.ByteWidth = sizeof(triangleVertices);
-
+	testet = test[0];
 	D3D11_SUBRESOURCE_DATA data;
 	data.pSysMem = triangleVertices;
 	gDevice->CreateBuffer(&bufferDesc, &data, &VertexBuffer);
+	HRESULT hr = gDevice->CreateBuffer(&bufferDesc, &data, &this->VertexBuffer);
+	if (FAILED(hr))
+		std::cout << "Failed to create vertex buffer!" << std::endl;
 }
 
 GameObject::~GameObject()
@@ -42,7 +45,26 @@ GameObject::GameObject()
 {
 }
 
-ID3D11Buffer & GameObject::getVertexbuffer()
+ID3D11Buffer * GameObject::getVertexbuffer()
 {
-	return *VertexBuffer;
+	return VertexBuffer;
+}
+
+void GameObject::draw(ID3D11DeviceContext* gDeviceContext, ID3D11InputLayout* gVertexLayout)
+{
+
+
+	UINT32 vertexSize = sizeof(float) * 6;
+	UINT32 offset = 0;
+	gDeviceContext->IASetVertexBuffers(0, 1, &VertexBuffer, &vertexSize, &offset);
+
+	gDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	gDeviceContext->IASetInputLayout(gVertexLayout);
+
+
+	gDeviceContext->Draw(3, 0);
+}
+
+void GameObject::update()
+{
 }

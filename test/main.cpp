@@ -2,7 +2,7 @@
 // BTH - Stefan Petersson 2014.
 //--------------------------------------------------------------------------------------
 #include <windows.h>
-
+#include "Test.h"
 #include <d3d11.h>
 #include <d3dcompiler.h>
 
@@ -12,11 +12,14 @@
 #include "Render.h"
 #include "Gameobject.h"
 
+int * pointertest;
+
+
 HWND InitWindow(HINSTANCE hInstance);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 HRESULT CreateDirect3DContext(HWND wndHandle);
-
+DeansRender renderingsfuntionen;
 IDXGISwapChain* gSwapChain = nullptr;
 ID3D11Device* gDevice = nullptr;
 ID3D11DeviceContext* gDeviceContext = nullptr;
@@ -144,8 +147,12 @@ void Render()
 	gDeviceContext->Draw(3, 0);
 }
 
-int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
+int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
+//	pointertest = &test;
+//	std::cout << pointertest[0] << std::endl;
+//	std::cout << "Test" << test << std::endl;
+	std::cout << "test" << std::endl;
 	MSG msg = { 0 };
 	HWND wndHandle = InitWindow(hInstance); //1. Skapa fönster
 	
@@ -156,9 +163,10 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		SetViewport(); //3. Sätt viewport
 
 		CreateShaders(); //4. Skapa vertex- och pixel-shaders
-
-		CreateTriangleData(); //5. Definiera triangelvertiser, 6. Skapa vertex buffer, 7. Skapa input layout
-//		GameObject Triangle(gDevice);
+		test(gDevice, gVertexBuffer);
+	//	CreateTriangleData(); //5. Definiera triangelvertiser, 6. Skapa vertex buffer, 7. Skapa input layout
+	//	GameObject Triangle(gDevice,pointertest);
+	//	renderingsfuntionen.Gameobjectpush(Triangle);
 		ShowWindow(wndHandle, nCmdShow);
 
 		while (WM_QUIT != msg.message)
@@ -171,7 +179,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 			else
 			{
 				Render(); //8. Rendera
-
+		//		renderingsfuntionen.update(gDeviceContext, gBackbufferRTV, gVertexShader, gPixelShader,  gVertexLayout);
 				gSwapChain->Present(0, 0); //9. Växla front- och back-buffer
 			}
 		}
