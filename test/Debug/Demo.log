@@ -1,6 +1,6 @@
 ﻿  main.cpp
 h:\programming\3d project\test\main.cpp(151): warning C4007: 'wWinMain': must be '__stdcall'
-  Test.cpp
+  Render.cpp
   Generating Code...
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.exe
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.pdb (Full PDB)

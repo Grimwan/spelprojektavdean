@@ -163,10 +163,11 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 		SetViewport(); //3. Sätt viewport
 
 		CreateShaders(); //4. Skapa vertex- och pixel-shaders
-		test(gDevice, gVertexBuffer);
+	//	test(gDevice, gVertexBuffer);
 	//	CreateTriangleData(); //5. Definiera triangelvertiser, 6. Skapa vertex buffer, 7. Skapa input layout
-	//	GameObject Triangle(gDevice,pointertest);
-	//	renderingsfuntionen.Gameobjectpush(Triangle);
+		GameObject Triangle(gDevice);
+		GameObject * triangletest = &Triangle;
+		renderingsfuntionen.Gameobjectpush(triangletest);
 		ShowWindow(wndHandle, nCmdShow);
 
 		while (WM_QUIT != msg.message)
@@ -178,8 +179,8 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 			}
 			else
 			{
-				Render(); //8. Rendera
-		//		renderingsfuntionen.update(gDeviceContext, gBackbufferRTV, gVertexShader, gPixelShader,  gVertexLayout);
+			//	Render(); //8. Rendera
+				renderingsfuntionen.update(gDeviceContext, gBackbufferRTV, gVertexShader, gPixelShader,  gVertexLayout);
 				gSwapChain->Present(0, 0); //9. Växla front- och back-buffer
 			}
 		}

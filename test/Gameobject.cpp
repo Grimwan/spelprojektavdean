@@ -2,7 +2,7 @@
 
 
 
-GameObject::GameObject(ID3D11Device* gDevice, int * test)
+GameObject::GameObject(ID3D11Device* &gDevice)
 {
 	struct TriangleVertex
 	{
@@ -27,7 +27,6 @@ GameObject::GameObject(ID3D11Device* gDevice, int * test)
 	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 	bufferDesc.ByteWidth = sizeof(triangleVertices);
-	testet = test[0];
 	D3D11_SUBRESOURCE_DATA data;
 	data.pSysMem = triangleVertices;
 	gDevice->CreateBuffer(&bufferDesc, &data, &VertexBuffer);

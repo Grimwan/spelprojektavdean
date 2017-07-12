@@ -11,13 +11,13 @@
 class DeansRender
 {
 private:
-	std::vector<GameObject> test;
+	std::vector<GameObject*> test;
 
 public:
 
 	DeansRender();
-	void update(ID3D11DeviceContext* gDeviceContext,ID3D11RenderTargetView* gBackbufferRTV, ID3D11VertexShader* gVertexShader,ID3D11PixelShader* gPixelShader, ID3D11InputLayout* gVertexLayout);
+	void update(ID3D11DeviceContext* &gDeviceContext,ID3D11RenderTargetView* &gBackbufferRTV, ID3D11VertexShader* &gVertexShader,ID3D11PixelShader* &gPixelShader, ID3D11InputLayout* &gVertexLayout);
 	~DeansRender();
-	void Gameobjectpush(GameObject objectfile);
+	void Gameobjectpush(GameObject* &objectfile);
 
 };
