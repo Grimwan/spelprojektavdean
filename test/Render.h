@@ -13,6 +13,9 @@ class DeansRender
 private:
 	std::vector<GameObject*> test;
 	ID3D11Device* gDevice = nullptr;
+	IDXGISwapChain* gSwapChain = nullptr;
+	ID3D11DeviceContext * gDeviceContext = nullptr;
+	ID3D11RenderTargetView* gBackbufferRTV = nullptr;
 public:
 
 	DeansRender();
@@ -20,4 +23,7 @@ public:
 	~DeansRender();
 	void Gameobjectpush(GameObject* &objectfile);
 	ID3D11Device *& gDevicereturn();
+	IDXGISwapChain *& gSwapChainreturn();
+	ID3D11DeviceContext *& gDeviceContextreturn();
+	ID3D11RenderTargetView*& gBackbufferRTVreturn();
 };

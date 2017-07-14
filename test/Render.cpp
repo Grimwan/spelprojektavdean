@@ -39,3 +39,21 @@ ID3D11Device *& DeansRender::gDevicereturn()
 	return gDevice;
 	// TODO: insert return statement here
 }
+
+IDXGISwapChain *& DeansRender::gSwapChainreturn()
+{
+	return gSwapChain;
+	// TODO: insert return statement here
+}
+
+ID3D11DeviceContext *& DeansRender::gDeviceContextreturn()
+{
+	return gDeviceContext;
+	// TODO: insert return statement here
+}
+
+ID3D11RenderTargetView *& DeansRender::gBackbufferRTVreturn()
+{
+	return gBackbufferRTV;
+	// TODO: insert return statement here
+}

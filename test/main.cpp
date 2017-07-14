@@ -20,10 +20,6 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 HRESULT CreateDirect3DContext(HWND wndHandle);
 DeansRender renderingsfuntionen;
-IDXGISwapChain* gSwapChain = nullptr;
-//ID3D11Device* gDevice = nullptr;
-ID3D11DeviceContext* gDeviceContext = nullptr;
-ID3D11RenderTargetView* gBackbufferRTV = nullptr;
 
 ID3D11Buffer* gVertexBuffer = nullptr;
 
@@ -121,30 +117,30 @@ void SetViewport()
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
-	gDeviceContext->RSSetViewports(1, &vp);
+	renderingsfuntionen.gDeviceContextreturn()->RSSetViewports(1, &vp);
 }
 
 void Render()
 {
 	// clear the back buffer to a deep blue
 	float clearColor[] = { 0, 0, 0, 1 };
-	gDeviceContext->ClearRenderTargetView(gBackbufferRTV, clearColor);
+	renderingsfuntionen.gDeviceContextreturn()->ClearRenderTargetView(renderingsfuntionen.gBackbufferRTVreturn(), clearColor);
 
-	gDeviceContext->VSSetShader(gVertexShader, nullptr, 0);
-	gDeviceContext->HSSetShader(nullptr, nullptr, 0);
-	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
-	gDeviceContext->GSSetShader(nullptr, nullptr, 0);
-	gDeviceContext->PSSetShader(gPixelShader, nullptr, 0);
+	renderingsfuntionen.gDeviceContextreturn()->VSSetShader(gVertexShader, nullptr, 0);
+	renderingsfuntionen.gDeviceContextreturn()->HSSetShader(nullptr, nullptr, 0);
+	renderingsfuntionen.gDeviceContextreturn()->DSSetShader(nullptr, nullptr, 0);
+	renderingsfuntionen.gDeviceContextreturn()->GSSetShader(nullptr, nullptr, 0);
+	renderingsfuntionen.gDeviceContextreturn()->PSSetShader(gPixelShader, nullptr, 0);
 
 	UINT32 vertexSize = sizeof(float) * 6;
 	UINT32 offset = 0;
-	gDeviceContext->IASetVertexBuffers(0, 1, &gVertexBuffer, &vertexSize, &offset);
+	renderingsfuntionen.gDeviceContextreturn()->IASetVertexBuffers(0, 1, &gVertexBuffer, &vertexSize, &offset);
 
-	gDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	gDeviceContext->IASetInputLayout(gVertexLayout);
+	renderingsfuntionen.gDeviceContextreturn()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	renderingsfuntionen.gDeviceContextreturn()->IASetInputLayout(gVertexLayout);
 
 
-	gDeviceContext->Draw(3, 0);
+	renderingsfuntionen.gDeviceContextreturn()->Draw(3, 0);
 }
 
 int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
@@ -174,9 +170,9 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 			else
 			{
 			//	Render(); //8. Rendera
-				renderingsfuntionen.update(gDeviceContext, gBackbufferRTV, gVertexShader, gPixelShader,  gVertexLayout);
+				renderingsfuntionen.update(renderingsfuntionen.gDeviceContextreturn(), renderingsfuntionen.gBackbufferRTVreturn(), gVertexShader, gPixelShader,  gVertexLayout);
 				
-				gSwapChain->Present(0, 0); //9. Växla front- och back-buffer
+				renderingsfuntionen.gSwapChainreturn()->Present(0, 0); //9. Växla front- och back-buffer
 			}
 		}
 
@@ -186,10 +182,10 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 		gVertexShader->Release();
 		gPixelShader->Release();
 
-		gBackbufferRTV->Release();
-		gSwapChain->Release();
+		renderingsfuntionen.gBackbufferRTVreturn()->Release();
+		renderingsfuntionen.gSwapChainreturn()->Release();
 		renderingsfuntionen.gDevicereturn()->Release();
-		gDeviceContext->Release();
+		renderingsfuntionen.gDeviceContextreturn()->Release();
 		DestroyWindow(wndHandle);
 	}
 
@@ -263,23 +259,23 @@ HRESULT CreateDirect3DContext(HWND wndHandle)
 		NULL,
 		D3D11_SDK_VERSION,
 		&scd,
-		&gSwapChain,
+		&renderingsfuntionen.gSwapChainreturn(),
 		&renderingsfuntionen.gDevicereturn(),
 		NULL,
-		&gDeviceContext);
+		&renderingsfuntionen.gDeviceContextreturn());
 
 	if (SUCCEEDED(hr))
 	{
 		// get the address of the back buffer
 		ID3D11Texture2D* pBackBuffer = nullptr;
-		gSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+		renderingsfuntionen.gSwapChainreturn()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 
 		// use the back buffer address to create the render target
-		renderingsfuntionen.gDevicereturn()->CreateRenderTargetView(pBackBuffer, NULL, &gBackbufferRTV);
+		renderingsfuntionen.gDevicereturn()->CreateRenderTargetView(pBackBuffer, NULL, &renderingsfuntionen.gBackbufferRTVreturn());
 		pBackBuffer->Release();
 
 		// set the render target as the back buffer
-		gDeviceContext->OMSetRenderTargets(1, &gBackbufferRTV, NULL);
+		renderingsfuntionen.gDeviceContextreturn()->OMSetRenderTargets(1, &renderingsfuntionen.gBackbufferRTVreturn(), NULL);
 	}
 	return hr;
 }
