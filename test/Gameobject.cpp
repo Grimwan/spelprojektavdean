@@ -62,8 +62,10 @@ void GameObject::draw(ID3D11DeviceContext* gDeviceContext, ID3D11InputLayout* gV
 
 
 	gDeviceContext->Draw(3, 0);
+
 }
 
 void GameObject::update()
 {
+
 }

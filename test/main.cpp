@@ -21,7 +21,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HRESULT CreateDirect3DContext(HWND wndHandle);
 DeansRender renderingsfuntionen;
 IDXGISwapChain* gSwapChain = nullptr;
-ID3D11Device* gDevice = nullptr;
+//ID3D11Device* gDevice = nullptr;
 ID3D11DeviceContext* gDeviceContext = nullptr;
 ID3D11RenderTargetView* gBackbufferRTV = nullptr;
 
@@ -49,14 +49,14 @@ void CreateShaders()
 		// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
 		);
 
-	gDevice->CreateVertexShader(pVS->GetBufferPointer(), pVS->GetBufferSize(), nullptr, &gVertexShader);
+	renderingsfuntionen.gDevicereturn()->CreateVertexShader(pVS->GetBufferPointer(), pVS->GetBufferSize(), nullptr, &gVertexShader);
 	
 	//create input layout (verified using vertex shader)
 	D3D11_INPUT_ELEMENT_DESC inputDesc[] = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 		{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
-	gDevice->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), pVS->GetBufferPointer(), pVS->GetBufferSize(), &gVertexLayout);
+	renderingsfuntionen.gDevicereturn()->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), pVS->GetBufferPointer(), pVS->GetBufferSize(), &gVertexLayout);
 	// we do not need anymore this COM object, so we release it.
 	pVS->Release();
 
@@ -76,7 +76,7 @@ void CreateShaders()
 		// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
 		);
 
-	gDevice->CreatePixelShader(pPS->GetBufferPointer(), pPS->GetBufferSize(), nullptr, &gPixelShader);
+	renderingsfuntionen.gDevicereturn()->CreatePixelShader(pPS->GetBufferPointer(), pPS->GetBufferSize(), nullptr, &gPixelShader);
 	// we do not need anymore this COM object, so we release it.
 	pPS->Release();
 }
@@ -109,7 +109,7 @@ void CreateTriangleData()
 
 	D3D11_SUBRESOURCE_DATA data;
 	data.pSysMem = triangleVertices;
-	gDevice->CreateBuffer(&bufferDesc, &data, &gVertexBuffer);
+	renderingsfuntionen.gDevicereturn()->CreateBuffer(&bufferDesc, &data, &gVertexBuffer);
 }
 
 void SetViewport()
@@ -159,7 +159,7 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 		SetViewport(); //3. Sätt viewport
 
 		CreateShaders(); //4. Skapa vertex- och pixel-shaders
-		GameObject Triangle(gDevice);
+		GameObject Triangle(renderingsfuntionen.gDevicereturn());
 		GameObject * triangletest = &Triangle;
 		renderingsfuntionen.Gameobjectpush(triangletest);
 		ShowWindow(wndHandle, nCmdShow);
@@ -175,6 +175,7 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 			{
 			//	Render(); //8. Rendera
 				renderingsfuntionen.update(gDeviceContext, gBackbufferRTV, gVertexShader, gPixelShader,  gVertexLayout);
+				
 				gSwapChain->Present(0, 0); //9. Växla front- och back-buffer
 			}
 		}
@@ -187,7 +188,7 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 
 		gBackbufferRTV->Release();
 		gSwapChain->Release();
-		gDevice->Release();
+		renderingsfuntionen.gDevicereturn()->Release();
 		gDeviceContext->Release();
 		DestroyWindow(wndHandle);
 	}
@@ -263,7 +264,7 @@ HRESULT CreateDirect3DContext(HWND wndHandle)
 		D3D11_SDK_VERSION,
 		&scd,
 		&gSwapChain,
-		&gDevice,
+		&renderingsfuntionen.gDevicereturn(),
 		NULL,
 		&gDeviceContext);
 
@@ -274,7 +275,7 @@ HRESULT CreateDirect3DContext(HWND wndHandle)
 		gSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 
 		// use the back buffer address to create the render target
-		gDevice->CreateRenderTargetView(pBackBuffer, NULL, &gBackbufferRTV);
+		renderingsfuntionen.gDevicereturn()->CreateRenderTargetView(pBackBuffer, NULL, &gBackbufferRTV);
 		pBackBuffer->Release();
 
 		// set the render target as the back buffer
