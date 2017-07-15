@@ -11,7 +11,7 @@
 
 #include "Render.h"
 #include "Gameobject.h"
-
+#include "Shaders.h"
 int * pointertest;
 
 
@@ -21,92 +21,14 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HRESULT CreateDirect3DContext(HWND wndHandle);
 DeansRender renderingsfuntionen;
 
-ID3D11Buffer* gVertexBuffer = nullptr;
+//ID3D11Buffer* gVertexBuffer = nullptr;
 
-ID3D11InputLayout* gVertexLayout = nullptr;
-ID3D11VertexShader* gVertexShader = nullptr;
-ID3D11PixelShader* gPixelShader = nullptr;
+//ID3D11InputLayout* gVertexLayout = nullptr;
+//ID3D11VertexShader* gVertexShader = nullptr;
+//ID3D11PixelShader* gPixelShader = nullptr;
 
-void CreateShaders()
-{
-	//create vertex shader
-	ID3DBlob* pVS = nullptr;
-	D3DCompileFromFile(
-		L"Vertex.hlsl", // filename
-		nullptr,		// optional macros
-		nullptr,		// optional include files
-		"VS_main",		// entry point
-		"vs_4_0",		// shader model (target)
-		0,				// shader compile options
-		0,				// effect compile options
-		&pVS,			// double pointer to ID3DBlob		
-		nullptr			// pointer for Error Blob messages.
-		// how to use the Error blob, see here
-		// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
-		);
 
-	renderingsfuntionen.gDevicereturn()->CreateVertexShader(pVS->GetBufferPointer(), pVS->GetBufferSize(), nullptr, &gVertexShader);
-	
-	//create input layout (verified using vertex shader)
-	D3D11_INPUT_ELEMENT_DESC inputDesc[] = {
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	};
-	renderingsfuntionen.gDevicereturn()->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), pVS->GetBufferPointer(), pVS->GetBufferSize(), &gVertexLayout);
-	// we do not need anymore this COM object, so we release it.
-	pVS->Release();
 
-	//create pixel shader
-	ID3DBlob* pPS = nullptr;
-	D3DCompileFromFile(
-		L"Fragment.hlsl", // filename
-		nullptr,		// optional macros
-		nullptr,		// optional include files
-		"PS_main",		// entry point
-		"ps_4_0",		// shader model (target)
-		0,				// shader compile options
-		0,				// effect compile options
-		&pPS,			// double pointer to ID3DBlob		
-		nullptr			// pointer for Error Blob messages.
-		// how to use the Error blob, see here
-		// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
-		);
-
-	renderingsfuntionen.gDevicereturn()->CreatePixelShader(pPS->GetBufferPointer(), pPS->GetBufferSize(), nullptr, &gPixelShader);
-	// we do not need anymore this COM object, so we release it.
-	pPS->Release();
-}
-
-void CreateTriangleData()
-{
-	struct TriangleVertex
-	{
-		float x, y, z;
-		float r, g, b;
-	};
-
-	TriangleVertex triangleVertices[3] =
-	{
-		0.0f, 0.5f, 0.0f,	//v0 pos
-		1.0f, 0.0f, 0.0f,	//v0 color
-
-		0.5f, -0.5f, 0.0f,	//v1
-		0.0f, 1.0f, 0.0f,	//v1 color
-
-		-0.5f, -0.5f, 0.0f, //v2
-		0.0f, 0.0f, 1.0f	//v2 color
-	};
-
-	D3D11_BUFFER_DESC bufferDesc;
-	memset(&bufferDesc, 0, sizeof(bufferDesc));
-	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	bufferDesc.ByteWidth = sizeof(triangleVertices);
-
-	D3D11_SUBRESOURCE_DATA data;
-	data.pSysMem = triangleVertices;
-	renderingsfuntionen.gDevicereturn()->CreateBuffer(&bufferDesc, &data, &gVertexBuffer);
-}
 
 void SetViewport()
 {
@@ -120,31 +42,12 @@ void SetViewport()
 	renderingsfuntionen.gDeviceContextreturn()->RSSetViewports(1, &vp);
 }
 
-void Render()
-{
-	// clear the back buffer to a deep blue
-	float clearColor[] = { 0, 0, 0, 1 };
-	renderingsfuntionen.gDeviceContextreturn()->ClearRenderTargetView(renderingsfuntionen.gBackbufferRTVreturn(), clearColor);
-
-	renderingsfuntionen.gDeviceContextreturn()->VSSetShader(gVertexShader, nullptr, 0);
-	renderingsfuntionen.gDeviceContextreturn()->HSSetShader(nullptr, nullptr, 0);
-	renderingsfuntionen.gDeviceContextreturn()->DSSetShader(nullptr, nullptr, 0);
-	renderingsfuntionen.gDeviceContextreturn()->GSSetShader(nullptr, nullptr, 0);
-	renderingsfuntionen.gDeviceContextreturn()->PSSetShader(gPixelShader, nullptr, 0);
-
-	UINT32 vertexSize = sizeof(float) * 6;
-	UINT32 offset = 0;
-	renderingsfuntionen.gDeviceContextreturn()->IASetVertexBuffers(0, 1, &gVertexBuffer, &vertexSize, &offset);
-
-	renderingsfuntionen.gDeviceContextreturn()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	renderingsfuntionen.gDeviceContextreturn()->IASetInputLayout(gVertexLayout);
-
-
-	renderingsfuntionen.gDeviceContextreturn()->Draw(3, 0);
-}
-
 int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
+	AllocConsole();
+	freopen("conin$", "r", stdin);
+	freopen("conout$", "w", stdout);
+	freopen("conout$", "w", stderr);
 	MSG msg = { 0 };
 	HWND wndHandle = InitWindow(hInstance); //1. Skapa fönster
 	
@@ -154,9 +57,13 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 
 		SetViewport(); //3. Sätt viewport
 
-		CreateShaders(); //4. Skapa vertex- och pixel-shaders
-		GameObject Triangle(renderingsfuntionen.gDevicereturn());
-		GameObject * triangletest = &Triangle;
+
+		Shaders shader;
+		shader.createShaders(renderingsfuntionen.gDevicereturn());
+//		CreateShaders(); //4. Skapa vertex- och pixel-shaders
+//		GameObject Triangle(renderingsfuntionen.gDevicereturn());
+//		GameObject * triangletest = &Triangle;
+		GameObject * triangletest = new GameObject(renderingsfuntionen.gDevicereturn());
 		renderingsfuntionen.Gameobjectpush(triangletest);
 		ShowWindow(wndHandle, nCmdShow);
 
@@ -170,7 +77,7 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 			else
 			{
 			//	Render(); //8. Rendera
-				renderingsfuntionen.update(renderingsfuntionen.gDeviceContextreturn(), renderingsfuntionen.gBackbufferRTVreturn(), gVertexShader, gPixelShader,  gVertexLayout);
+				renderingsfuntionen.update(renderingsfuntionen.gDeviceContextreturn(), renderingsfuntionen.gBackbufferRTVreturn(), shader.gVertexShaderReturn(), shader.gPixelShaderReturn(), shader.gVertexLayoutReturn());
 				
 				renderingsfuntionen.gSwapChainreturn()->Present(0, 0); //9. Växla front- och back-buffer
 			}
@@ -178,9 +85,9 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 
 	//	gVertexBuffer->Release();
 
-		gVertexLayout->Release();
-		gVertexShader->Release();
-		gPixelShader->Release();
+//		gVertexLayout->Release();
+//		gVertexShader->Release();
+//		gPixelShader->Release();
 
 		renderingsfuntionen.gBackbufferRTVreturn()->Release();
 		renderingsfuntionen.gSwapChainreturn()->Release();
