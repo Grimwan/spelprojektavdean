@@ -5,7 +5,7 @@ DeansRender::DeansRender()
 
 }
 
-void DeansRender::update(ID3D11DeviceContext* &gDeviceContext, ID3D11RenderTargetView* &gBackbufferRTV)
+void DeansRender::update()
 {
 	if(testet == true)
 	{
@@ -17,11 +17,7 @@ void DeansRender::update(ID3D11DeviceContext* &gDeviceContext, ID3D11RenderTarge
 	float clearColor[] = { 0, 0, 0, 1 };
 	gDeviceContext->ClearRenderTargetView(gBackbufferRTV, clearColor);
 
-	gDeviceContext->VSSetShader(shader.gVertexShaderReturn(), nullptr, 0);
-	gDeviceContext->HSSetShader(nullptr, nullptr, 0);
-	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
-	gDeviceContext->GSSetShader(nullptr, nullptr, 0);
-	gDeviceContext->PSSetShader(shader.gPixelShaderReturn(), nullptr, 0);
+	shader.objectShaderVSandPS(gDeviceContext);
 	test[0]->draw(gDeviceContext, shader.gVertexLayoutReturn());
 
 }

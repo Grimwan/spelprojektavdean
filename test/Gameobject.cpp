@@ -44,6 +44,44 @@ GameObject::GameObject()
 {
 }
 
+GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> Positionsochfergdata)
+{
+	
+//	PositonColorVertex * Positonandcolorconverter = &Positionsochfergdata[0];
+	
+	D3D11_BUFFER_DESC bufferDesc;
+	memset(&bufferDesc, 0, sizeof(bufferDesc));
+	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.ByteWidth = 6*sizeof(float)*(UINT)Positionsochfergdata.size();
+//	bufferDesc.ByteWidth = sizeof(Positonandcolorconverter);
+	D3D11_SUBRESOURCE_DATA data;
+	data.pSysMem = Positionsochfergdata.data();
+//	data.pSysMem = Positonandcolorconverter;
+	gDevice->CreateBuffer(&bufferDesc, &data, &VertexBuffer);
+	HRESULT hr = gDevice->CreateBuffer(&bufferDesc, &data, &this->VertexBuffer);
+	if (FAILED(hr))
+		std::cout << "Failed to create vertex buffer!" << std::endl;
+}
+GameObject::GameObject(ID3D11Device *& gDevice, PositonColorVertex * Positionsochfergdata)
+{
+	D3D11_BUFFER_DESC bufferDesc;
+	memset(&bufferDesc, 0, sizeof(bufferDesc));
+	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.ByteWidth = sizeof(Positionsochfergdata);
+	D3D11_SUBRESOURCE_DATA data;
+	data.pSysMem = Positionsochfergdata;
+	gDevice->CreateBuffer(&bufferDesc, &data, &VertexBuffer);
+	HRESULT hr = gDevice->CreateBuffer(&bufferDesc, &data, &this->VertexBuffer);
+	if (FAILED(hr))
+		std::cout << "Failed to create vertex buffer!" << std::endl;
+}
+
+
+
+
+
 ID3D11Buffer * GameObject::getVertexbuffer()
 {
 	return VertexBuffer;

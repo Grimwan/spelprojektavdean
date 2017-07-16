@@ -5,7 +5,7 @@
 #include "Test.h"
 #include <d3d11.h>
 #include <d3dcompiler.h>
-
+#include "Structs.h"
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 
@@ -58,7 +58,26 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 //		CreateShaders(); //4. Skapa vertex- och pixel-shaders
 //		GameObject Triangle(renderingsfuntionen.gDevicereturn());
 //		GameObject * triangletest = &Triangle;
-		GameObject * triangletest = new GameObject(renderingsfuntionen.gDevicereturn());
+	//	GameObject * triangletest = new GameObject(renderingsfuntionen.gDevicereturn());
+
+		std::vector<PositonColorVertex> testtriangle;
+		PositonColorVertex test = {
+			0.0f, 0.5f, 0.0f,	//v0 pos
+			1.0f, 0.0f, 0.0f,	//v0 color 
+		};
+		testtriangle.push_back(test);
+		test = {
+			0.5f, -0.5f, 0.0f,	//v1
+			0.0f, 1.0f, 0.0f,	//v1 color
+		};
+		testtriangle.push_back(test);
+		test = {
+			-0.5f, -0.5f, 0.0f, //v2
+			0.0f, 0.0f, 1.0f	//v2 color
+		};
+		testtriangle.push_back(test);
+
+		GameObject * triangletest = new GameObject(renderingsfuntionen.gDevicereturn(),testtriangle);
 		renderingsfuntionen.Gameobjectpush(triangletest);
 		ShowWindow(wndHandle, nCmdShow);
 
@@ -72,8 +91,7 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 			else
 			{
 			//	Render(); //8. Rendera
-				renderingsfuntionen.update(renderingsfuntionen.gDeviceContextreturn(), renderingsfuntionen.gBackbufferRTVreturn());
-				
+				renderingsfuntionen.update();
 				renderingsfuntionen.gSwapChainreturn()->Present(0, 0); //9. Växla front- och back-buffer
 			}
 		}

@@ -21,7 +21,7 @@ private:
 public:
 
 	DeansRender();
-	void update(ID3D11DeviceContext* &gDeviceContext,ID3D11RenderTargetView* &gBackbufferRTV);
+	void update();
 	~DeansRender();
 	void Gameobjectpush(GameObject* &objectfile);
 	ID3D11Device *& gDevicereturn();

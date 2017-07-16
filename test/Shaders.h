@@ -18,6 +18,7 @@ public:
 	void createShaders(ID3D11Device* &gDevice);
 	Shaders();
 	~Shaders();
+	void objectShaderVSandPS(ID3D11DeviceContext * &gDeviceContext);
 	ID3D11VertexShader* &gVertexShaderReturn();
 	ID3D11PixelShader* &gPixelShaderReturn();
 	ID3D11InputLayout* &gVertexLayoutReturn();

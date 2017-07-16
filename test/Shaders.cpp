@@ -64,6 +64,15 @@ Shaders::~Shaders()
 
 }
 
+void Shaders::objectShaderVSandPS(ID3D11DeviceContext *& gDeviceContext)
+{
+	gDeviceContext->VSSetShader(gVertexShader, nullptr, 0);
+	gDeviceContext->HSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->GSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->PSSetShader(gPixelShader, nullptr, 0);
+}
+
 ID3D11VertexShader *& Shaders::gVertexShaderReturn()
 {
 	return gVertexShader;

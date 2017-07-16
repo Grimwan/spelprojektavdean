@@ -98,6 +98,7 @@
     <ClInclude Include="Gameobject.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="Structs.h" />
     <ClInclude Include="Test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
