@@ -6,7 +6,7 @@
 #include <vector>
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
-
+#include "Shaders.h"
 
 class DeansRender
 {
@@ -16,10 +16,12 @@ private:
 	IDXGISwapChain* gSwapChain = nullptr;
 	ID3D11DeviceContext * gDeviceContext = nullptr;
 	ID3D11RenderTargetView* gBackbufferRTV = nullptr;
+	Shaders shader;
+	bool testet = true;
 public:
 
 	DeansRender();
-	void update(ID3D11DeviceContext* &gDeviceContext,ID3D11RenderTargetView* &gBackbufferRTV, ID3D11VertexShader* &gVertexShader,ID3D11PixelShader* &gPixelShader, ID3D11InputLayout* &gVertexLayout);
+	void update(ID3D11DeviceContext* &gDeviceContext,ID3D11RenderTargetView* &gBackbufferRTV);
 	~DeansRender();
 	void Gameobjectpush(GameObject* &objectfile);
 	ID3D11Device *& gDevicereturn();

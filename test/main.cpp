@@ -54,8 +54,7 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 		SetViewport(); //3. Sätt viewport
 
 
-		Shaders shader;
-		shader.createShaders(renderingsfuntionen.gDevicereturn());
+
 //		CreateShaders(); //4. Skapa vertex- och pixel-shaders
 //		GameObject Triangle(renderingsfuntionen.gDevicereturn());
 //		GameObject * triangletest = &Triangle;
@@ -73,7 +72,7 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 			else
 			{
 			//	Render(); //8. Rendera
-				renderingsfuntionen.update(renderingsfuntionen.gDeviceContextreturn(), renderingsfuntionen.gBackbufferRTVreturn(), shader.gVertexShaderReturn(), shader.gPixelShaderReturn(), shader.gVertexLayoutReturn());
+				renderingsfuntionen.update(renderingsfuntionen.gDeviceContextreturn(), renderingsfuntionen.gBackbufferRTVreturn());
 				
 				renderingsfuntionen.gSwapChainreturn()->Present(0, 0); //9. Växla front- och back-buffer
 			}
