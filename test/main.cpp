@@ -21,11 +21,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 HRESULT CreateDirect3DContext(HWND wndHandle);
 DeansRender renderingsfuntionen;
 
-//ID3D11Buffer* gVertexBuffer = nullptr;
 
-//ID3D11InputLayout* gVertexLayout = nullptr;
-//ID3D11VertexShader* gVertexShader = nullptr;
-//ID3D11PixelShader* gPixelShader = nullptr;
 
 
 
