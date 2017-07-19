@@ -13,13 +13,13 @@
 #include "Gameobject.h"
 #include "Shaders.h"
 int * pointertest;
-
+#include "objectfactory.h"
 
 HWND InitWindow(HINSTANCE hInstance);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 HRESULT CreateDirect3DContext(HWND wndHandle);
-DeansRender renderingsfuntionen;
+DeansRender * renderingsfuntionen = new DeansRender();
 
 
 
@@ -35,7 +35,7 @@ void SetViewport()
 	vp.MaxDepth = 1.0f;
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
-	renderingsfuntionen.gDeviceContextreturn()->RSSetViewports(1, &vp);
+	renderingsfuntionen->gDeviceContextreturn()->RSSetViewports(1, &vp);
 }
 
 int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
@@ -59,26 +59,9 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 //		GameObject Triangle(renderingsfuntionen.gDevicereturn());
 //		GameObject * triangletest = &Triangle;
 	//	GameObject * triangletest = new GameObject(renderingsfuntionen.gDevicereturn());
+		GameObjectCreationTriangle firstobject(renderingsfuntionen);
+	//	GameObjectCreationTriangle secondobject(renderingsfuntionen,2);
 
-		std::vector<PositonColorVertex> testtriangle;
-		PositonColorVertex test = {
-			0.0f, 0.5f, 0.0f,	//v0 pos
-			1.0f, 0.0f, 0.0f,	//v0 color 
-		};
-		testtriangle.push_back(test);
-		test = {
-			0.5f, -0.5f, 0.0f,	//v1
-			0.0f, 1.0f, 0.0f,	//v1 color
-		};
-		testtriangle.push_back(test);
-		test = {
-			-0.5f, -0.5f, 0.0f, //v2
-			0.0f, 0.0f, 1.0f	//v2 color
-		};
-		testtriangle.push_back(test);
-
-		GameObject * triangletest = new GameObject(renderingsfuntionen.gDevicereturn(),testtriangle);
-		renderingsfuntionen.Gameobjectpush(triangletest);
 		ShowWindow(wndHandle, nCmdShow);
 
 		while (WM_QUIT != msg.message)
@@ -91,8 +74,8 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 			else
 			{
 			//	Render(); //8. Rendera
-				renderingsfuntionen.update();
-				renderingsfuntionen.gSwapChainreturn()->Present(0, 0); //9. Växla front- och back-buffer
+				renderingsfuntionen->update();
+				renderingsfuntionen->gSwapChainreturn()->Present(0, 0); //9. Växla front- och back-buffer
 			}
 		}
 
@@ -102,10 +85,10 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 //		gVertexShader->Release();
 //		gPixelShader->Release();
 
-		renderingsfuntionen.gBackbufferRTVreturn()->Release();
-		renderingsfuntionen.gSwapChainreturn()->Release();
-		renderingsfuntionen.gDevicereturn()->Release();
-		renderingsfuntionen.gDeviceContextreturn()->Release();
+		renderingsfuntionen->gBackbufferRTVreturn()->Release();
+		renderingsfuntionen->gSwapChainreturn()->Release();
+		renderingsfuntionen->gDevicereturn()->Release();
+		renderingsfuntionen->gDeviceContextreturn()->Release();
 		DestroyWindow(wndHandle);
 	}
 
@@ -179,23 +162,23 @@ HRESULT CreateDirect3DContext(HWND wndHandle)
 		NULL,
 		D3D11_SDK_VERSION,
 		&scd,
-		&renderingsfuntionen.gSwapChainreturn(),
-		&renderingsfuntionen.gDevicereturn(),
+		&renderingsfuntionen->gSwapChainreturn(),
+		&renderingsfuntionen->gDevicereturn(),
 		NULL,
-		&renderingsfuntionen.gDeviceContextreturn());
+		&renderingsfuntionen->gDeviceContextreturn());
 
 	if (SUCCEEDED(hr))
 	{
 		// get the address of the back buffer
 		ID3D11Texture2D* pBackBuffer = nullptr;
-		renderingsfuntionen.gSwapChainreturn()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+		renderingsfuntionen->gSwapChainreturn()->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 
 		// use the back buffer address to create the render target
-		renderingsfuntionen.gDevicereturn()->CreateRenderTargetView(pBackBuffer, NULL, &renderingsfuntionen.gBackbufferRTVreturn());
+		renderingsfuntionen->gDevicereturn()->CreateRenderTargetView(pBackBuffer, NULL, &renderingsfuntionen->gBackbufferRTVreturn());
 		pBackBuffer->Release();
 
 		// set the render target as the back buffer
-		renderingsfuntionen.gDeviceContextreturn()->OMSetRenderTargets(1, &renderingsfuntionen.gBackbufferRTVreturn(), NULL);
+		renderingsfuntionen->gDeviceContextreturn()->OMSetRenderTargets(1, &renderingsfuntionen->gBackbufferRTVreturn(), NULL);
 	}
 	return hr;
 }

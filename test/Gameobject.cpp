@@ -35,6 +35,8 @@ GameObject::GameObject(ID3D11Device* &gDevice)
 		std::cout << "Failed to create vertex buffer!" << std::endl;
 }
 
+
+
 GameObject::~GameObject()
 {
 	VertexBuffer->Release();
@@ -52,12 +54,12 @@ GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> 
 	D3D11_BUFFER_DESC bufferDesc;
 	memset(&bufferDesc, 0, sizeof(bufferDesc));
 	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+//	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	bufferDesc.ByteWidth = 6*sizeof(float)*(UINT)Positionsochfergdata.size();
-//	bufferDesc.ByteWidth = sizeof(Positonandcolorconverter);
 	D3D11_SUBRESOURCE_DATA data;
 	data.pSysMem = Positionsochfergdata.data();
-//	data.pSysMem = Positonandcolorconverter;
 	gDevice->CreateBuffer(&bufferDesc, &data, &VertexBuffer);
 	HRESULT hr = gDevice->CreateBuffer(&bufferDesc, &data, &this->VertexBuffer);
 	if (FAILED(hr))
@@ -87,7 +89,7 @@ ID3D11Buffer * GameObject::getVertexbuffer()
 	return VertexBuffer;
 }
 
-void GameObject::draw(ID3D11DeviceContext* gDeviceContext, ID3D11InputLayout* gVertexLayout)
+void GameObject::draw(ID3D11DeviceContext* &gDeviceContext, ID3D11InputLayout* &gVertexLayout)
 {
 
 
@@ -106,4 +108,62 @@ void GameObject::draw(ID3D11DeviceContext* gDeviceContext, ID3D11InputLayout* gV
 void GameObject::update()
 {
 
+}
+
+std::vector<PositonColorVertex> GameObject::paintingtwotriangles(int differentone)
+{
+
+
+	if(differentone == 1)
+	{
+	std::vector<PositonColorVertex> testtriangle;
+	PositonColorVertex test = {
+		0.5f, 0.5f, 0.0f,	//v0 pos
+		1.0f, 0.0f, 0.0f,	//v0 color 
+	};
+	testtriangle.push_back(test);
+	test = {
+		1.0f, -0.5f, 0.0f,	//v1
+		0.0f, 1.0f, 0.0f,	//v1 color
+	};
+	testtriangle.push_back(test);
+	test = {
+		0.0f, -0.5f, 0.0f, //v2
+		0.0f, 0.0f, 1.0f	//v2 color
+	};
+	testtriangle.push_back(test);
+	return testtriangle;
+	}
+	else if (differentone == 2)
+	{
+
+		std::vector<PositonColorVertex> testtriangle;
+		PositonColorVertex test = {
+			0.0f, 0.5f, 0.0f,	//v0 pos
+			1.0f, 0.0f, 0.0f,	//v0 color 
+		};
+		testtriangle.push_back(test);
+		test = {
+			0.5f, -0.5f, 0.0f,	//v1
+			0.0f, 1.0f, 0.0f,	//v1 color
+		};
+		testtriangle.push_back(test);
+		test = {
+			-0.5f, -0.5f, 0.0f, //v2
+			0.0f, 0.0f, 1.0f	//v2 color
+		};
+		testtriangle.push_back(test);
+		return testtriangle;
+	}
+}
+
+void GameObject::changeVertexbufferdata(ID3D11DeviceContext*& gDeviceContext, std::vector<PositonColorVertex> Positionsochfergdata)
+{
+	D3D11_SUBRESOURCE_DATA data;
+//	data.pSysMem = Positionsochfergdata.data();
+	D3D11_MAPPED_SUBRESOURCE resource;
+	ZeroMemory(&resource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+	gDeviceContext->Map(VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
+	memcpy(resource.pData, Positionsochfergdata.data(), 6 * sizeof(float)*(UINT)Positionsochfergdata.size());
+	gDeviceContext->Unmap(VertexBuffer, 0);
 }

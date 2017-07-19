@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="Gameobject.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="objectfactory.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="Test.cpp" />
@@ -96,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gameobject.h" />
+    <ClInclude Include="objectfactory.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="Structs.h" />

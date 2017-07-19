@@ -18,8 +18,19 @@ void DeansRender::update()
 	gDeviceContext->ClearRenderTargetView(gBackbufferRTV, clearColor);
 
 	shader.objectShaderVSandPS(gDeviceContext);
-	test[0]->draw(gDeviceContext, shader.gVertexLayoutReturn());
+	for (int i = 0;i < test.size();i++)
+	{
+		test[i]->changeVertexbufferdata(gDeviceContext, test[i]->paintingtwotriangles(1));
+		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn());
+	}
 
+
+	for (int j = 0;j < test.size();j++)
+	{
+
+		test[j]->changeVertexbufferdata(gDeviceContext, test[j]->paintingtwotriangles(2));
+		test[j]->draw(gDeviceContext, shader.gVertexLayoutReturn());
+	}
 }
 
 DeansRender::~DeansRender()

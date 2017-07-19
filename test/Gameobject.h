@@ -18,12 +18,15 @@ int testet = 0;
 
 public:
 	 GameObject(ID3D11Device * &gDevice);
+	
 	~GameObject();
 	GameObject();
 	GameObject(ID3D11Device * &gDevice,std::vector<PositonColorVertex> Positionsochfergdata);
 	GameObject(ID3D11Device * &gDevice,PositonColorVertex* Positionsochfergdata);
 	ID3D11Buffer * getVertexbuffer();
-	void draw(ID3D11DeviceContext* gDeviceContext, ID3D11InputLayout* gVertexLayout);
+	void draw(ID3D11DeviceContext* &gDeviceContext, ID3D11InputLayout* &gVertexLayout);
 	void update();
+	std::vector<PositonColorVertex> paintingtwotriangles(int differentmovement);
+	void changeVertexbufferdata(ID3D11DeviceContext* &gDeviceContext, std::vector<PositonColorVertex> Positionsochfergdata);
 
 };

@@ -1,3 +1,5 @@
 ﻿  Gameobject.cpp
+h:\programming\3d project\test\gameobject.cpp(162): warning C4101: 'data': unreferenced local variable
+h:\programming\3d project\test\gameobject.cpp(158): warning C4715: 'GameObject::paintingtwotriangles': not all control paths return a value
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.exe
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.pdb (Full PDB)
