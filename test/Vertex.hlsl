@@ -8,6 +8,7 @@ struct VS_OUT
 {
 	float4 Pos : SV_POSITION;
 	float3 Color : COLOR;
+	float4 wPos : POSITION;
 };
 //-----------------------------------------------------------------------------------------
 // VertexShader: VSScene
@@ -18,6 +19,6 @@ VS_OUT VS_main(VS_IN input)
 
 	output.Pos = float4(input.Pos, 1);
 	output.Color = input.Color;
-
+	output.wPos = float4(input.Pos, 1);
 	return output;
 }

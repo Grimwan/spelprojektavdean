@@ -41,6 +41,9 @@
     <FxCompile Include="Vertex.hlsl">
       <Filter>Source Files</Filter>
     </FxCompile>
+    <FxCompile Include="GeometryShader.hlsl">
+      <Filter>Source Files</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gameobject.h">

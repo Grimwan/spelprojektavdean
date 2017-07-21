@@ -2,6 +2,8 @@
 
 void Shaders::createShaders(ID3D11Device* &gDevice)
 {
+	ID3DBlob* errorBlob;
+	HRESULT hr;
 	//create vertex shader
 	ID3DBlob* pVS = nullptr;
 	D3DCompileFromFile(
@@ -20,14 +22,53 @@ void Shaders::createShaders(ID3D11Device* &gDevice)
 
 	gDevice->CreateVertexShader(pVS->GetBufferPointer(), pVS->GetBufferSize(), nullptr, &gVertexShader);
 
+
+//	float4 wPos : POSITION
 	//create input layout (verified using vertex shader)
 	D3D11_INPUT_ELEMENT_DESC inputDesc[] = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 	gDevice->CreateInputLayout(inputDesc, ARRAYSIZE(inputDesc), pVS->GetBufferPointer(), pVS->GetBufferSize(), &gVertexLayout);
 	// we do not need anymore this COM object, so we release it.
 	pVS->Release();
+
+
+
+
+
+
+
+
+
+
+	//create Geometry shader
+	
+	//Geometry shader
+	ID3DBlob* pGS = nullptr;
+	hr = D3DCompileFromFile(L"GeometryShader.hlsl", nullptr, nullptr, "GS_main", "gs_4_0", 0, 0, &pGS, &errorBlob);
+	if (FAILED(hr))
+	{
+		if (errorBlob != nullptr)
+		{
+			OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+			errorBlob->Release();
+		}
+	}
+	gDevice->CreateGeometryShader(pGS->GetBufferPointer(), pGS->GetBufferSize(), nullptr, &gGeometryShader);
+
+	pGS->Release();
+	
+	
+	
+	
+	
+
+
+
+
+
+
 
 	//create pixel shader
 	ID3DBlob* pPS = nullptr;
@@ -69,7 +110,7 @@ void Shaders::objectShaderVSandPS(ID3D11DeviceContext *& gDeviceContext)
 	gDeviceContext->VSSetShader(gVertexShader, nullptr, 0);
 	gDeviceContext->HSSetShader(nullptr, nullptr, 0);
 	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
-	gDeviceContext->GSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->GSSetShader(gGeometryShader, nullptr, 0);
 	gDeviceContext->PSSetShader(gPixelShader, nullptr, 0);
 }
 
