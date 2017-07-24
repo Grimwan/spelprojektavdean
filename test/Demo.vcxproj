@@ -77,6 +77,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="buffers.cpp" />
     <ClCompile Include="Gameobject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="objectfactory.cpp" />
@@ -106,7 +107,9 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="buffers.h" />
     <ClInclude Include="Gameobject.h" />
+    <ClInclude Include="Lights.h" />
     <ClInclude Include="objectfactory.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Shaders.h" />

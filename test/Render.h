@@ -7,7 +7,7 @@
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 #include "Shaders.h"
-
+#include "buffers.h"
 class DeansRender
 {
 private:
