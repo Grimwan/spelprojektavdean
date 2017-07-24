@@ -16,6 +16,8 @@ private:
 	IDXGISwapChain* gSwapChain = nullptr;
 	ID3D11DeviceContext * gDeviceContext = nullptr;
 	ID3D11RenderTargetView* gBackbufferRTV = nullptr;
+	//constantbuffer
+	ID3D11Buffer* ConstantBufferPointLight = nullptr;
 	Shaders shader;
 	bool testet = true;
 public:

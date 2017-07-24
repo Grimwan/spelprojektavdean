@@ -7,8 +7,9 @@
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 #include "Structs.h"
-/*
-ID3D11Buffer* ConstantBufferPointLight = NULL;
-void constantbufferforPointLight(pointlight Pointlightdata, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);
-void createallbuffers(ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);
-*/
+
+
+
+
+void constantbufferforPointLight(ID3D11Buffer* &ConstantBufferPointLight,pointlight Pointlightdata, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);
+void createallbuffers(ID3D11Buffer* &ConstantBufferPointLight, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);

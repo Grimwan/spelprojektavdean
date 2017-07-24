@@ -1,20 +1,3 @@
 ﻿  buffers.cpp
-  Generating Code...
-  Compiling...
-  Render.cpp
-h:\programming\3d project\test\render.cpp(22): warning C4018: '<': signed/unsigned mismatch
-h:\programming\3d project\test\render.cpp(29): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Compiling...
-  objectfactory.cpp
-  main.cpp
-h:\programming\3d project\test\main.cpp(42): warning C4007: 'wWinMain': must be '__stdcall'
-h:\programming\3d project\test\main.cpp(44): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-h:\programming\3d project\test\main.cpp(45): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-h:\programming\3d project\test\main.cpp(46): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-  Generating Code...
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.exe
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.pdb (Full PDB)

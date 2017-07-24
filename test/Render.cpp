@@ -10,7 +10,7 @@ void DeansRender::update()
 	if(testet == true)
 	{
 	shader.createShaders(gDevice);
-//	createallbuffers(gDevice, gDeviceContext);
+	createallbuffers(ConstantBufferPointLight,gDevice, gDeviceContext);
 	testet = false;
 	}
 

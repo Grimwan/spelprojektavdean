@@ -1,11 +1,11 @@
-/*
+
 #include "buffers.h"
 
 
 
 
 
-void constantbufferforPointLight(pointlight Pointlightdata, ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
+void constantbufferforPointLight(ID3D11Buffer* &ConstantBufferPointLight, pointlight Pointlightdata, ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
 {
 	HRESULT hr;
 	D3D11_BUFFER_DESC cbDesc;
@@ -32,13 +32,16 @@ void constantbufferforPointLight(pointlight Pointlightdata, ID3D11Device *& gDev
 	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
 }
 
-void createallbuffers(ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext)
+void createallbuffers(ID3D11Buffer* &ConstantBufferPointLight, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext)
 {
 //createPointLightbuffer
 	pointlight Firstdatavalues = {
-	0.5f, 0.0f, -2.0f,	//v0 pos
-	1.0f	//v0 color 
+	-3.f, 0.0f, -1.0f,	//v0 pos
+//	0.0f, 1.0f, 0.0f,
+	1.0f	//v0 range 
 };
-	constantbufferforPointLight(Firstdatavalues, gDevice, gDeviceContext);
+	
+
+
+	constantbufferforPointLight(ConstantBufferPointLight,Firstdatavalues, gDevice, gDeviceContext);
 }
-*/
