@@ -10,3 +10,4 @@ struct pointlight
 	float x, y, z;
 	float Range;
 };
+

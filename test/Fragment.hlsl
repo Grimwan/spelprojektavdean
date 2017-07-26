@@ -11,7 +11,6 @@ cbuffer pointlight : register(b0)
 	float3 LightPosition;
 	float1 LightScale;
 
-
 };
 
 

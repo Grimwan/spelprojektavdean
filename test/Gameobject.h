@@ -8,13 +8,16 @@
 #pragma comment (lib, "d3dcompiler.lib")
 #include "Structs.h"
 #include <iostream>
+#include <DirectXMath.h>
+#include <dinput.h>
+using namespace DirectX;
 
 class GameObject
 {
 private:
 ID3D11Buffer* VertexBuffer = nullptr;
 int testet = 0;
-
+XMMATRIX WorldMatrix;
 
 public:
 	 GameObject(ID3D11Device * &gDevice);

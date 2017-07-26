@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="buffers.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Gameobject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="objectfactory.cpp" />
@@ -108,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="buffers.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Gameobject.h" />
     <ClInclude Include="Lights.h" />
     <ClInclude Include="objectfactory.h" />
