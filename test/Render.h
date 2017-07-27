@@ -8,6 +8,7 @@
 #pragma comment (lib, "d3dcompiler.lib")
 #include "Shaders.h"
 #include "buffers.h"
+#include "Camera.h"
 class DeansRender
 {
 private:
@@ -18,8 +19,10 @@ private:
 	ID3D11RenderTargetView* gBackbufferRTV = nullptr;
 	//constantbuffer
 	ID3D11Buffer* ConstantBufferPointLight = nullptr;
+	ID3D11Buffer* worldMatrix = nullptr;
 	Shaders shader;
 	bool testet = true;
+	camera Camera;
 public:
 
 	DeansRender();

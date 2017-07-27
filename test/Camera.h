@@ -37,6 +37,8 @@ public:
 	~camera();
 	void UpdateCamera();
 	void DetectInput(double time);
+	XMFLOAT4X4 camview();
+	XMMATRIX camviewXmmatrix();
 	// Get / set world camera position
 
 

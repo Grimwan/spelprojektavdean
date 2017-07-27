@@ -17,6 +17,9 @@ class GameObject
 private:
 ID3D11Buffer* VertexBuffer = nullptr;
 int testet = 0;
+XMMATRIX scaling;
+XMMATRIX rotation;
+XMMATRIX translation;
 XMMATRIX WorldMatrix;
 
 public:
@@ -31,5 +34,12 @@ public:
 	void update();
 	std::vector<PositonColorVertex> paintingtwotriangles(int differentmovement);
 	void changeVertexbufferdata(ID3D11DeviceContext* &gDeviceContext, std::vector<PositonColorVertex> Positionsochfergdata);
-
+	XMMATRIX getWorldMatrixXMMATRIX();
+	XMFLOAT4X4 getWorldMatrixXMFLOAT4x4();
+	void setScaling(float scale);
+	void setrotx(float rotx);
+	void setroty(float roty);
+	void setrotz(float rotz);
+	void settranslation(float x, float y, float z);
+	void updateworldmatrix();
 };

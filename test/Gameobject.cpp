@@ -48,7 +48,11 @@ GameObject::GameObject()
 
 GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> Positionsochfergdata)
 {
-	
+
+	scaling = XMMatrixScaling(1, 1, 1);
+	rotation = XMMatrixRotationX(100);
+	translation = XMMatrixTranslation(0, 0, 0);
+	updateworldmatrix();
 //	PositonColorVertex * Positonandcolorconverter = &Positionsochfergdata[0];
 	
 	D3D11_BUFFER_DESC bufferDesc;
@@ -166,4 +170,48 @@ void GameObject::changeVertexbufferdata(ID3D11DeviceContext*& gDeviceContext, st
 	gDeviceContext->Map(VertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
 	memcpy(resource.pData, Positionsochfergdata.data(), 6 * sizeof(float)*(UINT)Positionsochfergdata.size());
 	gDeviceContext->Unmap(VertexBuffer, 0);
+}
+
+XMMATRIX GameObject::getWorldMatrixXMMATRIX()
+{
+	return WorldMatrix;
+}
+
+XMFLOAT4X4 GameObject::getWorldMatrixXMFLOAT4x4()
+{
+	DirectX::XMFLOAT4X4 WorldMatrixen;
+	XMStoreFloat4x4(&WorldMatrixen, WorldMatrix);
+	return WorldMatrixen;
+}
+
+void GameObject::setScaling(float scale)
+{
+	scaling = XMMatrixScaling(scale, scale, scale);
+}
+
+void GameObject::setrotx(float rotx)
+{
+	rotation = XMMatrixRotationX(rotx);
+}
+
+void GameObject::setroty(float roty)
+{
+	rotation = XMMatrixRotationY(roty);
+}
+
+void GameObject::setrotz(float rotz)
+{
+	rotation = XMMatrixRotationZ(rotz);
+}
+
+void GameObject::settranslation(float x, float y, float z)
+{
+	translation = XMMatrixTranslation(x, y, z);
+}
+
+void GameObject::updateworldmatrix()
+{
+
+	WorldMatrix = scaling * rotation * translation;
+	//	WorldMatrix =  translation*rotation*scaling;
 }

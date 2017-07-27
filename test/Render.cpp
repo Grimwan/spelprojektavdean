@@ -10,7 +10,7 @@ void DeansRender::update()
 	if(testet == true)
 	{
 	shader.createShaders(gDevice);
-	createallbuffers(ConstantBufferPointLight,gDevice, gDeviceContext);
+	createallbuffers(ConstantBufferPointLight, worldMatrix,gDevice, gDeviceContext);
 	testet = false;
 	}
 
@@ -19,19 +19,31 @@ void DeansRender::update()
 	gDeviceContext->ClearRenderTargetView(gBackbufferRTV, clearColor);
 
 	shader.objectShaderVSandPS(gDeviceContext);
+//	test[0]->setrotx(25);
+//	test[0]->settranslation(2, 0, 0);
+
+
+
 	for (int i = 0;i < test.size();i++)
 	{
-		test[i]->changeVertexbufferdata(gDeviceContext, test[i]->paintingtwotriangles(1));
+		test[i]->updateworldmatrix();
+//		XMMATRIX yees = Camera.camviewXmmatrix()*test[i]->getWorldMatrixXMMATRIX();
+
+//		DirectX::XMFLOAT4X4 yes;
+//		XMStoreFloat4x4(&yes, yees);
+		//	test[i]->changeVertexbufferdata(gDeviceContext, test[i]->paintingtwotriangles(1));
+		
+		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
 		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn());
 	}
 
 
-	for (int j = 0;j < test.size();j++)
-	{
+//	for (int j = 0;j < test.size();j++)
+//	{
 
-		test[j]->changeVertexbufferdata(gDeviceContext, test[j]->paintingtwotriangles(2));
-		test[j]->draw(gDeviceContext, shader.gVertexLayoutReturn());
-	}
+	//	test[j]->changeVertexbufferdata(gDeviceContext, test[j]->paintingtwotriangles(2));
+//		test[j]->draw(gDeviceContext, shader.gVertexLayoutReturn());
+//	}
 }
 
 DeansRender::~DeansRender()

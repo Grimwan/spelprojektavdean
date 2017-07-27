@@ -81,3 +81,14 @@ void camera::DetectInput(double time)
 
 }
 
+XMFLOAT4X4 camera::camview()
+{
+	DirectX::XMFLOAT4X4 cameravieww;
+	XMStoreFloat4x4(&cameravieww, camView);
+	return cameravieww;
+}
+
+XMMATRIX camera::camviewXmmatrix()
+{
+	return camView;
+}
