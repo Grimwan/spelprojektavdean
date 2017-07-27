@@ -2,6 +2,7 @@
 
 camera::camera()
 {
+
 }
 
 camera::~camera()
@@ -46,8 +47,8 @@ void camera::DetectInput(double time)
 	SHORT LCtrl = GetAsyncKeyState(VK_LCONTROL);
 	SHORT LShift = GetAsyncKeyState(VK_LSHIFT);
 
+	std::cout << XMVectorGetX(camPosition)<< " "<< XMVectorGetY(camPosition) << " " << XMVectorGetZ(camPosition) << std::endl;
 	
-	DIMOUSESTATE mouseCurrState;
 	
 
 	float speed = 15.0f * time;
@@ -68,14 +69,14 @@ void camera::DetectInput(double time)
 	{
 		moveBackForward -= speed;
 	}
-	if ((mouseCurrState.lX != mouseLastState.lX) || (mouseCurrState.lY != mouseLastState.lY))
-	{
-		camYaw += mouseLastState.lX * 0.001f;
+	//if ((mouseCurrState.lX != mouseLastState.lX) || (mouseCurrState.lY != mouseLastState.lY))
+//	{
+//		camYaw += mouseLastState.lX * 0.001f;
 
-		camPitch += mouseCurrState.lY * 0.001f;
+//		camPitch += mouseCurrState.lY * 0.001f;
 
-		mouseLastState = mouseCurrState;
-	}
+//		mouseLastState = mouseCurrState;
+//	}
 
 	UpdateCamera();
 
@@ -84,7 +85,7 @@ void camera::DetectInput(double time)
 XMFLOAT4X4 camera::camview()
 {
 	DirectX::XMFLOAT4X4 cameravieww;
-	XMStoreFloat4x4(&cameravieww, camView);
+	XMStoreFloat4x4(&cameravieww, XMMatrixTranspose(camView));
 	return cameravieww;
 }
 

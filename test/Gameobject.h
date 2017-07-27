@@ -21,6 +21,7 @@ XMMATRIX scaling;
 XMMATRIX rotation;
 XMMATRIX translation;
 XMMATRIX WorldMatrix;
+float raze=0;
 
 public:
 	 GameObject(ID3D11Device * &gDevice);
@@ -42,4 +43,5 @@ public:
 	void setrotz(float rotz);
 	void settranslation(float x, float y, float z);
 	void updateworldmatrix();
+	void animation();
 };

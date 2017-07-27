@@ -23,9 +23,10 @@ void DeansRender::update()
 //	test[0]->settranslation(2, 0, 0);
 
 
-
+//	Camera.DetectInput(1);
 	for (int i = 0;i < test.size();i++)
 	{
+		test[i]->animation();
 		test[i]->updateworldmatrix();
 //		XMMATRIX yees = Camera.camviewXmmatrix()*test[i]->getWorldMatrixXMMATRIX();
 
@@ -33,7 +34,8 @@ void DeansRender::update()
 //		XMStoreFloat4x4(&yes, yees);
 		//	test[i]->changeVertexbufferdata(gDeviceContext, test[i]->paintingtwotriangles(1));
 		
-		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
+	//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
+	//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
 		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn());
 	}
 

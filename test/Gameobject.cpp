@@ -49,9 +49,9 @@ GameObject::GameObject()
 GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> Positionsochfergdata)
 {
 
-	scaling = XMMatrixScaling(1, 1, 1);
-	rotation = XMMatrixRotationX(100);
-	translation = XMMatrixTranslation(0, 0, 0);
+	scaling = XMMatrixScaling(0.5, 0.5, 0);
+	rotation = XMMatrixRotationRollPitchYaw(0,0, 0); // first up down, second left right, z barrelroll
+	translation = XMMatrixTranslation(-0.5,-0.5, 0);
 	updateworldmatrix();
 //	PositonColorVertex * Positonandcolorconverter = &Positionsochfergdata[0];
 	
@@ -180,7 +180,7 @@ XMMATRIX GameObject::getWorldMatrixXMMATRIX()
 XMFLOAT4X4 GameObject::getWorldMatrixXMFLOAT4x4()
 {
 	DirectX::XMFLOAT4X4 WorldMatrixen;
-	XMStoreFloat4x4(&WorldMatrixen, WorldMatrix);
+	XMStoreFloat4x4(&WorldMatrixen, XMMatrixTranspose(WorldMatrix));
 	return WorldMatrixen;
 }
 
@@ -211,7 +211,56 @@ void GameObject::settranslation(float x, float y, float z)
 
 void GameObject::updateworldmatrix()
 {
+//	WorldMatrix = (scaling * rotation * translation);
+//	WorldMatrix = (scaling * translation * rotation);
+//	WorldMatrix =  translation*rotation*scaling;
+	WorldMatrix = scaling*rotation*translation;
+}
 
-	WorldMatrix = scaling * rotation * translation;
-	//	WorldMatrix =  translation*rotation*scaling;
+void GameObject::animation()
+{
+	SHORT M = GetAsyncKeyState('M');
+	if(M)
+	{
+	rotation=XMMatrixRotationRollPitchYaw(0, raze, 0); // first up down, second left right, z barrelroll
+	raze = raze + 0.00001;
+	std::cout << raze << std::endl;
+	}
+	SHORT N = GetAsyncKeyState('N');
+	if (N)
+	{
+		rotation = XMMatrixRotationRollPitchYaw(0, raze, 0); // first up down, second left right, z barrelroll
+		raze = raze + 0.001;
+		std::cout << raze << std::endl;
+	}
+	SHORT J = GetAsyncKeyState('J');
+	if (J)
+	{
+		rotation = XMMatrixRotationRollPitchYaw(0, 0, raze); // first up down, second left right, z barrelroll
+		raze = raze + 0.00001;
+		std::cout << raze << std::endl;
+	}
+	SHORT K = GetAsyncKeyState('K');
+	if (K)
+	{
+		rotation = XMMatrixRotationRollPitchYaw(0, 0, raze); // first up down, second left right, z barrelroll
+		raze = raze + 0.001;
+		std::cout << raze << std::endl;
+	}
+	SHORT U = GetAsyncKeyState('U');
+	if (U)
+	{
+		rotation = XMMatrixRotationRollPitchYaw(raze, 0, 0); // first up down, second left right, z barrelroll
+		raze = raze + 0.00001;
+		std::cout << raze << std::endl;
+	}
+	SHORT I = GetAsyncKeyState('I');
+	if (I)
+	{
+		rotation = XMMatrixRotationRollPitchYaw(raze, 0, 0); // first up down, second left right, z barrelroll
+		raze = raze + 0.001;
+		std::cout << raze << std::endl;
+	}
+
+
 }

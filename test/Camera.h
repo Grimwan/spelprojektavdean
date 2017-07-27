@@ -31,7 +31,7 @@ private:
 	float moveBackForward = 0.0f;
 	float camYaw = 0.0f; //left right rotation(y-axis);
 	float camPitch = 0.0f; //rotation up/down (x-axis)
-	DIMOUSESTATE mouseLastState;
+	POINT OldPos;
 public:
 	camera();
 	~camera();
