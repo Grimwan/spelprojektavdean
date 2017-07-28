@@ -28,14 +28,16 @@ void DeansRender::update()
 	{
 		test[i]->animation();
 		test[i]->updateworldmatrix();
-//		XMMATRIX yees = Camera.camviewXmmatrix()*test[i]->getWorldMatrixXMMATRIX();
-
-//		DirectX::XMFLOAT4X4 yes;
-//		XMStoreFloat4x4(&yes, yees);
-		//	test[i]->changeVertexbufferdata(gDeviceContext, test[i]->paintingtwotriangles(1));
 		Camera.DetectInput(0.00001);
+		XMMATRIX yees = XMMatrixTranspose(test[i]->getWorldMatrixXMMATRIX() * Camera.camviewXmmatrix() * mProjection);
+
+		DirectX::XMFLOAT4X4 yes;
+		XMStoreFloat4x4(&yes, yees);
+		//	test[i]->changeVertexbufferdata(gDeviceContext, test[i]->paintingtwotriangles(1));
+		
 	//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
-		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
+	//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
+		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,yes);
 		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn());
 	}
 

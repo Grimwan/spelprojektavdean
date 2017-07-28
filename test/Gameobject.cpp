@@ -180,7 +180,7 @@ XMMATRIX GameObject::getWorldMatrixXMMATRIX()
 XMFLOAT4X4 GameObject::getWorldMatrixXMFLOAT4x4()
 {
 	DirectX::XMFLOAT4X4 WorldMatrixen;
-	XMStoreFloat4x4(&WorldMatrixen, XMMatrixTranspose(WorldMatrix));
+	XMStoreFloat4x4(&WorldMatrixen, WorldMatrix);
 	return WorldMatrixen;
 }
 

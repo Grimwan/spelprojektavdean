@@ -2,10 +2,12 @@
 
 camera::camera()
 {
-	camPosition = XMVectorSet(1, 0, 0, 1);
+	camPosition = XMVectorSet(0, 0, 0, 1);
 	camUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	camYaw = 0.0f;
 	camPitch = 0.0f;
+	OldPos.x = 0;
+	OldPos.y = 0;
 }
 
 camera::~camera()
@@ -77,9 +79,9 @@ void camera::DetectInput(double time)
 	GetCursorPos(&NewMouseposition);
 	if ((NewMouseposition.x != OldPos.x) || (NewMouseposition.y != OldPos.y))
 	{
-		camYaw += abs(NewMouseposition.x-OldPos.x) * 0.01f;
+		camYaw += (NewMouseposition.x-OldPos.x) * 0.001f;
 
-		camPitch += abs(NewMouseposition.y - OldPos.y) * 0.01f;
+		camPitch += (NewMouseposition.y - OldPos.y) * 0.001f;
 
 		OldPos = NewMouseposition;
 	}
@@ -91,7 +93,7 @@ void camera::DetectInput(double time)
 XMFLOAT4X4 camera::camview()
 {
 	DirectX::XMFLOAT4X4 cameravieww;
-	XMStoreFloat4x4(&cameravieww, XMMatrixTranspose(camView));
+	XMStoreFloat4x4(&cameravieww, camView);
 	return cameravieww;
 }
 
