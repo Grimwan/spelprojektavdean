@@ -2,7 +2,7 @@
 
 DeansRender::DeansRender()
 {
-
+	mProjection = XMMatrixPerspectiveLH(3.141592f*0.45f, (float)640 / (float)480, 0.5f, 200.0f);
 }
 
 void DeansRender::update()
@@ -33,9 +33,9 @@ void DeansRender::update()
 //		DirectX::XMFLOAT4X4 yes;
 //		XMStoreFloat4x4(&yes, yees);
 		//	test[i]->changeVertexbufferdata(gDeviceContext, test[i]->paintingtwotriangles(1));
-		
+		Camera.DetectInput(0.00001);
 	//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
-	//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
+		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
 		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn());
 	}
 

@@ -2,7 +2,10 @@
 
 camera::camera()
 {
-
+	camPosition = XMVectorSet(1, 0, 0, 1);
+	camUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	camYaw = 0.0f;
+	camPitch = 0.0f;
 }
 
 camera::~camera()
@@ -32,6 +35,7 @@ void camera::UpdateCamera()
 	camTarget = camPosition + camTarget;
 
 	camView = XMMatrixLookAtLH(camPosition, camTarget, camUp);
+	std::cout << "wtf" << std::endl;
 }
 
 void camera::DetectInput(double time)
@@ -69,14 +73,16 @@ void camera::DetectInput(double time)
 	{
 		moveBackForward -= speed;
 	}
-	//if ((mouseCurrState.lX != mouseLastState.lX) || (mouseCurrState.lY != mouseLastState.lY))
-//	{
-//		camYaw += mouseLastState.lX * 0.001f;
+	POINT NewMouseposition;
+	GetCursorPos(&NewMouseposition);
+	if ((NewMouseposition.x != OldPos.x) || (NewMouseposition.y != OldPos.y))
+	{
+		camYaw += abs(NewMouseposition.x-OldPos.x) * 0.01f;
 
-//		camPitch += mouseCurrState.lY * 0.001f;
+		camPitch += abs(NewMouseposition.y - OldPos.y) * 0.01f;
 
-//		mouseLastState = mouseCurrState;
-//	}
+		OldPos = NewMouseposition;
+	}
 
 	UpdateCamera();
 

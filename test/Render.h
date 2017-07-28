@@ -20,6 +20,7 @@ private:
 	//constantbuffer
 	ID3D11Buffer* ConstantBufferPointLight = nullptr;
 	ID3D11Buffer* worldMatrix = nullptr;
+	XMMATRIX mProjection;
 	Shaders shader;
 	bool testet = true;
 	camera Camera;
