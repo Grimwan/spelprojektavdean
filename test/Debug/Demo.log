@@ -1,12 +1,5 @@
-﻿  Gameobject.cpp
+﻿  Camera.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\gameobject.cpp(166): warning C4101: 'data': unreferenced local variable
-h:\programming\3d project\test\gameobject.cpp(226): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(233): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(239): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(245): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(251): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(257): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(162): warning C4715: 'GameObject::paintingtwotriangles': not all control paths return a value
+h:\programming\3d project\test\camera.cpp(67): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.exe
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.pdb (Full PDB)

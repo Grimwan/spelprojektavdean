@@ -19,7 +19,6 @@ public:
 	GameObjectCreationTriangle(DeansRender* &renderingsfuntionen,int test);
 	~GameObjectCreationTriangle();
 	GameObjectCreationTriangle();
-
 };
 
 

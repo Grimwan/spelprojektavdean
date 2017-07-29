@@ -57,6 +57,11 @@ void camera::DetectInput(double time)
 
 	std::cout << XMVectorGetX(camPosition)<< " "<< XMVectorGetY(camPosition) << " " << XMVectorGetZ(camPosition) << std::endl;
 	
+	if (LMouse)
+		ShowCursor(FALSE);
+	if(RMouse)
+		ShowCursor(TRUE);
+
 	
 
 	float speed = 15.0f * time;
