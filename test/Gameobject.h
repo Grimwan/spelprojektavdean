@@ -21,7 +21,9 @@ XMMATRIX scaling;
 XMMATRIX rotation;
 XMMATRIX translation;
 XMMATRIX WorldMatrix;
-float raze=0;
+float rotationleftright=0;
+float rotationupdown = 0;
+float rotationbarrelroll = 0;
 
 public:
 	 GameObject(ID3D11Device * &gDevice);

@@ -222,44 +222,39 @@ void GameObject::animation()
 	SHORT M = GetAsyncKeyState('M');
 	if(M)
 	{
-	rotation=XMMatrixRotationRollPitchYaw(0, raze, 0); // first up down, second left right, z barrelroll
-	raze = raze + 0.00001;
-	std::cout << raze << std::endl;
+	rotation=XMMatrixRotationRollPitchYaw(rotationleftright, rotationupdown, rotationbarrelroll); // first up down, second left right, z barrelroll
+	rotationupdown = rotationupdown + 0.001;
+
 	}
 	SHORT N = GetAsyncKeyState('N');
 	if (N)
 	{
-		rotation = XMMatrixRotationRollPitchYaw(0, raze, 0); // first up down, second left right, z barrelroll
-		raze = raze + 0.001;
-		std::cout << raze << std::endl;
+		rotation = XMMatrixRotationRollPitchYaw(rotationleftright, rotationupdown, rotationbarrelroll); // first up down, second left right, z barrelroll
+		rotationupdown = rotationupdown - 0.001;
 	}
 	SHORT J = GetAsyncKeyState('J');
 	if (J)
 	{
-		rotation = XMMatrixRotationRollPitchYaw(0, 0, raze); // first up down, second left right, z barrelroll
-		raze = raze + 0.00001;
-		std::cout << raze << std::endl;
+		rotation = XMMatrixRotationRollPitchYaw(rotationleftright, rotationupdown, rotationbarrelroll); // first up down, second left right, z barrelroll
+		rotationbarrelroll = rotationbarrelroll + 0.001;
 	}
 	SHORT K = GetAsyncKeyState('K');
 	if (K)
 	{
-		rotation = XMMatrixRotationRollPitchYaw(0, 0, raze); // first up down, second left right, z barrelroll
-		raze = raze + 0.001;
-		std::cout << raze << std::endl;
+		rotation = XMMatrixRotationRollPitchYaw(rotationleftright, rotationupdown, rotationbarrelroll); // first up down, second left right, z barrelroll
+		rotationbarrelroll = rotationbarrelroll - 0.001;
 	}
 	SHORT U = GetAsyncKeyState('U');
 	if (U)
 	{
-		rotation = XMMatrixRotationRollPitchYaw(raze, 0, 0); // first up down, second left right, z barrelroll
-		raze = raze + 0.00001;
-		std::cout << raze << std::endl;
+		rotation = XMMatrixRotationRollPitchYaw(rotationleftright, rotationupdown, rotationbarrelroll); // first up down, second left right, z barrelroll
+		rotationleftright = rotationleftright + 0.001;
 	}
 	SHORT I = GetAsyncKeyState('I');
 	if (I)
 	{
-		rotation = XMMatrixRotationRollPitchYaw(raze, 0, 0); // first up down, second left right, z barrelroll
-		raze = raze + 0.001;
-		std::cout << raze << std::endl;
+		rotation = XMMatrixRotationRollPitchYaw(rotationleftright, rotationupdown, rotationbarrelroll); // first up down, second left right, z barrelroll
+		rotationleftright = rotationleftright - 0.001;
 	}
 
 

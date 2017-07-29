@@ -2,7 +2,7 @@
 
 camera::camera()
 {
-	camPosition = XMVectorSet(0, 0, 0, 1);
+	camPosition = XMVectorSet(0, 0, -1, 1);
 	camUp = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	camYaw = 0.0f;
 	camPitch = 0.0f;
@@ -30,9 +30,11 @@ void camera::UpdateCamera()
 
 	camPosition += moveLeftRight*camRight;
 	camPosition += moveBackForward*camForward;
+	camPosition += moveUpDown*camUp;
 
 	moveLeftRight = 0.0f;
 	moveBackForward = 0.0f;
+	moveUpDown = 0.0f;
 
 	camTarget = camPosition + camTarget;
 
@@ -74,6 +76,14 @@ void camera::DetectInput(double time)
 	if (S)
 	{
 		moveBackForward -= speed;
+	}
+	if (Space)
+	{
+		moveUpDown += speed;
+	}
+	if (LCtrl)
+	{
+		moveUpDown -= speed;
 	}
 	POINT NewMouseposition;
 	GetCursorPos(&NewMouseposition);

@@ -29,6 +29,7 @@ private:
 
 	float moveLeftRight = 0.0f;
 	float moveBackForward = 0.0f;
+	float moveUpDown = 0.0f;
 	float camYaw = 0.0f; //left right rotation(y-axis);
 	float camPitch = 0.0f; //rotation up/down (x-axis)
 	POINT OldPos;

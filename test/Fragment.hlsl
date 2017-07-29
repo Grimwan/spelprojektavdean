@@ -20,8 +20,8 @@ float4 PS_main(GS_OUT input) : SV_Target
 	ljusvector = normalize(ljusvector);
 	float procentoflight = dot(ljusvector, normalize(input.normal));
 //	procentoflight = 1;
-	return float4(input.Color, 1.0f);
-//	return float4(input.Color*procentoflight, 1.0f);
+//	return float4(input.Color, 1.0f);
+	return float4(input.Color*procentoflight, 1.0f);
 //	return float4(procentoflight, procentoflight, procentoflight, 1.0f);// kolla färgdjupet
 //	return float4(procentoflight.x, ljusvector.y, ljusvector.z, 1.0f); //kollar riktigningen på normalena. 
 };

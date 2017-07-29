@@ -65,7 +65,7 @@ void createallbuffers(ID3D11Buffer* &ConstantBufferPointLight, ID3D11Buffer* &Co
 {
 //createPointLightbuffer
 	pointlight Firstdatavalues = {
-	-3.f, 0.0f, -1.0f,	//v0 pos
+	-1.f, 0.0f, -2.0f,	//v0 pos
 //	0.0f, 1.0f, 0.0f,
 	1.0f	//v0 range 
 };
