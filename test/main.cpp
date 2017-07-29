@@ -75,7 +75,7 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 			else
 			{
 			//	Render(); //8. Rendera
-				renderingsfuntionen->update();
+				renderingsfuntionen->update(wndHandle);
 				renderingsfuntionen->gSwapChainreturn()->Present(0, 0); //9. Växla front- och back-buffer
 			}
 		}

@@ -27,7 +27,7 @@ private:
 public:
 
 	DeansRender();
-	void update();
+	void update(HWND wndHandle);
 	~DeansRender();
 	void Gameobjectpush(GameObject* &objectfile);
 	ID3D11Device *& gDevicereturn();

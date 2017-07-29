@@ -30,6 +30,7 @@ private:
 	float moveLeftRight = 0.0f;
 	float moveBackForward = 0.0f;
 	float moveUpDown = 0.0f;
+	bool MouseOnOff;
 	float camYaw = 0.0f; //left right rotation(y-axis);
 	float camPitch = 0.0f; //rotation up/down (x-axis)
 	POINT OldPos;
@@ -37,7 +38,7 @@ public:
 	camera();
 	~camera();
 	void UpdateCamera();
-	void DetectInput(double time);
+	void DetectInput(double time, HWND wndHandle);
 	XMFLOAT4X4 camview();
 	XMMATRIX camviewXmmatrix();
 	// Get / set world camera position

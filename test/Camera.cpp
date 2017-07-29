@@ -8,6 +8,7 @@ camera::camera()
 	camPitch = 0.0f;
 	OldPos.x = 0;
 	OldPos.y = 0;
+	MouseOnOff = false;
 }
 
 camera::~camera()
@@ -39,10 +40,10 @@ void camera::UpdateCamera()
 	camTarget = camPosition + camTarget;
 
 	camView = XMMatrixLookAtLH(camPosition, camTarget, camUp);
-	std::cout << "wtf" << std::endl;
+	//std::cout << "wtf" << std::endl;
 }
 
-void camera::DetectInput(double time)
+void camera::DetectInput(double time, HWND wndHandle)
 {
 	SHORT W = GetAsyncKeyState('W');
 	SHORT A = GetAsyncKeyState('A');
@@ -55,15 +56,59 @@ void camera::DetectInput(double time)
 	SHORT LCtrl = GetAsyncKeyState(VK_LCONTROL);
 	SHORT LShift = GetAsyncKeyState(VK_LSHIFT);
 
-	std::cout << XMVectorGetX(camPosition)<< " "<< XMVectorGetY(camPosition) << " " << XMVectorGetZ(camPosition) << std::endl;
-	
+//	std::cout << XMVectorGetX(camPosition)<< " "<< XMVectorGetY(camPosition) << " " << XMVectorGetZ(camPosition) << std::endl;
+/*	
 	if (LMouse)
-		ShowCursor(FALSE);
+	{
+	//(	ShowCursor(FALSE);
+	}
+	POINT NewMousepositionen;
+	NewMousepositionen.x = 640;
+	NewMousepositionen.y = 480;
 	if(RMouse)
+	{
+		ScreenToClient(wndHandle, &NewMousepositionen);
+		std::cout << NewMousepositionen.x <<" "<<NewMousepositionen.y << std::endl;
+		INPUT input;
+		input.type = INPUT_MOUSE;
+		input.mi.mouseData = 0;
+		input.mi.dx = (NewMousepositionen.x) * (65536 / GetSystemMetrics(SM_CXSCREEN)); //x being coord in pixels
+		input.mi.dy = (NewMousepositionen.y) * (65536 / GetSystemMetrics(SM_CYSCREEN)); //y being coord in pixels
+		input.mi.dwFlags = MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE;
+		SendInput(1, &input, sizeof(input));
 		ShowCursor(TRUE);
+	}
+	Frågor:
+	Fråga 1:
+	Vad anser du om vidde?
 
+	Fråga 2: 
+	Anser du att han är väldigt egosentrisk?
 	
+	Fråga 3: Är han självcentrerad?
 
+	Fråga 4: Bryr sig om sig själv och höjer sig själv över skyarna och försöker tala upp opm sig själv
+
+	Fråga 5: Vad stör du dig på hos Vidde?
+
+	Fråga 6: Han kritiserar mycket runt sig själv eller hur?
+
+	Fråga 7: Han har svårt att inse att världen inte kretsar kring sig fast han inte tror det själv
+
+	Fråga 8: han försöker ta upp en plats men inser det inte.
+
+	Fråga 9: 
+	*/
+	if (LMouse)
+	{
+		ShowCursor(FALSE);
+		MouseOnOff = true;
+	}
+	if (RMouse)
+	{
+		ShowCursor(TRUE);
+		MouseOnOff = false;
+	}
 	float speed = 15.0f * time;
 
 	if (A)
@@ -90,17 +135,48 @@ void camera::DetectInput(double time)
 	{
 		moveUpDown -= speed;
 	}
-	POINT NewMouseposition;
-	GetCursorPos(&NewMouseposition);
-	if ((NewMouseposition.x != OldPos.x) || (NewMouseposition.y != OldPos.y))
+
+/*	if (MouseOnOff)
 	{
-		camYaw += (NewMouseposition.x-OldPos.x) * 0.001f;
 
-		camPitch += (NewMouseposition.y - OldPos.y) * 0.001f;
 
-		OldPos = NewMouseposition;
-	}
+		OldPos.x = 640;
+		OldPos.y = 480;
+		ScreenToClient(wndHandle, &OldPos);
+		std::cout << OldPos.x << " " << OldPos.y << std::endl;
+		INPUT input;
+		input.type = INPUT_MOUSE;
+		input.mi.mouseData = 0;
+		input.mi.dx = (OldPos.x) * (65536 / GetSystemMetrics(SM_CXSCREEN)); //x being coord in pixels
+		input.mi.dy = (OldPos.y) * (65536 / GetSystemMetrics(SM_CYSCREEN)); //y being coord in pixels
+		input.mi.dwFlags = MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_MOVE;
+		SendInput(1, &input, sizeof(input));
+		ShowCursor(TRUE);
+		POINT NewMouseposition;
+		GetCursorPos(&NewMouseposition);
+		if ((NewMouseposition.x != OldPos.x) || (NewMouseposition.y != OldPos.y))
+		{
+			camYaw += (NewMouseposition.x - OldPos.x) * 0.001f;
 
+			camPitch += (NewMouseposition.y - OldPos.y) * 0.001f;
+
+			//	OldPos = NewMouseposition;
+		}*/
+
+			POINT NewMouseposition;
+			GetCursorPos(&NewMouseposition);
+			if ((NewMouseposition.x != OldPos.x) || (NewMouseposition.y != OldPos.y))
+			{
+				camYaw += (NewMouseposition.x-OldPos.x) * 0.001f;
+
+				camPitch += (NewMouseposition.y - OldPos.y) * 0.001f;
+
+				OldPos = NewMouseposition;
+			}
+
+
+			
+	//}
 	UpdateCamera();
 
 }
