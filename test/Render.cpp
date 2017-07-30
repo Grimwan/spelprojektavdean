@@ -10,7 +10,7 @@ void DeansRender::update(HWND wndHandle)
 	if(testet == true)
 	{
 	shader.createShaders(gDevice);
-	createallbuffers(ConstantBufferPointLight, worldMatrix,gDevice, gDeviceContext);
+	createallbuffers(ConstantBufferCamera,ConstantBufferPointLight, worldMatrix,gDevice, gDeviceContext);
 	testet = false;
 	}
 

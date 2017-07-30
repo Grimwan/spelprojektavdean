@@ -19,6 +19,7 @@ private:
 	ID3D11RenderTargetView* gBackbufferRTV = nullptr;
 	//constantbuffer
 	ID3D11Buffer* ConstantBufferPointLight = nullptr;
+	ID3D11Buffer* ConstantBufferCamera = nullptr;
 	ID3D11Buffer* worldMatrix = nullptr;
 	XMMATRIX mProjection;
 	Shaders shader;
