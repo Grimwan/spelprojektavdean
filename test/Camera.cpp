@@ -192,3 +192,10 @@ XMMATRIX camera::camviewXmmatrix()
 {
 	return camView;
 }
+
+XMFLOAT3 camera::returncamPosition()
+{
+	DirectX::XMFLOAT3 camPositionn;
+	XMStoreFloat3(&camPositionn, camPosition);
+	return camPositionn;
+}

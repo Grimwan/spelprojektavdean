@@ -13,7 +13,10 @@ void DeansRender::update(HWND wndHandle)
 	createallbuffers(ConstantBufferCamera,ConstantBufferPointLight, worldMatrix,gDevice, gDeviceContext);
 	testet = false;
 	}
-
+	Cameradata cameradataa;
+	cameradataa.cameraPos = Camera.returncamPosition();
+//	cameradataa.cameraPos = XMFLOAT3(0, 0, 1);
+	updateBufferforCamera(ConstantBufferCamera, cameradataa, gDevice,gDeviceContext);
 	// clear the back buffer to a deep blue
 	float clearColor[] = { 0, 0, 0, 1 };
 	gDeviceContext->ClearRenderTargetView(gBackbufferRTV, clearColor);

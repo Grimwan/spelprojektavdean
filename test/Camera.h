@@ -42,7 +42,7 @@ public:
 	XMFLOAT4X4 camview();
 	XMMATRIX camviewXmmatrix();
 	// Get / set world camera position
-
+	XMFLOAT3 returncamPosition();
 
 
 

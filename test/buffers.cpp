@@ -133,3 +133,14 @@ void constantbufferforCamera(ID3D11Buffer *& ConstantBufferCamera, Cameradata ca
 	// Set the buffer.
 	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
 }
+
+void updateBufferforCamera(ID3D11Buffer *& ConstantBuffer, Cameradata camera, ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
+{
+	D3D11_MAPPED_SUBRESOURCE resource;
+	ZeroMemory(&resource, sizeof(D3D11_MAPPED_SUBRESOURCE));
+
+	gDeviceContext->Map(ConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
+	Cameradata* CameradataMaped = (Cameradata*)resource.pData;
+	*CameradataMaped = camera;
+	gDeviceContext->Unmap(ConstantBuffer, 0);
+}

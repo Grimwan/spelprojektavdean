@@ -1,39 +1,5 @@
-﻿  objectfactory.cpp
+﻿  Render.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\objectfactory.cpp(31): warning C4316: 'GameObject': object allocated on the heap may not be aligned 16
-h:\programming\3d project\test\objectfactory.cpp(55): warning C4316: 'GameObject': object allocated on the heap may not be aligned 16
-  main.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\main.cpp(22): warning C4316: 'DeansRender': object allocated on the heap may not be aligned 16
-h:\programming\3d project\test\main.cpp(42): warning C4007: 'wWinMain': must be '__stdcall'
-h:\programming\3d project\test\main.cpp(44): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-h:\programming\3d project\test\main.cpp(45): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-h:\programming\3d project\test\main.cpp(46): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-  buffers.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Test.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Shaders.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Render.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\render.cpp(27): warning C4018: '<': signed/unsigned mismatch
-  Gameobject.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\gameobject.cpp(166): warning C4101: 'data': unreferenced local variable
-h:\programming\3d project\test\gameobject.cpp(226): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(233): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(239): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(245): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(251): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(257): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Camera.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\camera.cpp(112): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-h:\programming\3d project\test\gameobject.cpp(162): warning C4715: 'GameObject::paintingtwotriangles': not all control paths return a value
+h:\programming\3d project\test\render.cpp(30): warning C4018: '<': signed/unsigned mismatch
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.exe
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.pdb (Full PDB)
