@@ -50,6 +50,9 @@
     <FxCompile Include="GeometryShader.hlsl">
       <Filter>Source Files</Filter>
     </FxCompile>
+    <FxCompile Include="FragmentShaderFirstPass.hlsl">
+      <Filter>Source Files</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gameobject.h">

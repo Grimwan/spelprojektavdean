@@ -134,7 +134,7 @@ void constantbufferforCamera(ID3D11Buffer *& ConstantBufferCamera, Cameradata ca
 	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
 }
 
-void updateBufferforCamera(ID3D11Buffer *& ConstantBuffer, Cameradata camera, ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
+void updateBufferforCamera(ID3D11Buffer*& ConstantBuffer, Cameradata camera, ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
 {
 	D3D11_MAPPED_SUBRESOURCE resource;
 	ZeroMemory(&resource, sizeof(D3D11_MAPPED_SUBRESOURCE));
@@ -144,3 +144,55 @@ void updateBufferforCamera(ID3D11Buffer *& ConstantBuffer, Cameradata camera, ID
 	*CameradataMaped = camera;
 	gDeviceContext->Unmap(ConstantBuffer, 0);
 }
+
+void GbufferCreation(ID3D11ShaderResourceView* GBufferSRV[4],ID3D11RenderTargetView* GBufferRTV[4], ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
+{
+	HRESULT hr;
+	D3D11_TEXTURE2D_DESC GBufferDesc;
+	ZeroMemory(&GBufferDesc, sizeof(GBufferDesc));
+	GBufferDesc.Width = (float)640;
+	GBufferDesc.Height = (float)480;
+	GBufferDesc.MipLevels = 1;
+	GBufferDesc.ArraySize = 1;
+	GBufferDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	GBufferDesc.SampleDesc.Count = 1;
+	GBufferDesc.SampleDesc.Quality = 0;
+	GBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	GBufferDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+	GBufferDesc.MiscFlags = 0;
+	GBufferDesc.CPUAccessFlags = 0;
+
+	ID3D11Texture2D *pTexture[4];
+	for (int i = 0; i < 4; i++)
+	{
+		hr = gDevice->CreateTexture2D(&GBufferDesc, NULL, &pTexture[i]);
+
+		if FAILED(hr)
+			std::cout << "Failed to create GBuffer Texture." << std::endl;
+	}
+	D3D11_RENDER_TARGET_VIEW_DESC GBufferRTVViewDesc;
+	ZeroMemory(&GBufferRTVViewDesc, sizeof(GBufferRTVViewDesc));
+	GBufferRTVViewDesc.Format = GBufferDesc.Format;
+	GBufferRTVViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC GBufferResViewDesc;
+	ZeroMemory(&GBufferResViewDesc, sizeof(GBufferResViewDesc));
+	GBufferResViewDesc.Format = GBufferDesc.Format;
+	GBufferResViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	GBufferResViewDesc.Texture2D.MipLevels = GBufferDesc.MipLevels;
+	GBufferResViewDesc.Texture2D.MostDetailedMip = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		hr = gDevice->CreateRenderTargetView(pTexture[i], &GBufferRTVViewDesc, &GBufferRTV[i]);
+		if FAILED(hr)
+			std::cout << "Failed to create GBuffer RTV number " << i << "." << std::endl;
+		hr = gDevice->CreateShaderResourceView(pTexture[i], &GBufferResViewDesc, &GBufferSRV[i]);
+		if FAILED(hr)
+			std::cout << "Failed to create GBuffer SRV number " << i << "." << std::endl;
+	}
+	for (int i = 0; i < 4; i++)
+		pTexture[i]->Release();
+}
+
+

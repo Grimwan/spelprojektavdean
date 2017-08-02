@@ -18,3 +18,4 @@ void createallbuffers(ID3D11Buffer *& ConstantBufferCamera,ID3D11Buffer* &Consta
 void updateBufferMatrix(ID3D11Buffer* &ConstantBuffer, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext, DirectX::XMFLOAT4X4 WorldMatrixXMMATRIX);
 void constantbufferforCamera(ID3D11Buffer* &ConstantBufferCamera, Cameradata camera, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);
 void updateBufferforCamera(ID3D11Buffer* &ConstantBufferCamera, Cameradata camera, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);
+void GbufferCreation(ID3D11ShaderResourceView* GBufferSRV[4], ID3D11RenderTargetView* GBufferRTV[4], ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);

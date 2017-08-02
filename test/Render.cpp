@@ -11,6 +11,7 @@ void DeansRender::update(HWND wndHandle)
 	{
 	shader.createShaders(gDevice);
 	createallbuffers(ConstantBufferCamera,ConstantBufferPointLight, worldMatrix,gDevice, gDeviceContext);
+	GbufferCreation(GBufferSRV, GBufferRTV, gDevice, gDeviceContext);
 	testet = false;
 	}
 	Cameradata cameradataa;
@@ -21,12 +22,16 @@ void DeansRender::update(HWND wndHandle)
 	float clearColor[] = { 0, 0, 0, 1 };
 	gDeviceContext->ClearRenderTargetView(gBackbufferRTV, clearColor);
 
-	shader.objectShaderVSandPS(gDeviceContext);
+
 //	test[0]->setrotx(25);
 //	test[0]->settranslation(2, 0, 0);
 	test[1]->settranslation(0, 0, 0);
 
 //	Camera.DetectInput(1);
+//	forwardRendering();
+
+
+	DeferredRenderingFirstPass();
 	for (int i = 0;i < test.size();i++)
 	{
 		test[i]->animation();
@@ -53,9 +58,22 @@ void DeansRender::update(HWND wndHandle)
 //	}
 }
 
+void DeansRender::forwardRendering()
+{
+	shader.objectShaderVSandPS(gDeviceContext);
+}
+
+void DeansRender::DeferredRenderingFirstPass()
+{
+
+	shader.DeferredRenderingFirstPass(gDeviceContext);
+
+}
+
 DeansRender::~DeansRender()
 {
 }
+
 
 void DeansRender::Gameobjectpush(GameObject*&objectfile)
 {

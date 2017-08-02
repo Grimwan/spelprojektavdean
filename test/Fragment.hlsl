@@ -40,7 +40,7 @@ float4 PS_main(GS_OUT input) : SV_Target
 		{
 			float3 v = normalize(cameraPos - input.wPos.xyz);
 			float3 r = reflect(-ljusvectornormalised, normalize(input.normal));
-			specfactor = pow(saturate(dot(r, v)), 10);
+			specfactor = pow(saturate(dot(r, v)), 100);
 
 		}
 	 procentoflight = dot(ljusvectornormalised, normalize(input.normal));

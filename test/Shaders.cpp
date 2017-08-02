@@ -89,6 +89,40 @@ void Shaders::createShaders(ID3D11Device* &gDevice)
 	gDevice->CreatePixelShader(pPS->GetBufferPointer(), pPS->GetBufferSize(), nullptr, &gPixelShader);
 	// we do not need anymore this COM object, so we release it.
 	pPS->Release();
+
+
+
+
+
+
+
+
+
+
+
+
+	//create pixel shader
+	ID3DBlob* pPSFirstPassDeferred = nullptr;
+	D3DCompileFromFile(
+		L"FragmentShaderFirstPass.hlsl", // filename
+		nullptr,		// optional macros
+		nullptr,		// optional include files
+		"PS_main",		// entry point
+		"ps_4_0",		// shader model (target)
+		0,				// shader compile options
+		0,				// effect compile options
+		&pPSFirstPassDeferred,			// double pointer to ID3DBlob		
+		nullptr			// pointer for Error Blob messages.
+						// how to use the Error blob, see here
+						// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
+	);
+
+	gDevice->CreatePixelShader(pPSFirstPassDeferred->GetBufferPointer(), pPSFirstPassDeferred->GetBufferSize(), nullptr, &gPixelShaderFirstpass);
+	// we do not need anymore this COM object, so we release it.
+	pPSFirstPassDeferred->Release();
+
+
+
 }
 
 Shaders::Shaders()
@@ -112,6 +146,15 @@ void Shaders::objectShaderVSandPS(ID3D11DeviceContext *& gDeviceContext)
 	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
 	gDeviceContext->GSSetShader(gGeometryShader, nullptr, 0);
 	gDeviceContext->PSSetShader(gPixelShader, nullptr, 0);
+}
+
+void Shaders::DeferredRenderingFirstPass(ID3D11DeviceContext *& gDeviceContext)
+{
+	gDeviceContext->VSSetShader(gVertexShader, nullptr, 0);
+	gDeviceContext->HSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->GSSetShader(gGeometryShader, nullptr, 0);
+	gDeviceContext->PSSetShader(gPixelShaderFirstpass, nullptr, 0);
 }
 
 ID3D11VertexShader *& Shaders::gVertexShaderReturn()

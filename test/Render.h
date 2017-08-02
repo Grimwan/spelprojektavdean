@@ -18,6 +18,8 @@ private:
 	ID3D11DeviceContext * gDeviceContext = nullptr;
 	ID3D11RenderTargetView* gBackbufferRTV = nullptr;
 	//constantbuffer
+	ID3D11ShaderResourceView* GBufferSRV[4];
+	ID3D11RenderTargetView* GBufferRTV[4];
 	ID3D11Buffer* ConstantBufferPointLight = nullptr;
 	ID3D11Buffer* ConstantBufferCamera = nullptr;
 	ID3D11Buffer* worldMatrix = nullptr;
@@ -30,6 +32,8 @@ public:
 	DeansRender();
 	void update(HWND wndHandle);
 	~DeansRender();
+	void forwardRendering();
+	void DeferredRenderingFirstPass();
 	void Gameobjectpush(GameObject* &objectfile);
 	ID3D11Device *& gDevicereturn();
 	IDXGISwapChain *& gSwapChainreturn();

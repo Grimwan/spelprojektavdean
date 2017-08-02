@@ -14,12 +14,14 @@ private:
 	ID3D11VertexShader* gVertexShader = nullptr;
 	ID3D11GeometryShader* gGeometryShader = nullptr;
 	ID3D11PixelShader* gPixelShader = nullptr;
+	ID3D11PixelShader* gPixelShaderFirstpass = nullptr;
 	ID3D11InputLayout* gVertexLayout = nullptr;
 public:
 	void createShaders(ID3D11Device* &gDevice);
 	Shaders();
 	~Shaders();
 	void objectShaderVSandPS(ID3D11DeviceContext * &gDeviceContext);
+	void DeferredRenderingFirstPass(ID3D11DeviceContext * &gDeviceContext);
 	ID3D11VertexShader* &gVertexShaderReturn();
 	ID3D11PixelShader* &gPixelShaderReturn();
 	ID3D11InputLayout* &gVertexLayoutReturn();

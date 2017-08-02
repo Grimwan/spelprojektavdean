@@ -1,5 +1,4 @@
-﻿  Render.cpp
+﻿  Shaders.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\render.cpp(30): warning C4018: '<': signed/unsigned mismatch
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.exe
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.pdb (Full PDB)
