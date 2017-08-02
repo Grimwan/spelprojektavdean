@@ -21,7 +21,7 @@ void GS_main(triangle  VS_OUT input[3], inout TriangleStream< GS_OUT > OutputStr
 
 	float3 edge0 = input[1].wPos - input[0].wPos;
 	float3 edge1 = input[2].wPos - input[0].wPos;
-	float3 normalen = cross(edge1, edge0);
+	float3 normalen = cross(edge0, edge1);
 	normalen = normalize(normalen);
 
 //	float3 dir = normalize(cameraPos - input[0].wPos);
