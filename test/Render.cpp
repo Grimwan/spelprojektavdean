@@ -14,6 +14,10 @@ void DeansRender::update(HWND wndHandle)
 	GbufferCreation(GBufferSRV, GBufferRTV, gDevice, gDeviceContext);
 	testet = false;
 	}
+	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
+//	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
+//	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
+
 	Cameradata cameradataa;
 	cameradataa.cameraPos = Camera.returncamPosition();
 //	cameradataa.cameraPos = XMFLOAT3(0, 0, 1);

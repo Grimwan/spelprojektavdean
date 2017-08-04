@@ -6,23 +6,18 @@ struct GS_OUT
 	float3 normal : NORMAL;
 };
 
-cbuffer pointlight : register(b0)
+struct PS_OUT
 {
-	float3 LightPosition;
-	float range;
-	float4 Ambient;
-	float4 Diffuse;
-	float4 Specular;
+	float4 Normal : SV_Target0;
+	float4 Position : SV_Target1;
+	float4 Diffuse : SV_Target2;
+	float4 Specular : SV_Target3;
+};
 
-};
-cbuffer Cameradata : register(b1)
-{
-	float3 cameraPos;
-	float something;
-};
 
 float4 PS_main(GS_OUT input) : SV_Target
 {
+	
 	return float4(input.Color, 1.0f);
 
 };

@@ -157,6 +157,15 @@ void Shaders::DeferredRenderingFirstPass(ID3D11DeviceContext *& gDeviceContext)
 	gDeviceContext->PSSetShader(gPixelShaderFirstpass, nullptr, 0);
 }
 
+void Shaders::DeferredRenderingSecondPass(ID3D11DeviceContext *& gDeviceContext)
+{
+	gDeviceContext->VSSetShader(gVertexShader, nullptr, 0);
+	gDeviceContext->HSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->GSSetShader(gGeometryShader, nullptr, 0);
+	gDeviceContext->PSSetShader(gPixelShaderFirstpass, nullptr, 0);
+}
+
 ID3D11VertexShader *& Shaders::gVertexShaderReturn()
 {
 	return gVertexShader;

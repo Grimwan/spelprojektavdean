@@ -19,3 +19,6 @@ void updateBufferMatrix(ID3D11Buffer* &ConstantBuffer, ID3D11Device* &gDevice, I
 void constantbufferforCamera(ID3D11Buffer* &ConstantBufferCamera, Cameradata camera, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);
 void updateBufferforCamera(ID3D11Buffer* &ConstantBufferCamera, Cameradata camera, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);
 void GbufferCreation(ID3D11ShaderResourceView* GBufferSRV[4], ID3D11RenderTargetView* GBufferRTV[4], ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);
+void CreateCamerabuffer(ID3D11Buffer *& ConstantBufferCamera, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);
+void CreatePointLightbuffer(ID3D11Buffer* &ConstantBufferPointLight, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);
+void CreateworldMatrixbuffer( ID3D11Buffer* &worldMatrix, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext);

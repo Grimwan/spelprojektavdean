@@ -29,7 +29,7 @@ void constantbufferforPointLight(ID3D11Buffer* &ConstantBufferPointLight, pointl
 	if (FAILED(hr))
 		std::cout << "Failed constantbufferfor pointlight" << std::endl;
 	// Set the buffer.
-	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
+//	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
 }
 
 void ConstantBufferForMatrix(ID3D11Buffer *& ConstantBufferWorldMatrix, DirectX::XMFLOAT4X4 WorldMatrix, ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
@@ -58,7 +58,7 @@ void ConstantBufferForMatrix(ID3D11Buffer *& ConstantBufferWorldMatrix, DirectX:
 	if (FAILED(hr))
 		std::cout << "Failed constantbuffer" << std::endl;
 	// Set the buffer.
-	gDeviceContext->VSSetConstantBuffers(0, 1, &ConstantBufferWorldMatrix);
+//	gDeviceContext->VSSetConstantBuffers(0, 1, &ConstantBufferWorldMatrix);
 }
 
 void createallbuffers(ID3D11Buffer *& ConstantBufferCamera,ID3D11Buffer* &ConstantBufferPointLight, ID3D11Buffer* &ConstantBuffermatrix, ID3D11Device* &gDevice, ID3D11DeviceContext * &gDeviceContext)
@@ -131,7 +131,7 @@ void constantbufferforCamera(ID3D11Buffer *& ConstantBufferCamera, Cameradata ca
 	if (FAILED(hr))
 		std::cout << "Failed constantbufferfor Camera" << std::endl;
 	// Set the buffer.
-	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
+//	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
 }
 
 void updateBufferforCamera(ID3D11Buffer*& ConstantBuffer, Cameradata camera, ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
@@ -193,6 +193,38 @@ void GbufferCreation(ID3D11ShaderResourceView* GBufferSRV[4],ID3D11RenderTargetV
 	}
 	for (int i = 0; i < 4; i++)
 		pTexture[i]->Release();
+}
+
+void CreateCamerabuffer(ID3D11Buffer *& ConstantBufferCamera, ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
+{
+	Cameradata Firstcameradata;
+	Firstcameradata.cameraPos = XMFLOAT3(0.f, 0.f, 1.f);
+	Firstcameradata.camerasomething = 1;
+
+	
+	constantbufferforCamera(ConstantBufferCamera, Firstcameradata, gDevice, gDeviceContext);
+
+}
+
+void CreatePointLightbuffer(ID3D11Buffer *& ConstantBufferPointLight, ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
+{
+	pointlight Firstdatavalues;
+	Firstdatavalues.Position = XMFLOAT3(-2.f, 0.0f, -1.0f);
+	Firstdatavalues.range = 25.0f;
+	Firstdatavalues.Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+	Firstdatavalues.Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
+	Firstdatavalues.Specular = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
+
+	constantbufferforPointLight(ConstantBufferPointLight, Firstdatavalues, gDevice, gDeviceContext);
+
+}
+
+void CreateworldMatrixbuffer(ID3D11Buffer* &ConstantBuffermatrix, ID3D11Device *& gDevice, ID3D11DeviceContext *& gDeviceContext)
+{
+	XMMATRIX WorldMatrixXMMATRIX = XMMatrixScaling(1, 1, 1) * XMMatrixRotationX(0) * XMMatrixTranslation(0, 0, 0);
+	DirectX::XMFLOAT4X4 WorldMatrix;
+	XMStoreFloat4x4(&WorldMatrix, WorldMatrixXMMATRIX);
+	ConstantBufferForMatrix(ConstantBuffermatrix, WorldMatrix, gDevice, gDeviceContext);
 }
 
 
