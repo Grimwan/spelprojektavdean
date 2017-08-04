@@ -59,13 +59,13 @@ void DeansRender::update(HWND wndHandle)
 	{
 	shader.createShaders(gDevice);
 	createallbuffers(ConstantBufferCamera,ConstantBufferPointLight, worldMatrix,gDevice, gDeviceContext);
-	GbufferCreation(GBufferSRV, GBufferRTV, gDevice, gDeviceContext);
-//	testfunctionGbuffer();
-	testet = false;
+	//GbufferCreation(GBufferSRV, GBufferRTV, gDevice, gDeviceContext);
+	testfunctionGbuffer();
+	
 	}
-	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
-	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
-	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
+//	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
+//	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
+//	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
 
 	Cameradata cameradataa;
 	cameradataa.cameraPos = Camera.returncamPosition();
@@ -81,10 +81,11 @@ void DeansRender::update(HWND wndHandle)
 	test[1]->settranslation(0, 0, 0);
 
 //	Camera.DetectInput(1);
-	forwardRendering();
+
+//	forwardRendering();
 
 
-//	DeferredRenderingFirstPass();
+	DeferredRenderingFirstPass();
 	for (int i = 0;i < test.size();i++)
 	{
 		test[i]->animation();
@@ -101,44 +102,65 @@ void DeansRender::update(HWND wndHandle)
 		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,yes);
 		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn(0));
 	}
+	
 
-/*	DeferredRenderingSecondPass();
+
+
+	DeferredRenderingSecondPass();
 	
 	gDeviceContext->IASetInputLayout(shader.gVertexLayoutReturn(1));
-	std::vector<PositonColorVertex> Cubeinfrontofcamera;
-	PositonColorVertex Cube = {
-		0.0f, 0.5f, 0.0f,	//v0 pos
-		1.0f, 0.0f, 0.0f,	//v0 color 
+	if (testet == true)
+	{
+	std::vector<PositonSecondVertexPass> Cubeinfrontofcamera;
+	PositonSecondVertexPass Cube = {
+		-1.0f, -1.0f, 0.0f	//v0 pos
 	};
 	Cubeinfrontofcamera.push_back(Cube);
 	Cube = {
-		0.5f, -0.5f, 0.0f,	//v1
-		0.0f, 1.0f, 0.0f,	//v1 color
+		-1.0f, 1.0f, 0.0f //v1 pos
 	};
 	Cubeinfrontofcamera.push_back(Cube);
 	Cube = {
-		-0.5f, -0.5f, 0.0f, //v2
-		0.0f, 0.0f, 1.0f	//v2 color
+		1.0f, -1.0f, 0.0f //v2
 	};
 	Cubeinfrontofcamera.push_back(Cube);
 
-	D3D11_BUFFER_DESC bufferDesc;
-	memset(&bufferDesc, 0, sizeof(bufferDesc));
-	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	//	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	bufferDesc.ByteWidth = 3 * sizeof(float)*(UINT)Cubeinfrontofcamera.size();
-	D3D11_SUBRESOURCE_DATA data;
-	data.pSysMem = Cubeinfrontofcamera.data();
-	gDevice->CreateBuffer(&bufferDesc, &data, &VertexBufferforCube);
-	HRESULT hr = gDevice->CreateBuffer(&bufferDesc, &data, &this->VertexBufferforCube);
-	if (FAILED(hr))
-		std::cout << "Failed to create vertex buffer!" << std::endl;
 
 
+	Cube = {
+		-1.0f, 1.0f, 0.0f //v2
+		
+	};
+	Cubeinfrontofcamera.push_back(Cube);
+	Cube = {
+		1.0f, 1.0f, 0.0f	//v0 pos
+	};
+	Cubeinfrontofcamera.push_back(Cube);
+	Cube = {
+		1.0f, -1.0f, 0.0f //v2
+		
+	};
+	Cubeinfrontofcamera.push_back(Cube);
 
-	UINT32 vertexSize = sizeof(float) * 6;
+
+		D3D11_BUFFER_DESC bufferDesc;
+		memset(&bufferDesc, 0, sizeof(bufferDesc));
+		bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		//	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		bufferDesc.ByteWidth = 3 * sizeof(float)*(UINT)Cubeinfrontofcamera.size();
+		D3D11_SUBRESOURCE_DATA data;
+		data.pSysMem = Cubeinfrontofcamera.data();
+		gDevice->CreateBuffer(&bufferDesc, &data, &VertexBufferforCube);
+		HRESULT hr = gDevice->CreateBuffer(&bufferDesc, &data, &this->VertexBufferforCube);
+		if (FAILED(hr))
+			std::cout << "Failed to create vertex buffer!" << std::endl;
+		testet = false;
+	}
+
+
+	UINT32 vertexSize = sizeof(float) * 3;
 	UINT32 offset = 0;
 	gDeviceContext->IASetVertexBuffers(0, 1, &VertexBufferforCube, &vertexSize, &offset);
 
@@ -146,7 +168,7 @@ void DeansRender::update(HWND wndHandle)
 	gDeviceContext->IASetInputLayout(shader.gVertexLayoutReturn(1));
 
 
-	gDeviceContext->Draw(3, 0);
+	gDeviceContext->Draw(6, 0);
 //	GameObject * triangletest = new GameObject(gDevice, testtriangle);
 //	Gameobjectpush(triangletest);
 
@@ -157,7 +179,7 @@ void DeansRender::update(HWND wndHandle)
 	//	test[j]->changeVertexbufferdata(gDeviceContext, test[j]->paintingtwotriangles(2));
 //		test[j]->draw(gDeviceContext, shader.gVertexLayoutReturn());
 //	}
-*/
+	
 }
 
 void DeansRender::forwardRendering()
@@ -174,13 +196,14 @@ void DeansRender::DeferredRenderingFirstPass()
 		gDeviceContext->ClearRenderTargetView(GBufferRTV[i], clearColor);
 	}
 	gDeviceContext->OMSetRenderTargets(4, GBufferRTV, nullptr);
-
+	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
 	shader.DeferredRenderingFirstPass(gDeviceContext);
 
 }
 
 void DeansRender::DeferredRenderingSecondPass()
 {
+	gDeviceContext->OMSetRenderTargets(1,&gBackbufferRTV, nullptr);
 	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
 	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
 	gDeviceContext->PSSetShaderResources(0, 4, GBufferSRV);

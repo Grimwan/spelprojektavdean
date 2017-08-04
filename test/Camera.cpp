@@ -56,7 +56,7 @@ void camera::DetectInput(double time, HWND wndHandle)
 	SHORT LCtrl = GetAsyncKeyState(VK_LCONTROL);
 	SHORT LShift = GetAsyncKeyState(VK_LSHIFT);
 
-//	std::cout << XMVectorGetX(camPosition)<< " "<< XMVectorGetY(camPosition) << " " << XMVectorGetZ(camPosition) << std::endl;
+	std::cout << XMVectorGetX(camPosition)<< " "<< XMVectorGetY(camPosition) << " " << XMVectorGetZ(camPosition) << std::endl;
 /*	
 	if (LMouse)
 	{

@@ -12,35 +12,11 @@ h:\programming\3d project\test\main.cpp(45): warning C4996: 'freopen': This func
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
 h:\programming\3d project\test\main.cpp(46): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-  buffers.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\buffers.cpp(153): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-h:\programming\3d project\test\buffers.cpp(154): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-  Test.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Shaders.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   Render.cpp
   c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
 h:\programming\3d project\test\render.cpp(12): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
 h:\programming\3d project\test\render.cpp(13): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-h:\programming\3d project\test\render.cpp(88): warning C4018: '<': signed/unsigned mismatch
-  Gameobject.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\gameobject.cpp(166): warning C4101: 'data': unreferenced local variable
-h:\programming\3d project\test\gameobject.cpp(226): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(233): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(239): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(245): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(251): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-h:\programming\3d project\test\gameobject.cpp(257): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-h:\programming\3d project\test\gameobject.cpp(162): warning C4715: 'GameObject::paintingtwotriangles': not all control paths return a value
-h:\programming\3d project\test\shaders.cpp(262): warning C4715: 'Shaders::gPixelShaderReturn': not all control paths return a value
-  Compiling...
-  Camera.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\camera.cpp(112): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+h:\programming\3d project\test\render.cpp(89): warning C4018: '<': signed/unsigned mismatch
   Generating Code...
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.exe
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.pdb (Full PDB)
