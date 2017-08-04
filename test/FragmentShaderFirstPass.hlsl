@@ -15,9 +15,13 @@ struct PS_OUT
 };
 
 
-float4 PS_main(GS_OUT input) : SV_Target
+PS_OUT PS_main(GS_OUT input)
 {
-	
-	return float4(input.Color, 1.0f);
-
+	PS_OUT output;
+output.Normal = float4(input.normal, 1.0f);
+output.Position = input.Pos;
+output.Diffuse = float4(input.Color, 1.0f);
+output.Specular = float4(0.3f, 0.3f, 0.3f, 1);
+//	return float4(input.Color, 1.0f);
+return output;
 };

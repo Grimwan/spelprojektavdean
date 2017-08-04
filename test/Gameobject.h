@@ -24,7 +24,7 @@ XMMATRIX WorldMatrix;
 float rotationleftright=0;
 float rotationupdown = 0;
 float rotationbarrelroll = 0;
-
+int size = 0;
 public:
 	 GameObject(ID3D11Device * &gDevice);
 	

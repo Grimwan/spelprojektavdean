@@ -20,6 +20,7 @@ private:
 	//constantbuffer
 	ID3D11ShaderResourceView* GBufferSRV[4];
 	ID3D11RenderTargetView* GBufferRTV[4];
+	ID3D11Buffer* VertexBufferforCube = nullptr;
 	ID3D11Buffer* ConstantBufferPointLight = nullptr;
 	ID3D11Buffer* ConstantBufferCamera = nullptr;
 	ID3D11Buffer* worldMatrix = nullptr;
@@ -34,9 +35,11 @@ public:
 	~DeansRender();
 	void forwardRendering();
 	void DeferredRenderingFirstPass();
+	void DeferredRenderingSecondPass();
 	void Gameobjectpush(GameObject* &objectfile);
 	ID3D11Device *& gDevicereturn();
 	IDXGISwapChain *& gSwapChainreturn();
+	void testfunctionGbuffer();
 	ID3D11DeviceContext *& gDeviceContextreturn();
 	ID3D11RenderTargetView*& gBackbufferRTVreturn();
 };

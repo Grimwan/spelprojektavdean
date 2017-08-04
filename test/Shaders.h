@@ -15,7 +15,11 @@ private:
 	ID3D11GeometryShader* gGeometryShader = nullptr;
 	ID3D11PixelShader* gPixelShader = nullptr;
 	ID3D11PixelShader* gPixelShaderFirstpass = nullptr;
+	ID3D11VertexShader* gVertexSecondShader = nullptr;
+	ID3D11PixelShader* gPixelShaderSecondpass = nullptr;
+
 	ID3D11InputLayout* gVertexLayout = nullptr;
+	ID3D11InputLayout* SecondgVertexLayout = nullptr;
 public:
 	void createShaders(ID3D11Device* &gDevice);
 	Shaders();
@@ -23,7 +27,7 @@ public:
 	void objectShaderVSandPS(ID3D11DeviceContext * &gDeviceContext);
 	void DeferredRenderingFirstPass(ID3D11DeviceContext * &gDeviceContext);
 	void DeferredRenderingSecondPass(ID3D11DeviceContext * &gDeviceContext);
-	ID3D11VertexShader* &gVertexShaderReturn();
-	ID3D11PixelShader* &gPixelShaderReturn();
-	ID3D11InputLayout* &gVertexLayoutReturn();
+	ID3D11VertexShader* &gVertexShaderReturn(int firstsecond);
+	ID3D11PixelShader* &gPixelShaderReturn(int firstsecond);
+	ID3D11InputLayout* &gVertexLayoutReturn(int firstsecond);
 };

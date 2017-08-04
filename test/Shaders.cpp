@@ -103,7 +103,7 @@ void Shaders::createShaders(ID3D11Device* &gDevice)
 
 	//create pixel shader
 	ID3DBlob* pPSFirstPassDeferred = nullptr;
-	D3DCompileFromFile(
+hr =	D3DCompileFromFile(
 		L"FragmentShaderFirstPass.hlsl", // filename
 		nullptr,		// optional macros
 		nullptr,		// optional include files
@@ -116,10 +116,84 @@ void Shaders::createShaders(ID3D11Device* &gDevice)
 						// how to use the Error blob, see here
 						// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
 	);
+	if (FAILED(hr))
+	{
+		if (errorBlob != nullptr)
+		{
+			OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+			errorBlob->Release();
+		}
+	}
 
 	gDevice->CreatePixelShader(pPSFirstPassDeferred->GetBufferPointer(), pPSFirstPassDeferred->GetBufferSize(), nullptr, &gPixelShaderFirstpass);
 	// we do not need anymore this COM object, so we release it.
 	pPSFirstPassDeferred->Release();
+
+
+
+
+
+
+
+
+
+
+
+	//create vertex shader
+	ID3DBlob* pVSSecondpass = nullptr;
+	D3DCompileFromFile(
+		L"VertexSecondpass.hlsl", // filename
+		nullptr,		// optional macros
+		nullptr,		// optional include files
+		"VS_main",		// entry point
+		"vs_4_0",		// shader model (target)
+		0,				// shader compile options
+		0,				// effect compile options
+		&pVSSecondpass,			// double pointer to ID3DBlob		
+		nullptr			// pointer for Error Blob messages.
+						// how to use the Error blob, see here
+						// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
+	);
+
+	gDevice->CreateVertexShader(pVSSecondpass->GetBufferPointer(), pVSSecondpass->GetBufferSize(), nullptr, &gVertexSecondShader);
+
+	D3D11_INPUT_ELEMENT_DESC inputDescC[] = {
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+	gDevice->CreateInputLayout(inputDescC, ARRAYSIZE(inputDescC), pVSSecondpass->GetBufferPointer(), pVSSecondpass->GetBufferSize(), &SecondgVertexLayout);
+	// we do not need anymore this COM object, so we release it.
+	pVSSecondpass->Release();
+
+
+
+	//create pixel shader
+	ID3DBlob* pPSSecondPassDeferred = nullptr;
+	hr = D3DCompileFromFile(
+		L"FragmentSecondPass.hlsl", // filename
+		nullptr,		// optional macros
+		nullptr,		// optional include files
+		"PS_main",		// entry point
+		"ps_4_0",		// shader model (target)
+		0,				// shader compile options
+		0,				// effect compile options
+		&pPSSecondPassDeferred,			// double pointer to ID3DBlob		
+		nullptr			// pointer for Error Blob messages.
+						// how to use the Error blob, see here
+						// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
+	);
+	if (FAILED(hr))
+	{
+		if (errorBlob != nullptr)
+		{
+			OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+			errorBlob->Release();
+		}
+	}
+
+	gDevice->CreatePixelShader(pPSSecondPassDeferred->GetBufferPointer(), pPSSecondPassDeferred->GetBufferSize(), nullptr, &gPixelShaderSecondpass);
+	// we do not need anymore this COM object, so we release it.
+	pPSSecondPassDeferred->Release();
+
 
 
 
@@ -136,6 +210,7 @@ Shaders::~Shaders()
 	gVertexLayout->Release();
 	gVertexShader->Release();
 	gPixelShader->Release();
+	SecondgVertexLayout->Release();
 
 }
 
@@ -159,27 +234,38 @@ void Shaders::DeferredRenderingFirstPass(ID3D11DeviceContext *& gDeviceContext)
 
 void Shaders::DeferredRenderingSecondPass(ID3D11DeviceContext *& gDeviceContext)
 {
-	gDeviceContext->VSSetShader(gVertexShader, nullptr, 0);
+	gDeviceContext->VSSetShader(gVertexSecondShader, nullptr, 0);
 	gDeviceContext->HSSetShader(nullptr, nullptr, 0);
 	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
-	gDeviceContext->GSSetShader(gGeometryShader, nullptr, 0);
-	gDeviceContext->PSSetShader(gPixelShaderFirstpass, nullptr, 0);
+	gDeviceContext->GSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->PSSetShader(gPixelShaderSecondpass, nullptr, 0);
 }
 
-ID3D11VertexShader *& Shaders::gVertexShaderReturn()
+ID3D11VertexShader *& Shaders::gVertexShaderReturn(int firstsecond)
 {
-	return gVertexShader;
+	if (firstsecond == 0)
+		return gVertexShader;
+	else
+		return gVertexSecondShader;
 	// TODO: insert return statement here
 }
 
-ID3D11PixelShader *& Shaders::gPixelShaderReturn()
+ID3D11PixelShader *& Shaders::gPixelShaderReturn(int firstsecond)
 {
-	return gPixelShader;
+	if (firstsecond == 0)
+		return gPixelShader;
+	else if (firstsecond == 1)
+		return gPixelShaderFirstpass;
+	else if (firstsecond == 2)
+		return gPixelShaderSecondpass;
 	// TODO: insert return statement here
 }
 
-ID3D11InputLayout *& Shaders::gVertexLayoutReturn()
+ID3D11InputLayout *& Shaders::gVertexLayoutReturn(int firstsecond)
 {
-	return gVertexLayout;
+	if (firstsecond == 0)
+		return gVertexLayout;
+	else
+		return SecondgVertexLayout;
 	// TODO: insert return statement here
 }

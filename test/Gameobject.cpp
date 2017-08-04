@@ -48,7 +48,7 @@ GameObject::GameObject()
 
 GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> Positionsochfergdata)
 {
-
+	size = Positionsochfergdata.size();
 	scaling = XMMatrixScaling(0.5, 0.5, 0);
 	rotation = XMMatrixRotationRollPitchYaw(0,0, 0); // first up down, second left right, z barrelroll
 	translation = XMMatrixTranslation(-0.5,-0.5, 0);
@@ -105,7 +105,7 @@ void GameObject::draw(ID3D11DeviceContext* &gDeviceContext, ID3D11InputLayout* &
 	gDeviceContext->IASetInputLayout(gVertexLayout);
 
 
-	gDeviceContext->Draw(3, 0);
+	gDeviceContext->Draw(size, 0);
 
 }
 

@@ -4,7 +4,55 @@ DeansRender::DeansRender()
 {
 	mProjection = XMMatrixPerspectiveLH(3.141592f*0.45f, (float)640 / (float)480, 0.5f, 200.0f);
 }
+void DeansRender::testfunctionGbuffer()
+{
+	HRESULT hr;
+	D3D11_TEXTURE2D_DESC GBufferDesc;
+	ZeroMemory(&GBufferDesc, sizeof(GBufferDesc));
+	GBufferDesc.Width = (float)640;
+	GBufferDesc.Height = (float)480;
+	GBufferDesc.MipLevels = 1;
+	GBufferDesc.ArraySize = 1;
+	GBufferDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	GBufferDesc.SampleDesc.Count = 1;
+	GBufferDesc.SampleDesc.Quality = 0;
+	GBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	GBufferDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
+	GBufferDesc.MiscFlags = 0;
+	GBufferDesc.CPUAccessFlags = 0;
 
+	ID3D11Texture2D *pTexture[4];
+	for (int i = 0; i < 4; i++)
+	{
+		hr = gDevice->CreateTexture2D(&GBufferDesc, NULL, &pTexture[i]);
+
+		if FAILED(hr)
+			std::cout << "Failed to create GBuffer Texture." << std::endl;
+	}
+	D3D11_RENDER_TARGET_VIEW_DESC GBufferRTVViewDesc;
+	ZeroMemory(&GBufferRTVViewDesc, sizeof(GBufferRTVViewDesc));
+	GBufferRTVViewDesc.Format = GBufferDesc.Format;
+	GBufferRTVViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC GBufferResViewDesc;
+	ZeroMemory(&GBufferResViewDesc, sizeof(GBufferResViewDesc));
+	GBufferResViewDesc.Format = GBufferDesc.Format;
+	GBufferResViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	GBufferResViewDesc.Texture2D.MipLevels = GBufferDesc.MipLevels;
+	GBufferResViewDesc.Texture2D.MostDetailedMip = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		hr = gDevice->CreateRenderTargetView(pTexture[i], &GBufferRTVViewDesc, &GBufferRTV[i]);
+		if FAILED(hr)
+			std::cout << "Failed to create GBuffer RTV number " << i << "." << std::endl;
+		hr = gDevice->CreateShaderResourceView(pTexture[i], &GBufferResViewDesc, &GBufferSRV[i]);
+		if FAILED(hr)
+			std::cout << "Failed to create GBuffer SRV number " << i << "." << std::endl;
+	}
+	for (int i = 0; i < 4; i++)
+		pTexture[i]->Release();
+}
 void DeansRender::update(HWND wndHandle)
 {
 	if(testet == true)
@@ -12,11 +60,12 @@ void DeansRender::update(HWND wndHandle)
 	shader.createShaders(gDevice);
 	createallbuffers(ConstantBufferCamera,ConstantBufferPointLight, worldMatrix,gDevice, gDeviceContext);
 	GbufferCreation(GBufferSRV, GBufferRTV, gDevice, gDeviceContext);
+//	testfunctionGbuffer();
 	testet = false;
 	}
 	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
-//	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
-//	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
+	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
+	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
 
 	Cameradata cameradataa;
 	cameradataa.cameraPos = Camera.returncamPosition();
@@ -32,10 +81,10 @@ void DeansRender::update(HWND wndHandle)
 	test[1]->settranslation(0, 0, 0);
 
 //	Camera.DetectInput(1);
-//	forwardRendering();
+	forwardRendering();
 
 
-	DeferredRenderingFirstPass();
+//	DeferredRenderingFirstPass();
 	for (int i = 0;i < test.size();i++)
 	{
 		test[i]->animation();
@@ -50,8 +99,56 @@ void DeansRender::update(HWND wndHandle)
 	//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
 	//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
 		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,yes);
-		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn());
+		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn(0));
 	}
+
+/*	DeferredRenderingSecondPass();
+	
+	gDeviceContext->IASetInputLayout(shader.gVertexLayoutReturn(1));
+	std::vector<PositonColorVertex> Cubeinfrontofcamera;
+	PositonColorVertex Cube = {
+		0.0f, 0.5f, 0.0f,	//v0 pos
+		1.0f, 0.0f, 0.0f,	//v0 color 
+	};
+	Cubeinfrontofcamera.push_back(Cube);
+	Cube = {
+		0.5f, -0.5f, 0.0f,	//v1
+		0.0f, 1.0f, 0.0f,	//v1 color
+	};
+	Cubeinfrontofcamera.push_back(Cube);
+	Cube = {
+		-0.5f, -0.5f, 0.0f, //v2
+		0.0f, 0.0f, 1.0f	//v2 color
+	};
+	Cubeinfrontofcamera.push_back(Cube);
+
+	D3D11_BUFFER_DESC bufferDesc;
+	memset(&bufferDesc, 0, sizeof(bufferDesc));
+	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	//	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	bufferDesc.ByteWidth = 3 * sizeof(float)*(UINT)Cubeinfrontofcamera.size();
+	D3D11_SUBRESOURCE_DATA data;
+	data.pSysMem = Cubeinfrontofcamera.data();
+	gDevice->CreateBuffer(&bufferDesc, &data, &VertexBufferforCube);
+	HRESULT hr = gDevice->CreateBuffer(&bufferDesc, &data, &this->VertexBufferforCube);
+	if (FAILED(hr))
+		std::cout << "Failed to create vertex buffer!" << std::endl;
+
+
+
+	UINT32 vertexSize = sizeof(float) * 6;
+	UINT32 offset = 0;
+	gDeviceContext->IASetVertexBuffers(0, 1, &VertexBufferforCube, &vertexSize, &offset);
+
+	gDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	gDeviceContext->IASetInputLayout(shader.gVertexLayoutReturn(1));
+
+
+	gDeviceContext->Draw(3, 0);
+//	GameObject * triangletest = new GameObject(gDevice, testtriangle);
+//	Gameobjectpush(triangletest);
 
 
 //	for (int j = 0;j < test.size();j++)
@@ -60,6 +157,7 @@ void DeansRender::update(HWND wndHandle)
 	//	test[j]->changeVertexbufferdata(gDeviceContext, test[j]->paintingtwotriangles(2));
 //		test[j]->draw(gDeviceContext, shader.gVertexLayoutReturn());
 //	}
+*/
 }
 
 void DeansRender::forwardRendering()
@@ -69,9 +167,24 @@ void DeansRender::forwardRendering()
 
 void DeansRender::DeferredRenderingFirstPass()
 {
+	float clearColor[4];
+	memset(&clearColor, 0, sizeof(clearColor));
+	for (int i = 0; i < 4; i++)
+	{
+		gDeviceContext->ClearRenderTargetView(GBufferRTV[i], clearColor);
+	}
+	gDeviceContext->OMSetRenderTargets(4, GBufferRTV, nullptr);
 
 	shader.DeferredRenderingFirstPass(gDeviceContext);
 
+}
+
+void DeansRender::DeferredRenderingSecondPass()
+{
+	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
+	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
+	gDeviceContext->PSSetShaderResources(0, 4, GBufferSRV);
+	shader.DeferredRenderingSecondPass(gDeviceContext);
 }
 
 DeansRender::~DeansRender()
