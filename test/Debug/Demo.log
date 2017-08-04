@@ -1,22 +1,2 @@
-﻿  objectfactory.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\objectfactory.cpp(50): warning C4316: 'GameObject': object allocated on the heap may not be aligned 16
-h:\programming\3d project\test\objectfactory.cpp(74): warning C4316: 'GameObject': object allocated on the heap may not be aligned 16
-  main.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\main.cpp(22): warning C4316: 'DeansRender': object allocated on the heap may not be aligned 16
-h:\programming\3d project\test\main.cpp(42): warning C4007: 'wWinMain': must be '__stdcall'
-h:\programming\3d project\test\main.cpp(44): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-h:\programming\3d project\test\main.cpp(45): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-h:\programming\3d project\test\main.cpp(46): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(240): note: see declaration of 'freopen'
-  Render.cpp
-  c:\program files (x86)\windows kits\8.1\include\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\3d project\test\render.cpp(12): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-h:\programming\3d project\test\render.cpp(13): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-h:\programming\3d project\test\render.cpp(89): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.exe
+﻿  Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.exe
   Demo.vcxproj -> H:\programming\3d project\test\Debug\Demo.pdb (Full PDB)

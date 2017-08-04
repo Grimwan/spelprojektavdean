@@ -68,8 +68,8 @@ float4 PS_main(float4 screenPos : SV_POSITION) : SV_Target
 	//  return (float4(1, 1, 1, 1));
 	//	return float4(cameraPos,1.0f);
 	//	return float4((ambientLight*diffuse + (diffuseLight*diffuse + specularLight)),1.0f);
-		return float4(diffuse*procentoflight + specfactor, 1.0f);
-	//	return float4(specfactor, specfactor, specfactor, 1.0f);
+	//	return float4(diffuse*procentoflight + specfactor, 1.0f);
+		return float4(specfactor, specfactor, specfactor, 1.0f);
 	//	return float4(procentoflight, procentoflight, procentoflight, 1.0f);// kolla färgdjupet
 	//	return float4(ljusvector.x, ljusvector.y, ljusvector.z, 1.0f); //kollar riktigningen på normalena. 
 };

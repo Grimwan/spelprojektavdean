@@ -59,8 +59,8 @@ void DeansRender::update(HWND wndHandle)
 	{
 	shader.createShaders(gDevice);
 	createallbuffers(ConstantBufferCamera,ConstantBufferPointLight, worldMatrix,gDevice, gDeviceContext);
-	//GbufferCreation(GBufferSRV, GBufferRTV, gDevice, gDeviceContext);
-	testfunctionGbuffer();
+	GbufferCreation(GBufferSRV, GBufferRTV, gDevice, gDeviceContext);
+	//testfunctionGbuffer();
 	
 	}
 //	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
