@@ -109,7 +109,7 @@ void camera::DetectInput(double time, HWND wndHandle)
 		ShowCursor(TRUE);
 		MouseOnOff = false;
 	}
-	float speed = 15.0f * time;
+	float speed = 1.0f * time;
 
 	if (A)
 	{

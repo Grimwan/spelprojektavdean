@@ -19,7 +19,7 @@ PS_OUT PS_main(GS_OUT input)
 {
 	PS_OUT output;
 output.Normal = float4(input.normal, 1.0f);
-output.Position = input.Pos;
+output.Position = input.wPos;
 output.Diffuse = float4(input.Color, 1.0f);
 output.Specular = float4(0.3f, 0.3f, 0.3f, 1);
 //	return float4(input.Color, 1.0f);

@@ -31,7 +31,7 @@ void GetGBuffer(in float2 screenPos, out float3 normal, out float3 position, out
 	specularPower = spec.w;
 }
 
-
+/*
 float4 PS_main(float4 screenPos : SV_POSITION) : SV_Target
 {
 	float3 normal;
@@ -69,6 +69,52 @@ float4 PS_main(float4 screenPos : SV_POSITION) : SV_Target
 	//	return float4(cameraPos,1.0f);
 	//	return float4((ambientLight*diffuse + (diffuseLight*diffuse + specularLight)),1.0f);
 		return float4(diffuse*procentoflight + specfactor, 1.0f);
+	//	return float4(specfactor, specfactor, specfactor, 1.0f);
+	//	return float4(procentoflight, procentoflight, procentoflight, 1.0f);// kolla färgdjupet
+	//	return float4(ljusvector.x, ljusvector.y, ljusvector.z, 1.0f); //kollar riktigningen på normalena. 
+};
+*/
+
+float4 PS_main(float4 screenPos : SV_POSITION) : SV_Target
+{
+	float3 normal;
+	float3 position;
+	float3 diffuse;
+	float3 specular;
+	float specularPower;
+
+GetGBuffer(screenPos.xy, normal, position, diffuse, specular, specularPower);
+
+	float3 ljusvector = LightPosition - position;
+	float distance = length(ljusvector);
+	float procentoflight;
+	float specfactor = 0;
+	if (distance > range)
+	{
+		procentoflight = range / distance;
+	}
+	else
+	{
+		float3 ljusvectornormalised = normalize(ljusvector);
+
+		float diffusefactor = dot(ljusvector, ljusvectornormalised);
+		if (diffusefactor > 0.0f)
+		{
+			float3 v = normalize(cameraPos - position);
+			float3 r = reflect(-ljusvectornormalised, normalize(normal));
+			specfactor = pow(saturate(dot(r, v)), 100);
+
+		}
+		procentoflight = dot(ljusvectornormalised, normalize(normal));
+		//	procentoflight = 1;
+	}
+	//	return float4(input.Color, 1.0f);
+	//	return float4(cameraPos,1.0f);
+	//	return float4((ambientLight*diffuse + (diffuseLight*diffuse + specularLight)),1.0f);
+		return float4(diffuse*procentoflight + specfactor, 1.0f);
+	//	return float4(normal, 1.0f);
+	//	return float4(diffuse, 1.0f);
+	//	return float4(position, 1.0f);
 	//	return float4(specfactor, specfactor, specfactor, 1.0f);
 	//	return float4(procentoflight, procentoflight, procentoflight, 1.0f);// kolla färgdjupet
 	//	return float4(ljusvector.x, ljusvector.y, ljusvector.z, 1.0f); //kollar riktigningen på normalena. 

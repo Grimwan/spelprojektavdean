@@ -2,7 +2,9 @@
 
 DeansRender::DeansRender()
 {
+	Lasttime=std::chrono::system_clock::now();
 	mProjection = XMMatrixPerspectiveLH(3.141592f*0.45f, (float)640 / (float)480, 0.5f, 200.0f);
+	forwardordefered = true;
 }
 void DeansRender::testfunctionGbuffer()
 {
@@ -55,6 +57,15 @@ void DeansRender::testfunctionGbuffer()
 }
 void DeansRender::update(HWND wndHandle)
 {
+	SHORT P = GetAsyncKeyState('P');
+	SHORT O = GetAsyncKeyState('O');
+	if (P)
+		forwardordefered = true;
+
+	if (O)
+		forwardordefered = false;
+
+
 	if(testet == true)
 	{
 	shader.createShaders(gDevice);
@@ -63,84 +74,141 @@ void DeansRender::update(HWND wndHandle)
 	//testfunctionGbuffer();
 	
 	}
-//	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
-//	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
-//	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
+	if(getfps())
+	{
+		if(forwardordefered)
+	pureDefferedrendering(wndHandle);
+		else
+	pureForwardrendering(wndHandle);
+	}
+}
+
+void DeansRender::forwardRendering()
+{
+	shader.objectShaderVSandPS(gDeviceContext);
+}
+
+void DeansRender::pureForwardrendering(HWND wndHandle)
+{
+		gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
+		gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
+		gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
 
 	Cameradata cameradataa;
 	cameradataa.cameraPos = Camera.returncamPosition();
-//	cameradataa.cameraPos = XMFLOAT3(0, 0, 1);
-	updateBufferforCamera(ConstantBufferCamera, cameradataa, gDevice,gDeviceContext);
+	//	cameradataa.cameraPos = XMFLOAT3(0, 0, 1);
+	updateBufferforCamera(ConstantBufferCamera, cameradataa, gDevice, gDeviceContext);
 	// clear the back buffer to a deep blue
 	float clearColor[] = { 0, 0, 0, 1 };
 	gDeviceContext->ClearRenderTargetView(gBackbufferRTV, clearColor);
 
 
-//	test[0]->setrotx(25);
-//	test[0]->settranslation(2, 0, 0);
+	//	test[0]->setrotx(25);
+	//	test[0]->settranslation(2, 0, 0);
 	test[1]->settranslation(0, 0, 0);
 
-//	Camera.DetectInput(1);
+	//	Camera.DetectInput(1);
 
-//	forwardRendering();
+		forwardRendering();
 
-
-	DeferredRenderingFirstPass();
-	for (int i = 0;i < test.size();i++)
+	for (int i = 0; i < test.size(); i++)
 	{
 		test[i]->animation();
 		test[i]->updateworldmatrix();
-		Camera.DetectInput(0.00001,wndHandle);
+		Camera.DetectInput(dt, wndHandle);
 		XMMATRIX yees = XMMatrixTranspose(test[i]->getWorldMatrixXMMATRIX() * Camera.camviewXmmatrix() * mProjection);
 
 		DirectX::XMFLOAT4X4 yes;
 		XMStoreFloat4x4(&yes, yees);
 		//	test[i]->changeVertexbufferdata(gDeviceContext, test[i]->paintingtwotriangles(1));
-		
-	//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
-	//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
-		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,yes);
+
+		//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
+		//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
+		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, yes);
 		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn(0));
 	}
-	
+}
+
+void DeansRender::pureDefferedrendering(HWND wndHandle)
+{
+	//	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
+	//	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
+	//	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
+
+	Cameradata cameradataa;
+	cameradataa.cameraPos = Camera.returncamPosition();
+	//	cameradataa.cameraPos = XMFLOAT3(0, 0, 1);
+	updateBufferforCamera(ConstantBufferCamera, cameradataa, gDevice, gDeviceContext);
+	// clear the back buffer to a deep blue
+	float clearColor[] = { 0, 0, 0, 1 };
+	gDeviceContext->ClearRenderTargetView(gBackbufferRTV, clearColor);
+
+
+	//	test[0]->setrotx(25);
+	//	test[0]->settranslation(2, 0, 0);
+	test[1]->settranslation(0, 0, 0);
+
+	//	Camera.DetectInput(1);
+
+	//	forwardRendering();
+
+
+	DeferredRenderingFirstPass();
+	for (int i = 0; i < test.size(); i++)
+	{
+		test[i]->animation();
+		test[i]->updateworldmatrix();
+		Camera.DetectInput(dt, wndHandle);
+		XMMATRIX yees = XMMatrixTranspose(test[i]->getWorldMatrixXMMATRIX() * Camera.camviewXmmatrix() * mProjection);
+
+		DirectX::XMFLOAT4X4 yes;
+		XMStoreFloat4x4(&yes, yees);
+		//	test[i]->changeVertexbufferdata(gDeviceContext, test[i]->paintingtwotriangles(1));
+
+		//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
+		//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
+		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, yes);
+		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn(0));
+	}
+
 
 
 
 	DeferredRenderingSecondPass();
-	
+
 	gDeviceContext->IASetInputLayout(shader.gVertexLayoutReturn(1));
 	if (testet == true)
 	{
-	std::vector<PositonSecondVertexPass> Cubeinfrontofcamera;
-	PositonSecondVertexPass Cube = {
-		-1.0f, -1.0f, 0.0f	//v0 pos
-	};
-	Cubeinfrontofcamera.push_back(Cube);
-	Cube = {
-		-1.0f, 1.0f, 0.0f //v1 pos
-	};
-	Cubeinfrontofcamera.push_back(Cube);
-	Cube = {
-		1.0f, -1.0f, 0.0f //v2
-	};
-	Cubeinfrontofcamera.push_back(Cube);
+		std::vector<PositonSecondVertexPass> Cubeinfrontofcamera;
+		PositonSecondVertexPass Cube = {
+			-1.0f, -1.0f, 0.0f	//v0 pos
+		};
+		Cubeinfrontofcamera.push_back(Cube);
+		Cube = {
+			-1.0f, 1.0f, 0.0f //v1 pos
+		};
+		Cubeinfrontofcamera.push_back(Cube);
+		Cube = {
+			1.0f, -1.0f, 0.0f //v2
+		};
+		Cubeinfrontofcamera.push_back(Cube);
 
 
 
-	Cube = {
-		-1.0f, 1.0f, 0.0f //v2
-		
-	};
-	Cubeinfrontofcamera.push_back(Cube);
-	Cube = {
-		1.0f, 1.0f, 0.0f	//v0 pos
-	};
-	Cubeinfrontofcamera.push_back(Cube);
-	Cube = {
-		1.0f, -1.0f, 0.0f //v2
-		
-	};
-	Cubeinfrontofcamera.push_back(Cube);
+		Cube = {
+			-1.0f, 1.0f, 0.0f //v2
+
+		};
+		Cubeinfrontofcamera.push_back(Cube);
+		Cube = {
+			1.0f, 1.0f, 0.0f	//v0 pos
+		};
+		Cubeinfrontofcamera.push_back(Cube);
+		Cube = {
+			1.0f, -1.0f, 0.0f //v2
+
+		};
+		Cubeinfrontofcamera.push_back(Cube);
 
 
 		D3D11_BUFFER_DESC bufferDesc;
@@ -169,22 +237,17 @@ void DeansRender::update(HWND wndHandle)
 
 
 	gDeviceContext->Draw(6, 0);
-//	GameObject * triangletest = new GameObject(gDevice, testtriangle);
-//	Gameobjectpush(triangletest);
+	//	GameObject * triangletest = new GameObject(gDevice, testtriangle);
+	//	Gameobjectpush(triangletest);
 
 
-//	for (int j = 0;j < test.size();j++)
-//	{
+	//	for (int j = 0;j < test.size();j++)
+	//	{
 
 	//	test[j]->changeVertexbufferdata(gDeviceContext, test[j]->paintingtwotriangles(2));
-//		test[j]->draw(gDeviceContext, shader.gVertexLayoutReturn());
-//	}
-	
-}
+	//		test[j]->draw(gDeviceContext, shader.gVertexLayoutReturn());
+	//	}
 
-void DeansRender::forwardRendering()
-{
-	shader.objectShaderVSandPS(gDeviceContext);
 }
 
 void DeansRender::DeferredRenderingFirstPass()
@@ -208,6 +271,22 @@ void DeansRender::DeferredRenderingSecondPass()
 	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
 	gDeviceContext->PSSetShaderResources(0, 4, GBufferSRV);
 	shader.DeferredRenderingSecondPass(gDeviceContext);
+}
+
+bool DeansRender::getfps()
+{
+	std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now(); // Get current time
+	std::chrono::duration<float> deltaTime = now - this->Lasttime;
+	Lasttime = now;
+	dt = deltaTime.count();
+	time = dt + time;
+	if (time >= 1 / 60)
+		return true;
+	else
+	{
+		time = 0;
+		return false;
+	}
 }
 
 DeansRender::~DeansRender()
