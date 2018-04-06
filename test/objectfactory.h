@@ -6,6 +6,9 @@
 #include <vector>
 #include "Render.h"
 #include "Shaders.h"
+#include "Heightmap.h"
+
+
 
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
@@ -19,6 +22,9 @@ public:
 	GameObjectCreationTriangle(DeansRender* &renderingsfuntionen,int test);
 	~GameObjectCreationTriangle();
 	GameObjectCreationTriangle();
+
+	void GameObjectCreationHeightMap(DeansRender* &renderingsfunction, std::string Name);
+
 };
 
 

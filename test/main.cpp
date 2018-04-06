@@ -12,6 +12,7 @@
 #include "Render.h"
 #include "Gameobject.h"
 #include "Shaders.h"
+#include "Heightmap.h"
 int * pointertest;
 #include "objectfactory.h"
 
@@ -53,7 +54,8 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 
 		SetViewport(); //3. Sätt viewport
 
-
+	//	Heightmap test;
+	//	test.loadingBmpPicture("Demo2.bmp");
 
 //		CreateShaders(); //4. Skapa vertex- och pixel-shaders
 //		GameObject Triangle(renderingsfuntionen.gDevicereturn());
@@ -61,6 +63,8 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 	//	GameObject * triangletest = new GameObject(renderingsfuntionen.gDevicereturn());
 		GameObjectCreationTriangle firstobject(renderingsfuntionen);
 		GameObjectCreationTriangle secondobject(renderingsfuntionen);
+		GameObjectCreationTriangle BuildHeightMap;
+		BuildHeightMap.GameObjectCreationHeightMap(renderingsfuntionen, "heightmap");
 	//	GameObjectCreationTriangle secondobject(renderingsfuntionen,2);
 
 		ShowWindow(wndHandle, nCmdShow);

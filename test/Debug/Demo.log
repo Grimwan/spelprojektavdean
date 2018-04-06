@@ -1,1 +1,8 @@
-﻿  Demo.vcxproj -> H:\programming\visual studio projekt\spelprojektavdean\test\Debug\Demo.exe
+﻿  Heightmap.cpp
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+h:\programming\visual studio projekt\spelprojektavdean\test\heightmap.cpp(58): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+h:\programming\visual studio projekt\spelprojektavdean\test\heightmap.cpp(59): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+h:\programming\visual studio projekt\spelprojektavdean\test\heightmap.cpp(22): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(207): note: see declaration of 'fopen'
+h:\programming\visual studio projekt\spelprojektavdean\test\heightmap.cpp(103): warning C4101: 'test': unreferenced local variable
+  Demo.vcxproj -> H:\programming\visual studio projekt\spelprojektavdean\test\Debug\Demo.exe
