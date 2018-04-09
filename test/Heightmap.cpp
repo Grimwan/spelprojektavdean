@@ -89,18 +89,80 @@ int Heightmap::getwidhtLength()
 void Heightmap::buildscene()
 {
 	PositonColorVertex pushback;
-	
+	int m = 0;
+
 	for (int i = 0; i < _heightLength; i++)
 	{
 		for (int j = 0; j < _widthLength; j++) //bygger inga trianglar med det borde använda indexbuffer T_T
 		{
 			pushback = { _twodArray[i][j].x,_twodArray[i][j].y,0,
-				1,0,0,
+				1.0f,1.0f,0.0f,
 			};
+			_twodArray[i][j].indexValue = m;
+			m++;
 			Vertex.push_back(pushback);
 		}
 	}
-	int test;
+
+	for (int i = 0; i < _heightLength - 1; i++)
+	{
+		for (int j = 0; j < _widthLength - 1; j++)
+		{
+			Index.push_back(_twodArray[i][j].indexValue);
+			Index.push_back(_twodArray[i][j + 1].indexValue);
+			Index.push_back(_twodArray[i + 1][j].indexValue);
+			
+			Index.push_back(_twodArray[i][j + 1].indexValue);
+			Index.push_back(_twodArray[i + 1][j + 1].indexValue);
+			Index.push_back(_twodArray[i + 1][j].indexValue);
+
+
+
+		}
+	}
+	
+	/*
+	PositonColorVertex test = {
+		0.0f, 0.0f, 0.0f,	//v0 pos
+		1.0f, 0.0f, 0.0f,	//v0 color 
+	};
+	Vertex.push_back(test);
+
+	test = {
+		1.0f, 0.0f, 0.0f,	//v1
+		0.0f, 1.0f, 0.0f,	//v1 color
+	};
+	Vertex.push_back(test);
+
+	test = {
+		0.0f, 0.0f, 1.0f, //v2
+		0.0f, 0.0f, 1.0f	//v2 color
+	};
+	Vertex.push_back(test);
+
+	test = {
+		1.0f, 0.0f, 1.0f, //v2
+		0.0f, 0.0f, 1.0f	//v2 color
+	};
+	Vertex.push_back(test);
+	
+	
+	Index.push_back(0);
+	Index.push_back(1);
+	Index.push_back(2);
+
+	Index.push_back(1);
+	Index.push_back(2);
+	Index.push_back(3);
+	*/
+
+	for (int i = 0; i < Vertex.size(); i++)
+		std::cout << Vertex[i].x << " " << Vertex[i].y << " " << Vertex[i].z << std::endl;
+
+	for (int i = 0; i < Index.size(); i++)
+	{
+		std::cout << Index[i] << std::endl;
+	}
 	
 }
 

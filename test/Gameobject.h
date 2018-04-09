@@ -16,6 +16,7 @@ class GameObject
 {
 private:
 ID3D11Buffer* VertexBuffer = nullptr;
+ID3D11Buffer* IndexBuffer = nullptr;
 int testet = 0;
 XMMATRIX scaling;
 XMMATRIX rotation;
@@ -25,12 +26,14 @@ float rotationleftright=0;
 float rotationupdown = 0;
 float rotationbarrelroll = 0;
 int size = 0;
+int amountToDraw = 0;
 public:
 	 GameObject(ID3D11Device * &gDevice);
 	
 	~GameObject();
 	GameObject();
 	GameObject(ID3D11Device * &gDevice,std::vector<PositonColorVertex> Positionsochfergdata);
+	GameObject(ID3D11Device * &gDevice, std::vector<PositonColorVertex> Positionsochfergdata,std::vector<int> Indexdata);
 	GameObject(ID3D11Device * &gDevice,PositonColorVertex* Positionsochfergdata);
 	ID3D11Buffer * getVertexbuffer();
 	void draw(ID3D11DeviceContext* &gDeviceContext, ID3D11InputLayout* &gVertexLayout);

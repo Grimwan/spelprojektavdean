@@ -18,6 +18,7 @@ struct PositonColorVertex
 	float x, y, z;
 	float r, g, b;
 };
+
 struct PositonSecondVertexPass
 {
 	float x, y, z;

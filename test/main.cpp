@@ -63,6 +63,9 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 	//	GameObject * triangletest = new GameObject(renderingsfuntionen.gDevicereturn());
 		GameObjectCreationTriangle firstobject(renderingsfuntionen);
 		GameObjectCreationTriangle secondobject(renderingsfuntionen);
+	//	GameObjectCreationTriangle test;
+	//	test.Indexbuffertest(renderingsfuntionen);
+
 		GameObjectCreationTriangle BuildHeightMap;
 		BuildHeightMap.GameObjectCreationHeightMap(renderingsfuntionen, "heightmap");
 	//	GameObjectCreationTriangle secondobject(renderingsfuntionen,2);

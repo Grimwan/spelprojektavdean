@@ -105,7 +105,7 @@ void DeansRender::pureForwardrendering(HWND wndHandle)
 
 	//	test[0]->setrotx(25);
 	//	test[0]->settranslation(2, 0, 0);
-	test[1]->settranslation(0, 0, 0);
+//	test[1]->settranslation(0, 0, 0);
 
 	//	Camera.DetectInput(1);
 
@@ -146,13 +146,13 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 
 	//	test[0]->setrotx(25);
 	//	test[0]->settranslation(2, 0, 0);
-	test[1]->settranslation(0, 0, 0);
+//	test[1]->settranslation(0, 0, 20);
 
 	//	Camera.DetectInput(1);
 
 	//	forwardRendering();
 
-
+	
 	DeferredRenderingFirstPass();
 	for (int i = 0; i < test.size(); i++)
 	{

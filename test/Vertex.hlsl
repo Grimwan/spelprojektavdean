@@ -28,5 +28,10 @@ VS_OUT VS_main(VS_IN input)
 	output.Pos = mul(float4(input.Pos, 1), worldMatrix);
 	output.Color = input.Color;
 	output.wPos = mul(float4(input.Pos, 1), worldMatrix);
+	
+//	output.Pos = float4(input.Pos, 1);
+//	output.wPos = float4(input.Pos, 1);
+
+
 	return output;
 }

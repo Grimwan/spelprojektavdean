@@ -39,6 +39,7 @@ GameObject::GameObject(ID3D11Device* &gDevice)
 
 GameObject::~GameObject()
 {
+	IndexBuffer->Release();
 	VertexBuffer->Release();
 }
 
@@ -49,7 +50,8 @@ GameObject::GameObject()
 GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> Positionsochfergdata)
 {
 	size = Positionsochfergdata.size();
-	scaling = XMMatrixScaling(0.5, 0.5, 0);
+	amountToDraw = size;
+	scaling = XMMatrixScaling(0.5, 0.5, 1);
 	rotation = XMMatrixRotationRollPitchYaw(0,0, 0); // first up down, second left right, z barrelroll
 	translation = XMMatrixTranslation(-0.5,-0.5, 0);
 	updateworldmatrix();
@@ -68,6 +70,52 @@ GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> 
 	HRESULT hr = gDevice->CreateBuffer(&bufferDesc, &data, &this->VertexBuffer);
 	if (FAILED(hr))
 		std::cout << "Failed to create vertex buffer!" << std::endl;
+}
+GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> Positionsochfergdata, std::vector<int> Indexdata)
+{
+	size = Positionsochfergdata.size();
+	scaling = XMMatrixScaling(0.5, 0.5, 1);
+	rotation = XMMatrixRotationRollPitchYaw(0, 0, 0); // first up down, second left right, z barrelroll
+	translation = XMMatrixTranslation(-0.5, -0.5, 0);
+	updateworldmatrix();
+	//	PositonColorVertex * Positonandcolorconverter = &Positionsochfergdata[0];
+
+	D3D11_BUFFER_DESC bufferDesc;
+	memset(&bufferDesc, 0, sizeof(bufferDesc));
+	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	//	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	bufferDesc.ByteWidth = 6 * sizeof(float)*(UINT)Positionsochfergdata.size();
+	D3D11_SUBRESOURCE_DATA data;
+	data.pSysMem = Positionsochfergdata.data();
+	gDevice->CreateBuffer(&bufferDesc, &data, &VertexBuffer);
+	HRESULT hr = gDevice->CreateBuffer(&bufferDesc, &data, &this->VertexBuffer);
+	if (FAILED(hr))
+		std::cout << "Failed to create vertex buffer!" << std::endl;
+
+	amountToDraw = Indexdata.size();
+
+	//creates indexbuffer
+	D3D11_BUFFER_DESC bufferIndex;
+	bufferIndex.Usage = D3D11_USAGE_DEFAULT;
+	bufferIndex.ByteWidth = sizeof(unsigned int) * Indexdata.size();
+	bufferIndex.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	bufferIndex.CPUAccessFlags = 0;
+	bufferIndex.MiscFlags = 0;
+
+	// Define the resource data.
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = Indexdata.data();
+	InitData.SysMemPitch = 0;
+	InitData.SysMemSlicePitch = 0;
+
+	// Create the buffer with the device.
+	hr = gDevice->CreateBuffer(&bufferIndex, &InitData, &IndexBuffer);
+	if (FAILED(hr))
+		std::cout << "Failed to create Index buffer!" << std::endl;
+
+
 }
 GameObject::GameObject(ID3D11Device *& gDevice, PositonColorVertex * Positionsochfergdata)
 {
@@ -95,17 +143,20 @@ ID3D11Buffer * GameObject::getVertexbuffer()
 
 void GameObject::draw(ID3D11DeviceContext* &gDeviceContext, ID3D11InputLayout* &gVertexLayout)
 {
-
-
-	UINT32 vertexSize = sizeof(float) * 6;
+	UINT32 vertexSize = sizeof(int) * 6;
 	UINT32 offset = 0;
 	gDeviceContext->IASetVertexBuffers(0, 1, &VertexBuffer, &vertexSize, &offset);
+
+	if (IndexBuffer!= nullptr)
+		gDeviceContext->IASetIndexBuffer(IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	gDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	gDeviceContext->IASetInputLayout(gVertexLayout);
 
-
-	gDeviceContext->Draw(size, 0);
+	if (IndexBuffer != nullptr)
+		gDeviceContext->DrawIndexed(amountToDraw, 0, 0);
+	else
+		gDeviceContext->Draw(size, 0);
 
 }
 

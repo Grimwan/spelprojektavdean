@@ -23,6 +23,8 @@ public:
 	~GameObjectCreationTriangle();
 	GameObjectCreationTriangle();
 
+	void Indexbuffertest(DeansRender* &renderingsfuntionen);
+
 	void GameObjectCreationHeightMap(DeansRender* &renderingsfunction, std::string Name);
 
 };

@@ -8,6 +8,7 @@ struct Grid {
 	float x;
 	float y;
 	float height;
+	int indexValue;
 };
 
 
@@ -18,6 +19,7 @@ private:
 	int _widthLength = 0;
 	Grid** _twodArray;
 	std::vector<PositonColorVertex> Vertex;
+	std::vector<int> Index;
 public:
 	Heightmap();
 	~Heightmap();
@@ -27,6 +29,7 @@ public:
 	int getwidhtLength();
 	void buildscene();
 	std::vector<PositonColorVertex> returnvertexdata() { return Vertex; };
+	std::vector<int> returnIndexdata() { return Index; };
 
 	void test();
 
