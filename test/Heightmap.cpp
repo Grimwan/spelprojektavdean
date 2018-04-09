@@ -1,5 +1,5 @@
 #include "Heightmap.h"
-
+#define roundDownTheHeight 10
 
 
 	
@@ -95,7 +95,7 @@ void Heightmap::buildscene()
 	{
 		for (int j = 0; j < _widthLength; j++) //bygger inga trianglar med det borde använda indexbuffer T_T
 		{
-			pushback = { _twodArray[i][j].x,_twodArray[i][j].y,0,
+			pushback = { _twodArray[i][j].x, _twodArray[i][j].height/ roundDownTheHeight ,_twodArray[i][j].y,
 				1.0f,1.0f,0.0f,
 			};
 			_twodArray[i][j].indexValue = m;
@@ -155,7 +155,7 @@ void Heightmap::buildscene()
 	Index.push_back(2);
 	Index.push_back(3);
 	*/
-
+/*
 	for (int i = 0; i < Vertex.size(); i++)
 		std::cout << Vertex[i].x << " " << Vertex[i].y << " " << Vertex[i].z << std::endl;
 
@@ -163,7 +163,7 @@ void Heightmap::buildscene()
 	{
 		std::cout << Index[i] << std::endl;
 	}
-	
+	*/
 }
 
 void Heightmap::test()

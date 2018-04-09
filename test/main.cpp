@@ -67,7 +67,7 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 	//	test.Indexbuffertest(renderingsfuntionen);
 
 		GameObjectCreationTriangle BuildHeightMap;
-		BuildHeightMap.GameObjectCreationHeightMap(renderingsfuntionen, "heightmap");
+		BuildHeightMap.GameObjectCreationHeightMap(renderingsfuntionen, "Heightmap.bmp");
 	//	GameObjectCreationTriangle secondobject(renderingsfuntionen,2);
 
 		ShowWindow(wndHandle, nCmdShow);

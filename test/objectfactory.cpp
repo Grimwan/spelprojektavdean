@@ -64,7 +64,7 @@ void GameObjectCreationTriangle::Indexbuffertest(DeansRender *& renderingsfuntio
 void GameObjectCreationTriangle::GameObjectCreationHeightMap(DeansRender *& renderingsfunction, std::string Name)
 {
 	Heightmap creation;
-	creation.loadingBmpPicture("Demo2.bmp");
+	creation.loadingBmpPicture(Name.c_str());
 	creation.buildscene();
 //	std::vector<PositonColorVertex> testtriangle;
 //	PositonColorVertex test = {
