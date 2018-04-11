@@ -11,6 +11,7 @@
 #include <DirectXMath.h>
 #include <dinput.h>
 using namespace DirectX;
+enum objectType { heightMapObject, AnObject };
 
 class GameObject
 {
@@ -27,6 +28,7 @@ float rotationupdown = 0;
 float rotationbarrelroll = 0;
 int size = 0;
 int amountToDraw = 0;
+objectType typeOfObject;
 public:
 	 GameObject(ID3D11Device * &gDevice);
 	
@@ -46,6 +48,7 @@ public:
 	void setrotx(float rotx);
 	void setroty(float roty);
 	void setrotz(float rotz);
+	void setTypeOfObject(objectType objectType);
 	void settranslation(float x, float y, float z);
 	void updateworldmatrix();
 	void animation();

@@ -4,6 +4,7 @@
 
 GameObject::GameObject(ID3D11Device* &gDevice)
 {
+	typeOfObject = AnObject;
 	struct TriangleVertex
 	{
 		float x, y, z;
@@ -45,10 +46,12 @@ GameObject::~GameObject()
 
 GameObject::GameObject()
 {
+	typeOfObject = AnObject;
 }
 
 GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> Positionsochfergdata)
 {
+	typeOfObject = AnObject;
 	size = Positionsochfergdata.size();
 	amountToDraw = size;
 	scaling = XMMatrixScaling(0.5, 0.5, 1);
@@ -73,6 +76,7 @@ GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> 
 }
 GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> Positionsochfergdata, std::vector<int> Indexdata)
 {
+	typeOfObject = AnObject;
 	size = Positionsochfergdata.size();
 	scaling = XMMatrixScaling(0.5, 0.5, 1);
 	rotation = XMMatrixRotationRollPitchYaw(0, 0, 0); // first up down, second left right, z barrelroll
@@ -119,6 +123,7 @@ GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> 
 }
 GameObject::GameObject(ID3D11Device *& gDevice, PositonColorVertex * Positionsochfergdata)
 {
+	typeOfObject = AnObject;
 	D3D11_BUFFER_DESC bufferDesc;
 	memset(&bufferDesc, 0, sizeof(bufferDesc));
 	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -253,6 +258,11 @@ void GameObject::setroty(float roty)
 void GameObject::setrotz(float rotz)
 {
 	rotation = XMMatrixRotationZ(rotz);
+}
+
+void GameObject::setTypeOfObject(objectType objectType)
+{
+	typeOfObject = objectType;
 }
 
 void GameObject::settranslation(float x, float y, float z)

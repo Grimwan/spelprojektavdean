@@ -74,7 +74,9 @@ void GameObjectCreationTriangle::GameObjectCreationHeightMap(DeansRender *& rend
 //	testtriangle.push_back(test);
 
 	GameObject * triangletest = new GameObject(renderingsfunction->gDevicereturn(), creation.returnvertexdata(), creation.returnIndexdata());
+	triangletest->setTypeOfObject(heightMapObject);
 	renderingsfunction->Gameobjectpush(triangletest);
+	
 }
 
 GameObjectCreationTriangle::GameObjectCreationTriangle(DeansRender* &renderingsfuntionen)
