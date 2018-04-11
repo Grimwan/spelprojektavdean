@@ -49,6 +49,7 @@ public:
 	void setroty(float roty);
 	void setrotz(float rotz);
 	void setTypeOfObject(objectType objectType);
+	objectType getTypeOfObject() { return typeOfObject; };
 	void settranslation(float x, float y, float z);
 	void updateworldmatrix();
 	void animation();

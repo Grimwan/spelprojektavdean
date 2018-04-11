@@ -1,35 +1,11 @@
-﻿  objectfactory.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\visual studio projekt\spelprojektavdean\test\objectfactory.cpp(61): warning C4316: 'GameObject': object allocated on the heap may not be aligned 16
-h:\programming\visual studio projekt\spelprojektavdean\test\objectfactory.cpp(76): warning C4316: 'GameObject': object allocated on the heap may not be aligned 16
-h:\programming\visual studio projekt\spelprojektavdean\test\objectfactory.cpp(137): warning C4316: 'GameObject': object allocated on the heap may not be aligned 16
-h:\programming\visual studio projekt\spelprojektavdean\test\objectfactory.cpp(161): warning C4316: 'GameObject': object allocated on the heap may not be aligned 16
-  Generating Code...
-  Compiling...
-  main.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\visual studio projekt\spelprojektavdean\test\main.cpp(23): warning C4316: 'DeansRender': object allocated on the heap may not be aligned 16
-h:\programming\visual studio projekt\spelprojektavdean\test\main.cpp(43): warning C4007: 'wWinMain': must be '__stdcall'
-h:\programming\visual studio projekt\spelprojektavdean\test\main.cpp(45): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(242): note: see declaration of 'freopen'
-h:\programming\visual studio projekt\spelprojektavdean\test\main.cpp(46): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(242): note: see declaration of 'freopen'
-h:\programming\visual studio projekt\spelprojektavdean\test\main.cpp(47): warning C4996: 'freopen': This function or variable may be unsafe. Consider using freopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\ucrt\stdio.h(242): note: see declaration of 'freopen'
-  buffers.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\visual studio projekt\spelprojektavdean\test\buffers.cpp(153): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-h:\programming\visual studio projekt\spelprojektavdean\test\buffers.cpp(154): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
-  Test.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Shaders.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Render.cpp
+﻿  Render.cpp
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
 h:\programming\visual studio projekt\spelprojektavdean\test\render.cpp(14): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
 h:\programming\visual studio projekt\spelprojektavdean\test\render.cpp(15): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
 h:\programming\visual studio projekt\spelprojektavdean\test\render.cpp(114): warning C4018: '<': signed/unsigned mismatch
-h:\programming\visual studio projekt\spelprojektavdean\test\render.cpp(157): warning C4018: '<': signed/unsigned mismatch
+h:\programming\visual studio projekt\spelprojektavdean\test\render.cpp(158): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
   Gameobject.cpp
   c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
 h:\programming\visual studio projekt\spelprojektavdean\test\gameobject.cpp(222): warning C4101: 'data': unreferenced local variable
@@ -39,10 +15,13 @@ h:\programming\visual studio projekt\spelprojektavdean\test\gameobject.cpp(300):
 h:\programming\visual studio projekt\spelprojektavdean\test\gameobject.cpp(306): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 h:\programming\visual studio projekt\spelprojektavdean\test\gameobject.cpp(312): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 h:\programming\visual studio projekt\spelprojektavdean\test\gameobject.cpp(318): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Camera.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-h:\programming\visual studio projekt\spelprojektavdean\test\camera.cpp(112): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating Code...
 h:\programming\visual studio projekt\spelprojektavdean\test\gameobject.cpp(218): warning C4715: 'GameObject::paintingtwotriangles': not all control paths return a value
-h:\programming\visual studio projekt\spelprojektavdean\test\shaders.cpp(262): warning C4715: 'Shaders::gPixelShaderReturn': not all control paths return a value
+  Skipping... (no relevant changes detected)
+  objectfactory.cpp
+  main.cpp
+  buffers.cpp
+  Test.cpp
+  Shaders.cpp
+  Camera.cpp
   Demo.vcxproj -> H:\programming\visual studio projekt\spelprojektavdean\test\Debug\Demo.exe

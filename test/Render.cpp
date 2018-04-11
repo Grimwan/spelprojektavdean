@@ -83,7 +83,7 @@ void DeansRender::update(HWND wndHandle)
 	}
 }
 
-void DeansRender::forwardRendering()
+void DeansRender::forwardRendering(objectType Type)
 {
 	shader.objectShaderVSandPS(gDeviceContext);
 }
@@ -109,10 +109,11 @@ void DeansRender::pureForwardrendering(HWND wndHandle)
 
 	//	Camera.DetectInput(1);
 
-		forwardRendering();
+	
 
 	for (int i = 0; i < test.size(); i++)
 	{
+		forwardRendering(test[i]->getTypeOfObject());
 		test[i]->animation();
 		test[i]->updateworldmatrix();
 		Camera.DetectInput(dt, wndHandle);
@@ -153,9 +154,10 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 	//	forwardRendering();
 
 	
-	DeferredRenderingFirstPass();
+	
 	for (int i = 0; i < test.size(); i++)
 	{
+		DeferredRenderingFirstPass(test[i]->getTypeOfObject());
 		test[i]->animation();
 		test[i]->updateworldmatrix();
 		Camera.DetectInput(dt, wndHandle);
@@ -250,7 +252,7 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 
 }
 
-void DeansRender::DeferredRenderingFirstPass()
+void DeansRender::DeferredRenderingFirstPass(objectType Type)
 {
 	float clearColor[4];
 	memset(&clearColor, 0, sizeof(clearColor));

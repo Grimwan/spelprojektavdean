@@ -39,10 +39,10 @@ public:
 	DeansRender();
 	void update(HWND wndHandle);
 	~DeansRender();
-	void forwardRendering();
+	void forwardRendering(objectType Type);
 	void pureForwardrendering(HWND wndHandle);
 	void pureDefferedrendering(HWND wndHandle);
-	void DeferredRenderingFirstPass();
+	void DeferredRenderingFirstPass(objectType Type);
 	void DeferredRenderingSecondPass();
 	bool getfps();
 	void Gameobjectpush(GameObject* &objectfile);
