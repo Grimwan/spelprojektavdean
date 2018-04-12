@@ -25,7 +25,7 @@ public:
 
 	void Indexbuffertest(DeansRender* &renderingsfuntionen);
 
-	void GameObjectCreationHeightMap(DeansRender* &renderingsfunction, std::string Name);
+	void GameObjectCreationHeightMap(DeansRender* &renderingsfunction, std::string Name, std::string Normal);
 
 };
 

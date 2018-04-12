@@ -19,6 +19,14 @@ struct PositonColorVertex
 	float r, g, b;
 };
 
+struct PositonColorNormalVertex
+{
+	float x, y, z;
+	float r, g, b;
+	float N, NN, NNN;
+};
+
+
 struct PositonSecondVertexPass
 {
 	float x, y, z;

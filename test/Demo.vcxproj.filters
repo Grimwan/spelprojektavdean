@@ -13,6 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{5a87ed07-63e5-4aef-b9ad-a68e46a5a926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders\Defered renderer">
+      <UniqueIdentifier>{ebe53859-1d0d-4083-a69f-9318e9c6b217}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders\Defered renderer\Heightmap">
+      <UniqueIdentifier>{f3069528-a8e0-4589-ad5e-ddacd6f9f39e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders\Defered renderer\OtherObjects">
+      <UniqueIdentifier>{7052d87a-152a-4b5e-9743-544b26626627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders\Forward rendering">
+      <UniqueIdentifier>{fcf519bb-13fc-4ffc-8719-b4c2fec97e07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders\Forward rendering\Heightmap">
+      <UniqueIdentifier>{5a9fec33-ec39-4ac8-9a46-a74c6ab518d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Shaders\Forward rendering\OtherObject">
+      <UniqueIdentifier>{81fd20f8-b554-4f87-b3e5-82d9d7ccf207}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,23 +65,32 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Fragment.hlsl">
-      <Filter>Source Files</Filter>
-    </FxCompile>
     <FxCompile Include="Vertex.hlsl">
-      <Filter>Source Files</Filter>
-    </FxCompile>
-    <FxCompile Include="GeometryShader.hlsl">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="FragmentShaderFirstPass.hlsl">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shaders\Defered renderer\OtherObjects</Filter>
     </FxCompile>
     <FxCompile Include="VertexSecondpass.hlsl">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shaders\Defered renderer</Filter>
     </FxCompile>
     <FxCompile Include="FragmentSecondPass.hlsl">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Shaders\Defered renderer</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexHeightMap.hlsl">
+      <Filter>Source Files\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Fragment.hlsl">
+      <Filter>Source Files\Shaders\Forward rendering\OtherObject</Filter>
+    </FxCompile>
+    <FxCompile Include="GeometryShader.hlsl">
+      <Filter>Source Files\Shaders\Forward rendering\OtherObject</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelHeightmapForward.hlsl">
+      <Filter>Source Files\Shaders\Forward rendering\Heightmap</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelHeightMapDeffered.hlsl">
+      <Filter>Source Files\Shaders\Defered renderer\Heightmap</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

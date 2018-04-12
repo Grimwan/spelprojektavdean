@@ -18,6 +18,7 @@ private:
 	int _heightLength = 0;
 	int _widthLength = 0;
 	Grid** _twodArray;
+	std::vector<PositonColorNormalVertex> VertexwithNormal;
 	std::vector<PositonColorVertex> Vertex;
 	std::vector<int> Index;
 public:
@@ -28,6 +29,8 @@ public:
 	int getheightLength();
 	int getwidhtLength();
 	void buildscene();
+
+	std::vector<PositonColorNormalVertex> returnVertexNormaldata() { return VertexwithNormal; };
 	std::vector<PositonColorVertex> returnvertexdata() { return Vertex; };
 	std::vector<int> returnIndexdata() { return Index; };
 

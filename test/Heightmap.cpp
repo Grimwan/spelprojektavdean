@@ -166,6 +166,7 @@ void Heightmap::buildscene()
 	*/
 }
 
+
 void Heightmap::test()
 {
 	_twodArray;

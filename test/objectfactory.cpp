@@ -61,22 +61,20 @@ void GameObjectCreationTriangle::Indexbuffertest(DeansRender *& renderingsfuntio
 	GameObject * triangletest = new GameObject(renderingsfuntionen->gDevicereturn(), testtriangle,Indexdata);
 	renderingsfuntionen->Gameobjectpush(triangletest);
 }
-void GameObjectCreationTriangle::GameObjectCreationHeightMap(DeansRender *& renderingsfunction, std::string Name)
+void GameObjectCreationTriangle::GameObjectCreationHeightMap(DeansRender *& renderingsfunction, std::string Name,std::string Normal)
 {
+	
 	Heightmap creation;
 	creation.loadingBmpPicture(Name.c_str());
+	if(Normal == "No")
+	{
 	creation.buildscene();
-//	std::vector<PositonColorVertex> testtriangle;
-//	PositonColorVertex test = {
-//		0.5f, 0.5f, 0.0f,	//v0 pos
-//		1.0f, 0.0f, 0.0f,	//v0 color 
-//	};
-//	testtriangle.push_back(test);
-
 	GameObject * triangletest = new GameObject(renderingsfunction->gDevicereturn(), creation.returnvertexdata(), creation.returnIndexdata());
-	triangletest->setTypeOfObject(heightMapObject);
-	renderingsfunction->Gameobjectpush(triangletest);
 	
+	triangletest->setTypeOfObject(heightMapObject);
+	
+	renderingsfunction->Gameobjectpush(triangletest);
+	}
 }
 
 GameObjectCreationTriangle::GameObjectCreationTriangle(DeansRender* &renderingsfuntionen)

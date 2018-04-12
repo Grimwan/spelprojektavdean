@@ -85,7 +85,10 @@ void DeansRender::update(HWND wndHandle)
 
 void DeansRender::forwardRendering(objectType Type)
 {
-	shader.objectShaderVSandPS(gDeviceContext);
+	if(Type == AnObject)
+		shader.objectShaderVSandPS(gDeviceContext);
+	else if (Type == heightMapObject)
+		shader.objectShaderVSandPS(gDeviceContext);
 }
 
 void DeansRender::pureForwardrendering(HWND wndHandle)
@@ -262,7 +265,12 @@ void DeansRender::DeferredRenderingFirstPass(objectType Type)
 	}
 	gDeviceContext->OMSetRenderTargets(4, GBufferRTV, nullptr);
 	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
-	shader.DeferredRenderingFirstPass(gDeviceContext);
+
+
+	if (Type == AnObject)
+		shader.DeferredRenderingFirstPass(gDeviceContext);
+	else if (Type == heightMapObject)
+		shader.DeferredRenderingFirstPass(gDeviceContext);
 
 }
 
