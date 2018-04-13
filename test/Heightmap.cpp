@@ -2,7 +2,16 @@
 #define roundDownTheHeight 10
 
 
-	
+float3 CrossProductt(float3 First, float3 Second)
+{
+	return float3((First.y*Second.z) - (First.z * Second.y), (First.z * Second.x) - (First.x * Second.z), (First.x * Second.y) - (First.y * Second.x));
+}
+
+float3 normalize(float3 normal)
+{
+	float size = sqrt(pow(normal.x, 2) + pow(normal.y, 2) + pow(normal.z, 2));
+	return float3(normal.x / size, normal.y / size, normal.z / size);
+}
 
 Heightmap::Heightmap()
 {
@@ -86,7 +95,7 @@ int Heightmap::getwidhtLength()
 	return _widthLength;
 }
 
-void Heightmap::buildscene()
+void Heightmap::buildSceneWithOutNormals()
 {
 	PositonColorVertex pushback;
 	int m = 0;
@@ -120,50 +129,75 @@ void Heightmap::buildscene()
 
 		}
 	}
-	
-	/*
-	PositonColorVertex test = {
-		0.0f, 0.0f, 0.0f,	//v0 pos
-		1.0f, 0.0f, 0.0f,	//v0 color 
-	};
-	Vertex.push_back(test);
 
-	test = {
-		1.0f, 0.0f, 0.0f,	//v1
-		0.0f, 1.0f, 0.0f,	//v1 color
-	};
-	Vertex.push_back(test);
+}
 
-	test = {
-		0.0f, 0.0f, 1.0f, //v2
-		0.0f, 0.0f, 1.0f	//v2 color
-	};
-	Vertex.push_back(test);
+void Heightmap::buildSceneWithNormals()
+{
+	PositonColorNormalVertex pushback;
+	int m = 0;
 
-	test = {
-		1.0f, 0.0f, 1.0f, //v2
-		0.0f, 0.0f, 1.0f	//v2 color
-	};
-	Vertex.push_back(test);
-	
-	
-	Index.push_back(0);
-	Index.push_back(1);
-	Index.push_back(2);
+	for (int i = 0; i < _heightLength; i++)
+	{
+		for (int j = 0; j < _widthLength; j++) //bygger inga trianglar med det borde använda indexbuffer T_T
+		{
+			pushback = { _twodArray[i][j].x, _twodArray[i][j].height / roundDownTheHeight ,_twodArray[i][j].y,
+				1.0f,1.0f,0.0f,
+				0,0,0,
+			};
+			_twodArray[i][j].indexValue = m;
+			m++;
+			VertexwithNormal.push_back(pushback);
+		}
+	}
 
-	Index.push_back(1);
-	Index.push_back(2);
-	Index.push_back(3);
-	*/
+	for (int i = 0; i < _heightLength - 1; i++)
+	{
+		for (int j = 0; j < _widthLength - 1; j++)
+		{
+			Index.push_back(_twodArray[i][j].indexValue);
+			Index.push_back(_twodArray[i][j + 1].indexValue);
+			Index.push_back(_twodArray[i + 1][j].indexValue);
+
+			Index.push_back(_twodArray[i][j + 1].indexValue);
+			Index.push_back(_twodArray[i + 1][j + 1].indexValue);
+			Index.push_back(_twodArray[i + 1][j].indexValue);
+		}
+	}
 /*
-	for (int i = 0; i < Vertex.size(); i++)
-		std::cout << Vertex[i].x << " " << Vertex[i].y << " " << Vertex[i].z << std::endl;
-
+	float3 edge0 = float3(VertexwithNormal[1].x, VertexwithNormal[1].y, VertexwithNormal[1].z) - float3(VertexwithNormal[0].x, VertexwithNormal[0].y, VertexwithNormal[0].z);
+	float3 edge1 = float3(VertexwithNormal[2].x, VertexwithNormal[2].y, VertexwithNormal[2].z) - float3(VertexwithNormal[0].x, VertexwithNormal[0].y, VertexwithNormal[0].z);
+	float3 normalen = CrossProductt(edge0, edge1);
+	normalen = normalize(normalen);
+*/
 	for (int i = 0; i < Index.size(); i++)
 	{
-		std::cout << Index[i] << std::endl;
+		float3 edge0 = float3(VertexwithNormal[Index[i + 1]].x, VertexwithNormal[Index[i + 1]].y, VertexwithNormal[Index[i + 1]].z) - float3(VertexwithNormal[Index[i + 0]].x, VertexwithNormal[Index[i + 0]].y, VertexwithNormal[Index[i + 0]].z);
+		float3 edge1 = float3(VertexwithNormal[Index[i + 2]].x, VertexwithNormal[Index[i + 2]].y, VertexwithNormal[Index[i + 2]].z) - float3(VertexwithNormal[Index[i + 0]].x, VertexwithNormal[Index[i + 0]].y, VertexwithNormal[Index[i + 0]].z);
+		float3 normalen = CrossProductt(edge0, edge1);
+		VertexwithNormal[Index[i]].N = VertexwithNormal[Index[i]].N + normalen.x;
+		VertexwithNormal[Index[i]].NN = VertexwithNormal[Index[i]].NN + normalen.y;
+		VertexwithNormal[Index[i]].NNN = VertexwithNormal[Index[i]].NNN + normalen.z;
+	
+		VertexwithNormal[Index[i + 1]].N = VertexwithNormal[Index[i + 1]].N + normalen.x;
+		VertexwithNormal[Index[i + 1]].NN = VertexwithNormal[Index[i + 1]].NN + normalen.y;
+		VertexwithNormal[Index[i + 1]].NNN = VertexwithNormal[Index[i + 1]].NNN + normalen.z;
+
+		VertexwithNormal[Index[i + 2]].N = VertexwithNormal[Index[i + 2]].N + normalen.x;
+		VertexwithNormal[Index[i + 2]].NN = VertexwithNormal[Index[i + 2]].NN + normalen.y;
+		VertexwithNormal[Index[i + 2]].NNN = VertexwithNormal[Index[i + 2]].NNN + normalen.z;
+		i++;
+		i++;
 	}
-	*/
+	for (int i = 0; i < VertexwithNormal.size(); i++)
+	{
+		float3 test = normalize(float3(VertexwithNormal[i].N, VertexwithNormal[i].NN, VertexwithNormal[i].NNN));
+		VertexwithNormal[i].N = test.x;
+		VertexwithNormal[i].NN = test.y;
+		VertexwithNormal[i].NNN = test.z;
+	}
+
+
 }
 
 

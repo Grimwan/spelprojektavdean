@@ -12,6 +12,7 @@ struct Grid {
 };
 
 
+
 class Heightmap
 {
 private:
@@ -28,8 +29,8 @@ public:
 	void buildgridarray();
 	int getheightLength();
 	int getwidhtLength();
-	void buildscene();
-
+	void buildSceneWithOutNormals();
+	void buildSceneWithNormals();
 	std::vector<PositonColorNormalVertex> returnVertexNormaldata() { return VertexwithNormal; };
 	std::vector<PositonColorVertex> returnvertexdata() { return Vertex; };
 	std::vector<int> returnIndexdata() { return Index; };

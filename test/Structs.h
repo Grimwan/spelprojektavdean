@@ -53,4 +53,20 @@ struct Cameradata
 	float camerasomething;
 };
 
+struct float3 
+{
+	float x, y, z; 
+	float3() { x = 0; y = 0; z = 0; }
+	float3(int x, int y, int z) { this->x = x, this->y = y, this->z = z; };
+	
+
+	float3 operator-(const float3& o)
+	{
+		return float3(x - o.x, y - o.y, z - o.z);
+	}
+
+
+};
+
+
 #endif

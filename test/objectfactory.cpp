@@ -68,7 +68,7 @@ void GameObjectCreationTriangle::GameObjectCreationHeightMap(DeansRender *& rend
 	creation.loadingBmpPicture(Name.c_str());
 	if(Normal == "No")
 	{
-	creation.buildscene();
+	creation.buildSceneWithOutNormals();
 	GameObject * triangletest = new GameObject(renderingsfunction->gDevicereturn(), creation.returnvertexdata(), creation.returnIndexdata());
 	
 	triangletest->setTypeOfObject(heightMapObject);
