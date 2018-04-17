@@ -36,7 +36,10 @@ public:
 	GameObject();
 	GameObject(ID3D11Device * &gDevice,std::vector<PositonColorVertex> Positionsochfergdata);
 	GameObject(ID3D11Device * &gDevice, std::vector<PositonColorVertex> Positionsochfergdata,std::vector<int> Indexdata);
+	
 	GameObject(ID3D11Device * &gDevice,PositonColorVertex* Positionsochfergdata);
+
+	GameObject(ID3D11Device * &gDevice, std::vector<PositonColorNormalVertex> Positionsochfergdata, std::vector<int> Indexdata, objectType objectt);
 	ID3D11Buffer * getVertexbuffer();
 	void draw(ID3D11DeviceContext* &gDeviceContext, ID3D11InputLayout* &gVertexLayout);
 	void update();

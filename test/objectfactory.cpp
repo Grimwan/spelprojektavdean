@@ -71,10 +71,20 @@ void GameObjectCreationTriangle::GameObjectCreationHeightMap(DeansRender *& rend
 	creation.buildSceneWithOutNormals();
 	GameObject * triangletest = new GameObject(renderingsfunction->gDevicereturn(), creation.returnvertexdata(), creation.returnIndexdata());
 	
-	triangletest->setTypeOfObject(heightMapObject);
+//	triangletest->setTypeOfObject(heightMapObject);
 	
 	renderingsfunction->Gameobjectpush(triangletest);
 	}
+	if (Normal == "Yes")
+	{
+		creation.buildSceneWithNormals();
+		GameObject * triangletest = new GameObject(renderingsfunction->gDevicereturn(), creation.returnVertexNormaldata(), creation.returnIndexdata(), heightMapObject);
+
+			triangletest->setTypeOfObject(heightMapObject);
+	//	triangletest->setTypeOfObject(AnObject);
+		renderingsfunction->Gameobjectpush(triangletest);
+	}
+
 }
 
 GameObjectCreationTriangle::GameObjectCreationTriangle(DeansRender* &renderingsfuntionen)

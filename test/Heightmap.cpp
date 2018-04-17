@@ -1,6 +1,6 @@
 #include "Heightmap.h"
 #define roundDownTheHeight 10
-
+using namespace DirectX;
 
 float3 CrossProductt(float3 First, float3 Second)
 {
@@ -143,7 +143,7 @@ void Heightmap::buildSceneWithNormals()
 		{
 			pushback = { _twodArray[i][j].x, _twodArray[i][j].height / roundDownTheHeight ,_twodArray[i][j].y,
 				1.0f,1.0f,0.0f,
-				0,0,0,
+				0.f,0.f,0.f,
 			};
 			_twodArray[i][j].indexValue = m;
 			m++;
@@ -164,17 +164,20 @@ void Heightmap::buildSceneWithNormals()
 			Index.push_back(_twodArray[i + 1][j].indexValue);
 		}
 	}
-/*
+	/*
 	float3 edge0 = float3(VertexwithNormal[1].x, VertexwithNormal[1].y, VertexwithNormal[1].z) - float3(VertexwithNormal[0].x, VertexwithNormal[0].y, VertexwithNormal[0].z);
 	float3 edge1 = float3(VertexwithNormal[2].x, VertexwithNormal[2].y, VertexwithNormal[2].z) - float3(VertexwithNormal[0].x, VertexwithNormal[0].y, VertexwithNormal[0].z);
 	float3 normalen = CrossProductt(edge0, edge1);
 	normalen = normalize(normalen);
-*/
+	*/
+
+	
 	for (int i = 0; i < Index.size(); i++)
 	{
 		float3 edge0 = float3(VertexwithNormal[Index[i + 1]].x, VertexwithNormal[Index[i + 1]].y, VertexwithNormal[Index[i + 1]].z) - float3(VertexwithNormal[Index[i + 0]].x, VertexwithNormal[Index[i + 0]].y, VertexwithNormal[Index[i + 0]].z);
 		float3 edge1 = float3(VertexwithNormal[Index[i + 2]].x, VertexwithNormal[Index[i + 2]].y, VertexwithNormal[Index[i + 2]].z) - float3(VertexwithNormal[Index[i + 0]].x, VertexwithNormal[Index[i + 0]].y, VertexwithNormal[Index[i + 0]].z);
 		float3 normalen = CrossProductt(edge0, edge1);
+		normalen = normalize(normalen);
 		VertexwithNormal[Index[i]].N = VertexwithNormal[Index[i]].N + normalen.x;
 		VertexwithNormal[Index[i]].NN = VertexwithNormal[Index[i]].NN + normalen.y;
 		VertexwithNormal[Index[i]].NNN = VertexwithNormal[Index[i]].NNN + normalen.z;
@@ -191,13 +194,14 @@ void Heightmap::buildSceneWithNormals()
 	}
 	for (int i = 0; i < VertexwithNormal.size(); i++)
 	{
-		float3 test = normalize(float3(VertexwithNormal[i].N, VertexwithNormal[i].NN, VertexwithNormal[i].NNN));
+		float3 test = normalize(float3(VertexwithNormal[i].N / 7, VertexwithNormal[i].NN/ 7, VertexwithNormal[i].NNN / 7));
 		VertexwithNormal[i].N = test.x;
 		VertexwithNormal[i].NN = test.y;
 		VertexwithNormal[i].NNN = test.z;
 	}
+	
 
-
+	
 }
 
 

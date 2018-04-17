@@ -21,12 +21,13 @@ cbuffer Cameradata : register(b1)
 	float something;
 };
 
-float4 main(VS_OUT input) : SV_Target
+float4 PS_main(VS_OUT input) : SV_Target
 {
 	float3 ljusvector = LightPosition - input.wPos.xyz;
 	float distance = length(ljusvector);
 	float procentoflight;
 	float specfactor = 0;
+//	float3 hardcodednormal = float3(0, 1, 0);
 	if (distance > range)
 	{
 		procentoflight = range / distance;

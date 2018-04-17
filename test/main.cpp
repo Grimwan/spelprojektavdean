@@ -61,13 +61,13 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 //		GameObject Triangle(renderingsfuntionen.gDevicereturn());
 //		GameObject * triangletest = &Triangle;
 	//	GameObject * triangletest = new GameObject(renderingsfuntionen.gDevicereturn());
-		GameObjectCreationTriangle firstobject(renderingsfuntionen);
-		GameObjectCreationTriangle secondobject(renderingsfuntionen);
+	//	GameObjectCreationTriangle firstobject(renderingsfuntionen);
+	//	GameObjectCreationTriangle secondobject(renderingsfuntionen);
 	//	GameObjectCreationTriangle test;
 	//	test.Indexbuffertest(renderingsfuntionen);
 
 		GameObjectCreationTriangle BuildHeightMap;
-		BuildHeightMap.GameObjectCreationHeightMap(renderingsfuntionen, "Heightmap.bmp","No");
+		BuildHeightMap.GameObjectCreationHeightMap(renderingsfuntionen, "Heightmap.bmp","Yes");
 	//	GameObjectCreationTriangle secondobject(renderingsfuntionen,2);
 
 		ShowWindow(wndHandle, nCmdShow);
@@ -165,7 +165,7 @@ HRESULT CreateDirect3DContext(HWND wndHandle)
 	HRESULT hr = D3D11CreateDeviceAndSwapChain(NULL,
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
-		NULL,
+		D3D11_CREATE_DEVICE_DEBUG,
 		NULL,
 		NULL,
 		D3D11_SDK_VERSION,
@@ -185,8 +185,31 @@ HRESULT CreateDirect3DContext(HWND wndHandle)
 		renderingsfuntionen->gDevicereturn()->CreateRenderTargetView(pBackBuffer, NULL, &renderingsfuntionen->gBackbufferRTVreturn());
 		pBackBuffer->Release();
 
+
+		//Describe our Depth/Stencil Buffer
+		D3D11_TEXTURE2D_DESC depthStencilDesc;
+
+		depthStencilDesc.Width = 640;
+		depthStencilDesc.Height = 480;
+		depthStencilDesc.MipLevels = 1;
+		depthStencilDesc.ArraySize = 1;
+		depthStencilDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		depthStencilDesc.SampleDesc.Count = 1;
+		depthStencilDesc.SampleDesc.Quality = 0;
+		depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
+		depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+		depthStencilDesc.CPUAccessFlags = 0;
+		depthStencilDesc.MiscFlags = 0;
+
+		//Create the Depth/Stencil View
+		renderingsfuntionen->gDevicereturn()->CreateTexture2D(&depthStencilDesc, NULL, &renderingsfuntionen->depthStencilBufferreturn());
+		renderingsfuntionen->gDevicereturn()->CreateDepthStencilView(renderingsfuntionen->depthStencilBufferreturn(), NULL, &renderingsfuntionen->depthstencilviewreturn());
+//		renderingsfuntionen->depthstencilviewreturn()
 		// set the render target as the back buffer
-		renderingsfuntionen->gDeviceContextreturn()->OMSetRenderTargets(1, &renderingsfuntionen->gBackbufferRTVreturn(), NULL);
+		renderingsfuntionen->gDeviceContextreturn()->OMSetRenderTargets(1, &renderingsfuntionen->gBackbufferRTVreturn(),nullptr);
 	}
+
+
+
 	return hr;
 }

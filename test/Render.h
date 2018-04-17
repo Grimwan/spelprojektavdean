@@ -28,6 +28,8 @@ private:
 	ID3D11Buffer* worldMatrix = nullptr;
 	XMMATRIX mProjection;
 	Shaders shader;
+	ID3D11DepthStencilView* depthStencilView;
+	ID3D11Texture2D* depthStencilBuffer;
 	std::chrono::time_point<std::chrono::system_clock> Lasttime;
 	float time;
 	float dt;
@@ -45,7 +47,10 @@ public:
 	void DeferredRenderingFirstPass(objectType Type);
 	void DeferredRenderingSecondPass();
 	bool getfps();
+//	void setdepthStencilView(ID3D11DepthStencilView* depthStencilView);
 	void Gameobjectpush(GameObject* &objectfile);
+	ID3D11DepthStencilView *& depthstencilviewreturn();
+	ID3D11Texture2D *& depthStencilBufferreturn();
 	ID3D11Device *& gDevicereturn();
 	IDXGISwapChain *& gSwapChainreturn();
 	void testfunctionGbuffer();

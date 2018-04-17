@@ -4,7 +4,12 @@ DeansRender::DeansRender()
 {
 	Lasttime=std::chrono::system_clock::now();
 	mProjection = XMMatrixPerspectiveLH(3.141592f*0.45f, (float)640 / (float)480, 0.5f, 200.0f);
-	forwardordefered = true;
+	forwardordefered = false;
+
+
+
+
+
 }
 void DeansRender::testfunctionGbuffer()
 {
@@ -88,7 +93,7 @@ void DeansRender::forwardRendering(objectType Type)
 	if(Type == AnObject)
 		shader.objectShaderVSandPS(gDeviceContext);
 	else if (Type == heightMapObject)
-		shader.objectShaderVSandPS(gDeviceContext);
+		shader.forwardrenderingHeightmap(gDeviceContext);
 }
 
 void DeansRender::pureForwardrendering(HWND wndHandle)
@@ -104,7 +109,7 @@ void DeansRender::pureForwardrendering(HWND wndHandle)
 	// clear the back buffer to a deep blue
 	float clearColor[] = { 0, 0, 0, 1 };
 	gDeviceContext->ClearRenderTargetView(gBackbufferRTV, clearColor);
-
+	gDeviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	//	test[0]->setrotx(25);
 	//	test[0]->settranslation(2, 0, 0);
@@ -298,7 +303,12 @@ bool DeansRender::getfps()
 		return false;
 	}
 }
-
+/*
+void DeansRender::setdepthStencilView(ID3D11DepthStencilView * depthStencilView)
+{
+	this->depthStencilView = depthStencilView;
+}
+*/
 DeansRender::~DeansRender()
 {
 }
@@ -307,6 +317,16 @@ DeansRender::~DeansRender()
 void DeansRender::Gameobjectpush(GameObject*&objectfile)
 {
 	test.push_back(objectfile);
+}
+
+ID3D11DepthStencilView *& DeansRender::depthstencilviewreturn()
+{
+	return depthStencilView;
+}
+
+ID3D11Texture2D *& DeansRender::depthStencilBufferreturn()
+{
+	return depthStencilBuffer;
 }
 
 ID3D11Device *& DeansRender::gDevicereturn()

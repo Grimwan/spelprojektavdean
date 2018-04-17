@@ -197,6 +197,72 @@ hr =	D3DCompileFromFile(
 
 
 
+
+
+
+
+
+
+
+
+	//create vertex shader
+	ID3DBlob* VertexshaderHeightMap = nullptr;
+	D3DCompileFromFile(
+		L"VertexHeightMap.hlsl", // filename
+		nullptr,		// optional macros
+		nullptr,		// optional include files
+		"VS_main",		// entry point
+		"vs_4_0",		// shader model (target)
+		0,				// shader compile options
+		0,				// effect compile options
+		&VertexshaderHeightMap,			// double pointer to ID3DBlob		
+		nullptr			// pointer for Error Blob messages.
+						// how to use the Error blob, see here
+						// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
+	);
+
+	gDevice->CreateVertexShader(VertexshaderHeightMap->GetBufferPointer(), VertexshaderHeightMap->GetBufferSize(), nullptr, &gVertexHeightmap);
+
+	D3D11_INPUT_ELEMENT_DESC inputDescheightmap[] = {
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }	
+	};
+	gDevice->CreateInputLayout(inputDescheightmap, ARRAYSIZE(inputDescheightmap), VertexshaderHeightMap->GetBufferPointer(), VertexshaderHeightMap->GetBufferSize(), &gVertexLayout);
+	// we do not need anymore this COM object, so we release it.
+	VertexshaderHeightMap->Release();
+
+
+	//create pixel shader
+	ID3DBlob* HeightMapPixelForward = nullptr;
+	hr = D3DCompileFromFile(
+		L"PixelHeightmapForward.hlsl", // filename
+		nullptr,		// optional macros
+		nullptr,		// optional include files
+		"PS_main",		// entry point
+		"ps_4_0",		// shader model (target)
+		0,				// shader compile options
+		0,				// effect compile options
+		&HeightMapPixelForward,			// double pointer to ID3DBlob		
+		nullptr			// pointer for Error Blob messages.
+						// how to use the Error blob, see here
+						// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
+	);
+	if (FAILED(hr))
+	{
+		if (errorBlob != nullptr)
+		{
+			OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+			errorBlob->Release();
+		}
+	}
+
+	gDevice->CreatePixelShader(HeightMapPixelForward->GetBufferPointer(), HeightMapPixelForward->GetBufferSize(), nullptr, &gPixelShaderHeightmapforward);
+	// we do not need anymore this COM object, so we release it.
+	HeightMapPixelForward->Release();
+
+
+
 }
 
 Shaders::Shaders()
@@ -212,6 +278,15 @@ Shaders::~Shaders()
 	gPixelShader->Release();
 	SecondgVertexLayout->Release();
 
+}
+
+void Shaders::forwardrenderingHeightmap(ID3D11DeviceContext *& gDeviceContext)
+{
+	gDeviceContext->VSSetShader(gVertexHeightmap, nullptr, 0);
+	gDeviceContext->HSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->GSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->PSSetShader(gPixelShaderHeightmapforward, nullptr, 0);
 }
 
 void Shaders::objectShaderVSandPS(ID3D11DeviceContext *& gDeviceContext)
