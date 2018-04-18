@@ -158,7 +158,7 @@ HRESULT CreateDirect3DContext(HWND wndHandle)
 	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;     // use 32-bit color
 	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;      // how swap chain is to be used
 	scd.OutputWindow = wndHandle;                           // the window to be used
-	scd.SampleDesc.Count = 4;                               // how many multisamples
+	scd.SampleDesc.Count = 1;                               // how many multisamples
 	scd.Windowed = TRUE;                                    // windowed/full-screen mode
 
 	// create a device, device context and swap chain using the information in the scd struct
@@ -206,7 +206,7 @@ HRESULT CreateDirect3DContext(HWND wndHandle)
 		renderingsfuntionen->gDevicereturn()->CreateDepthStencilView(renderingsfuntionen->depthStencilBufferreturn(), NULL, &renderingsfuntionen->depthstencilviewreturn());
 //		renderingsfuntionen->depthstencilviewreturn()
 		// set the render target as the back buffer
-		renderingsfuntionen->gDeviceContextreturn()->OMSetRenderTargets(1, &renderingsfuntionen->gBackbufferRTVreturn(),nullptr);
+		renderingsfuntionen->gDeviceContextreturn()->OMSetRenderTargets(1, &renderingsfuntionen->gBackbufferRTVreturn(), renderingsfuntionen->depthstencilviewreturn());
 	}
 
 
