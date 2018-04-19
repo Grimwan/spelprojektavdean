@@ -62,12 +62,18 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 //		GameObject * triangletest = &Triangle;
 	//	GameObject * triangletest = new GameObject(renderingsfuntionen.gDevicereturn());
 	//	GameObjectCreationTriangle firstobject(renderingsfuntionen);
-	//	GameObjectCreationTriangle secondobject(renderingsfuntionen);
+		GameObjectCreationTriangle secondobject(renderingsfuntionen);
 	//	GameObjectCreationTriangle test;
 	//	test.Indexbuffertest(renderingsfuntionen);
 
+		GameObjectCreationTriangle Skybox;
+		Skybox.GameObjectCreationCubeMapSky(renderingsfuntionen, 200,200,200);
+
 		GameObjectCreationTriangle BuildHeightMap;
 		BuildHeightMap.GameObjectCreationHeightMap(renderingsfuntionen, "Heightmap.bmp","Yes");
+
+
+
 	//	GameObjectCreationTriangle secondobject(renderingsfuntionen,2);
 
 		ShowWindow(wndHandle, nCmdShow);

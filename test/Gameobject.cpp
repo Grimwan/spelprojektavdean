@@ -54,7 +54,7 @@ GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> 
 	typeOfObject = AnObject;
 	size = Positionsochfergdata.size();
 	amountToDraw = size;
-	scaling = XMMatrixScaling(0.5, 0.5, 1);
+	scaling = XMMatrixScaling(0.5, 0.5, 0.5);
 	rotation = XMMatrixRotationRollPitchYaw(0,0, 0); // first up down, second left right, z barrelroll
 	translation = XMMatrixTranslation(-0.5,-0.5, 0);
 	updateworldmatrix();
@@ -80,7 +80,7 @@ GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorNormalVe
 {
 	typeOfObject = objectt;
 	size = Positionsochfergdata.size();
-	scaling = XMMatrixScaling(0.5, 0.5, 1);
+	scaling = XMMatrixScaling(0.5, 0.5, 0.5);
 	rotation = XMMatrixRotationRollPitchYaw(0, 0, 0); // first up down, second left right, z barrelroll
 	translation = XMMatrixTranslation(-0.5, -20, 0);
 	updateworldmatrix();
@@ -129,7 +129,7 @@ GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> 
 {
 	typeOfObject = AnObject;
 	size = Positionsochfergdata.size();
-	scaling = XMMatrixScaling(0.5, 0.5, 1);
+	scaling = XMMatrixScaling(0.5, 0.5, 0.5);
 	rotation = XMMatrixRotationRollPitchYaw(0, 0, 0); // first up down, second left right, z barrelroll
 	translation = XMMatrixTranslation(-0.5, -0.5, 0);
 	updateworldmatrix();

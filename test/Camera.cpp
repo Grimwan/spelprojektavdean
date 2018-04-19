@@ -8,6 +8,7 @@ camera::camera()
 	camPitch = 0.0f;
 	OldPos.x = 0;
 	OldPos.y = 0;
+	onoff = false;
 	MouseOnOff = false;
 }
 
@@ -50,6 +51,8 @@ void camera::DetectInput(double time, HWND wndHandle)
 	SHORT S = GetAsyncKeyState('S');
 	SHORT D = GetAsyncKeyState('D');
 	SHORT R = GetAsyncKeyState('R');
+	SHORT Z = GetAsyncKeyState('Z');
+	SHORT X = GetAsyncKeyState('X');
 	SHORT LMouse = GetAsyncKeyState(VK_LBUTTON);
 	SHORT RMouse = GetAsyncKeyState(VK_RBUTTON);
 	SHORT Space = GetAsyncKeyState(VK_SPACE);
@@ -99,6 +102,16 @@ void camera::DetectInput(double time, HWND wndHandle)
 
 	Fråga 9: 
 	*/
+
+	if (Z)
+	{
+		onoff = true;
+	}
+	if (X)
+	{
+		onoff = false;
+	}
+
 	if (LMouse)
 	{
 		ShowCursor(FALSE);
@@ -162,21 +175,30 @@ void camera::DetectInput(double time, HWND wndHandle)
 
 			//	OldPos = NewMouseposition;
 		}*/
+	if (onoff == true)
+	{
+		POINT NewMouseposition;
+		GetCursorPos(&NewMouseposition);
+		if ((NewMouseposition.x != 100) || (NewMouseposition.y != 100))
+		{
+			camYaw += (NewMouseposition.x - 100) * speed*0.01f;
+			camPitch += (NewMouseposition.y - 100) * speed*0.01f;
+			SetCursorPos(100, 100);
+		}
+	}
+	else
+	{
+		POINT NewMouseposition;
+		GetCursorPos(&NewMouseposition);
+		if ((NewMouseposition.x != OldPos.x) || (NewMouseposition.y != OldPos.y))
+		{
+			camYaw += (NewMouseposition.x-OldPos.x) * 0.001f;
 
-			POINT NewMouseposition;
-			GetCursorPos(&NewMouseposition);
-			if ((NewMouseposition.x != OldPos.x) || (NewMouseposition.y != OldPos.y))
-			{
-				camYaw += (NewMouseposition.x-OldPos.x) * 0.001f;
+			camPitch += (NewMouseposition.y - OldPos.y) * 0.001f;
 
-				camPitch += (NewMouseposition.y - OldPos.y) * 0.001f;
-
-				OldPos = NewMouseposition;
-			}
-
-
-			
-	//}
+			OldPos = NewMouseposition;
+		}			
+	}
 	UpdateCamera();
 
 }

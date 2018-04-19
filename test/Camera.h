@@ -26,7 +26,7 @@ private:
 	XMMATRIX camView;
 
 	XMMATRIX camRotationMatrix;
-
+	bool onoff;
 	float moveLeftRight = 0.0f;
 	float moveBackForward = 0.0f;
 	float moveUpDown = 0.0f;

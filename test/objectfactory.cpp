@@ -87,9 +87,17 @@ void GameObjectCreationTriangle::GameObjectCreationHeightMap(DeansRender *& rend
 
 }
 
+void GameObjectCreationTriangle::GameObjectCreationCubeMapSky(DeansRender *& renderingsfunction,int height , int width, int z)
+{
+	Skybox skybox;
+	skybox.buildCube(width, height,z);
+	GameObject * triangletest = new GameObject(renderingsfunction->gDevicereturn(), skybox.returnvertexdata(), skybox.returnIndexdata());
+	renderingsfunction->Gameobjectpush(triangletest);
+}
+
 GameObjectCreationTriangle::GameObjectCreationTriangle(DeansRender* &renderingsfuntionen)
 {
-	/*
+
 	std::vector<PositonColorVertex> testtriangle;
 	PositonColorVertex test = {
 		0.0f, 0.5f, 0.0f,	//v0 pos
@@ -123,7 +131,8 @@ GameObjectCreationTriangle::GameObjectCreationTriangle(DeansRender* &renderingsf
 	};
 	testtriangle.push_back(test);
 
-	*/
+	
+	/*
 	std::vector<PositonColorVertex> testtriangle;
 	PositonColorVertex test = {
 		0.0f, 0.5f, 0.0f,	//v0 pos
@@ -139,7 +148,7 @@ GameObjectCreationTriangle::GameObjectCreationTriangle(DeansRender* &renderingsf
 		-0.50f, -0.5f, 0.0f, //v2
 		0.0f, 0.0f, 1.0f	//v2 color
 	};
-
+	*/
 	testtriangle.push_back(test);
 
 	GameObject * triangletest = new GameObject(renderingsfuntionen->gDevicereturn(), testtriangle);

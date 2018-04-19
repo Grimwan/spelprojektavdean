@@ -7,7 +7,7 @@
 #include "Render.h"
 #include "Shaders.h"
 #include "Heightmap.h"
-
+#include "Skybox.h"
 
 
 #pragma comment (lib, "d3d11.lib")
@@ -27,6 +27,8 @@ public:
 
 	void GameObjectCreationHeightMap(DeansRender* &renderingsfunction, std::string Name, std::string Normal);
 
+
+	void GameObjectCreationCubeMapSky(DeansRender* &renderingsfunction, int height, int width,int z);
 };
 
 
