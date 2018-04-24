@@ -41,7 +41,7 @@ public:
 	DeansRender();
 	void update(HWND wndHandle);
 	~DeansRender();
-	void forwardRendering(objectType Type);
+	void forwardRendering(objectType Type, ID3D11ShaderResourceView *& gTextureView);
 	void pureForwardrendering(HWND wndHandle);
 	void pureDefferedrendering(HWND wndHandle);
 	void DeferredRenderingFirstPass(objectType Type);

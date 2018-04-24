@@ -1,1 +1,7 @@
-﻿  Demo.vcxproj -> H:\programming\visual studio projekt\spelprojektavdean\test\Debug\Demo.exe
+﻿  Shaders.cpp
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+h:\programming\visual studio projekt\spelprojektavdean\test\structs.h(64): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+h:\programming\visual studio projekt\spelprojektavdean\test\structs.h(69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+h:\programming\visual studio projekt\spelprojektavdean\test\shaders.cpp(449): warning C4715: 'Shaders::gPixelShaderReturn': not all control paths return a value
+h:\programming\visual studio projekt\spelprojektavdean\test\shaders.cpp(460): warning C4715: 'Shaders::gVertexLayoutReturn': not all control paths return a value
+  Demo.vcxproj -> H:\programming\visual studio projekt\spelprojektavdean\test\Debug\Demo.exe

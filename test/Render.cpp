@@ -88,12 +88,14 @@ void DeansRender::update(HWND wndHandle)
 	}
 }
 
-void DeansRender::forwardRendering(objectType Type)
+void DeansRender::forwardRendering(objectType Type, ID3D11ShaderResourceView *& gTextureView)
 {
-	if(Type == AnObject)
+	if (Type == AnObject)
 		shader.objectShaderVSandPS(gDeviceContext);
 	else if (Type == heightMapObject)
 		shader.forwardrenderingHeightmap(gDeviceContext);
+	else if (Type == PosTxtShader)
+		shader.PosTexVsGsPs(gDeviceContext, gTextureView);
 }
 
 void DeansRender::pureForwardrendering(HWND wndHandle)
@@ -121,7 +123,7 @@ void DeansRender::pureForwardrendering(HWND wndHandle)
 
 	for (int i = 0; i < test.size(); i++)
 	{
-		forwardRendering(test[i]->getTypeOfObject());
+		forwardRendering(test[i]->getTypeOfObject(),test[i]->TextureViewenreturn());
 		test[i]->animation();
 		test[i]->updateworldmatrix();
 		Camera.DetectInput(dt, wndHandle);
@@ -134,7 +136,7 @@ void DeansRender::pureForwardrendering(HWND wndHandle)
 		//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
 		//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
 		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, yes);
-		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn(0));
+		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn(test[i]->getVertexLayoutNumber()));
 	}
 }
 

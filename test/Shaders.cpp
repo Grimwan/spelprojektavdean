@@ -263,6 +263,106 @@ hr =	D3DCompileFromFile(
 
 
 
+
+
+
+
+
+	
+
+
+	//Position Texture
+
+	
+	//create vertex shader
+	ID3DBlob* pVertexPosTex = nullptr;
+	D3DCompileFromFile(
+		L"VertexPosTex.hlsl", // filename
+		nullptr,		// optional macros
+		nullptr,		// optional include files
+		"VS_main",		// entry point
+		"vs_4_0",		// shader model (target)
+		0,				// shader compile options
+		0,				// effect compile options
+		&pVertexPosTex,			// double pointer to ID3DBlob		
+		nullptr			// pointer for Error Blob messages.
+						// how to use the Error blob, see here
+						// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
+	);
+
+	gDevice->CreateVertexShader(pVertexPosTex->GetBufferPointer(), pVertexPosTex->GetBufferSize(), nullptr, &VertexPosTexShader);
+
+
+	//	float4 wPos : POSITION
+	//create input layout (verified using vertex shader)
+	D3D11_INPUT_ELEMENT_DESC inputDescPosTex[] = {
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+	};
+	gDevice->CreateInputLayout(inputDescPosTex, ARRAYSIZE(inputDescPosTex), pVertexPosTex->GetBufferPointer(), pVertexPosTex->GetBufferSize(), &gVertexLayoutPosTex);
+	// we do not need anymore this COM object, so we release it.
+	pVertexPosTex->Release();
+
+	
+
+
+
+
+
+
+	
+
+	//create Geometry shader
+
+	//Geometry shader
+	ID3DBlob* pGSPosTex = nullptr;
+	hr = D3DCompileFromFile(L"GeometryPosTex.hlsl", nullptr, nullptr, "GS_main", "gs_4_0", 0, 0, &pGSPosTex, &errorBlob);
+	if (FAILED(hr))
+	{
+		if (errorBlob != nullptr)
+		{
+			OutputDebugStringA((char*)errorBlob->GetBufferPointer());
+			errorBlob->Release();
+		}
+	}
+	gDevice->CreateGeometryShader(pGSPosTex->GetBufferPointer(), pGSPosTex->GetBufferSize(), nullptr, &GeometryPosTexShader);
+
+	pGSPosTex->Release();
+
+
+
+
+
+
+
+
+
+
+
+
+	//create pixel shader
+	ID3DBlob* pPSposTex = nullptr;
+	D3DCompileFromFile(
+		L"PixelPosTex.hlsl", // filename
+		nullptr,		// optional macros
+		nullptr,		// optional include files
+		"PS_main",		// entry point
+		"ps_4_0",		// shader model (target)
+		0,				// shader compile options
+		0,				// effect compile options
+		&pPSposTex,			// double pointer to ID3DBlob		
+		nullptr			// pointer for Error Blob messages.
+						// how to use the Error blob, see here
+						// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
+	);
+
+	gDevice->CreatePixelShader(pPSposTex->GetBufferPointer(), pPSposTex->GetBufferSize(), nullptr, &PixelPosTexShader);
+	// we do not need anymore this COM object, so we release it.
+	pPSposTex->Release();
+
+	
+	
+
 }
 
 Shaders::Shaders()
@@ -287,6 +387,18 @@ void Shaders::forwardrenderingHeightmap(ID3D11DeviceContext *& gDeviceContext)
 	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
 	gDeviceContext->GSSetShader(nullptr, nullptr, 0);
 	gDeviceContext->PSSetShader(gPixelShaderHeightmapforward, nullptr, 0);
+}
+
+void Shaders::PosTexVsGsPs(ID3D11DeviceContext *& gDeviceContext, ID3D11ShaderResourceView *& gTextureView)
+{
+	gDeviceContext->VSSetShader(VertexPosTexShader, nullptr, 0);
+	gDeviceContext->HSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
+
+	gDeviceContext->GSSetShader(GeometryPosTexShader, nullptr, 0);
+	gDeviceContext->PSSetShaderResources(0, 1, &gTextureView);
+	gDeviceContext->PSSetShader(PixelPosTexShader, nullptr, 0);
+
 }
 
 void Shaders::objectShaderVSandPS(ID3D11DeviceContext *& gDeviceContext)
@@ -340,7 +452,9 @@ ID3D11InputLayout *& Shaders::gVertexLayoutReturn(int firstsecond)
 {
 	if (firstsecond == 0)
 		return gVertexLayout;
-	else
+	else if (firstsecond == 1)
 		return SecondgVertexLayout;
+	else if (firstsecond == 2)
+		return gVertexLayoutPosTex;
 	// TODO: insert return statement here
 }

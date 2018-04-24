@@ -18,7 +18,11 @@ struct PositonColorVertex
 	float x, y, z;
 	float r, g, b;
 };
-
+struct PositionTexture
+{
+	float x, y, z;
+	float U, V;
+};
 struct PositonColorNormalVertex
 {
 	float x, y, z;

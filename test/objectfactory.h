@@ -16,7 +16,7 @@
 class GameObjectCreationTriangle
 {
 private:
-
+	ID3D11ShaderResourceView * gTextureViewen;
 public:
 	GameObjectCreationTriangle(DeansRender* &renderingsfuntionen);
 	GameObjectCreationTriangle(DeansRender* &renderingsfuntionen,int test);
@@ -26,7 +26,7 @@ public:
 	void Indexbuffertest(DeansRender* &renderingsfuntionen);
 
 	void GameObjectCreationHeightMap(DeansRender* &renderingsfunction, std::string Name, std::string Normal);
-
+	void GameObjectCreationTriangleTextureTest(DeansRender* &renderingsfuntionen);
 
 	void GameObjectCreationCubeMapSky(DeansRender* &renderingsfunction, int height, int width,int z);
 };

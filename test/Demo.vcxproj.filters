@@ -95,6 +95,21 @@
     <FxCompile Include="PixelHeightMapDeffered.hlsl">
       <Filter>Source Files\Shaders\Defered renderer\Heightmap</Filter>
     </FxCompile>
+    <FxCompile Include="VertexPosTexNorm.hlsl">
+      <Filter>Source Files\Shaders\Forward rendering\OtherObject</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelPosTexNorm.hlsl">
+      <Filter>Source Files\Shaders\Forward rendering\OtherObject</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexPosTex.hlsl">
+      <Filter>Source Files\Shaders\Forward rendering\OtherObject</Filter>
+    </FxCompile>
+    <FxCompile Include="GeometryPosTex.hlsl">
+      <Filter>Source Files\Shaders\Forward rendering\OtherObject</Filter>
+    </FxCompile>
+    <FxCompile Include="PixelPosTex.hlsl">
+      <Filter>Source Files\Shaders\Forward rendering\OtherObject</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gameobject.h">
@@ -128,6 +143,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

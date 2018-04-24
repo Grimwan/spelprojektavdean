@@ -11,13 +11,16 @@
 #include <DirectXMath.h>
 #include <dinput.h>
 using namespace DirectX;
-enum objectType { heightMapObject, AnObject };
+enum objectType { heightMapObject, AnObject,Skyboxobject,PosTxtShader};
 
 class GameObject
 {
 private:
+int VertexLayoutNumber;
 ID3D11Buffer* VertexBuffer = nullptr;
 ID3D11Buffer* IndexBuffer = nullptr;
+ID3D11ShaderResourceView* TextureViewen = nullptr;
+
 int testet = 0;
 XMMATRIX scaling;
 XMMATRIX rotation;
@@ -36,7 +39,7 @@ public:
 	GameObject();
 	GameObject(ID3D11Device * &gDevice,std::vector<PositonColorVertex> Positionsochfergdata);
 	GameObject(ID3D11Device * &gDevice, std::vector<PositonColorVertex> Positionsochfergdata,std::vector<int> Indexdata);
-	
+	GameObject(ID3D11Device * &gDevice, std::vector<PositionTexture> Positionsochtexture, std::vector<int> Indexdata, ID3D11ShaderResourceView* &gTextureViewen);
 	GameObject(ID3D11Device * &gDevice,PositonColorVertex* Positionsochfergdata);
 
 	GameObject(ID3D11Device * &gDevice, std::vector<PositonColorNormalVertex> Positionsochfergdata, std::vector<int> Indexdata, objectType objectt);
@@ -51,6 +54,9 @@ public:
 	void setrotx(float rotx);
 	void setroty(float roty);
 	void setrotz(float rotz);
+	ID3D11ShaderResourceView *& TextureViewenreturn();
+	void setVertexLayoutNumber(int 	VertexLayoutNumber) { VertexLayoutNumber = this->VertexLayoutNumber; };
+	int getVertexLayoutNumber() {return VertexLayoutNumber;};
 	void setTypeOfObject(objectType objectType);
 	objectType getTypeOfObject() { return typeOfObject; };
 	void settranslation(float x, float y, float z);

@@ -10,7 +10,7 @@ GameObject::GameObject(ID3D11Device* &gDevice)
 		float x, y, z;
 		float r, g, b;
 	};
-
+	VertexLayoutNumber = 0;
 	TriangleVertex triangleVertices[3] =
 	{
 		0.0f, 0.5f, 0.0f,	//v0 pos
@@ -46,11 +46,13 @@ GameObject::~GameObject()
 
 GameObject::GameObject()
 {
+	VertexLayoutNumber = 0;
 	typeOfObject = AnObject;
 }
 
 GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> Positionsochfergdata)
 {
+	VertexLayoutNumber = 0;
 	typeOfObject = AnObject;
 	size = Positionsochfergdata.size();
 	amountToDraw = size;
@@ -78,6 +80,7 @@ GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> 
 }
 GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorNormalVertex> Positionsochfergdata, std::vector<int> Indexdata,objectType objectt)
 {
+	VertexLayoutNumber = 0;
 	typeOfObject = objectt;
 	size = Positionsochfergdata.size();
 	scaling = XMMatrixScaling(0.5, 0.5, 0.5);
@@ -127,6 +130,7 @@ GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorNormalVe
 
 GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> Positionsochfergdata, std::vector<int> Indexdata)
 {
+	VertexLayoutNumber = 0;
 	typeOfObject = AnObject;
 	size = Positionsochfergdata.size();
 	scaling = XMMatrixScaling(0.5, 0.5, 0.5);
@@ -172,8 +176,58 @@ GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositonColorVertex> 
 
 
 }
+GameObject::GameObject(ID3D11Device *& gDevice, std::vector<PositionTexture> Positionsochtexture, std::vector<int> Indexdata, ID3D11ShaderResourceView *& gTextureViewen)
+{
+	VertexLayoutNumber = 2;
+	TextureViewen = gTextureViewen;
+	typeOfObject = PosTxtShader;
+	size = Positionsochtexture.size();
+	scaling = XMMatrixScaling(0.5, 0.5, 0.5);
+	rotation = XMMatrixRotationRollPitchYaw(0, 0, 0); // first up down, second left right, z barrelroll
+	translation = XMMatrixTranslation(-0.5, -0.5, 0);
+	updateworldmatrix();
+	//	PositonColorVertex * Positonandcolorconverter = &Positionsochfergdata[0];
+
+	D3D11_BUFFER_DESC bufferDesc;
+	memset(&bufferDesc, 0, sizeof(bufferDesc));
+	bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	//	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	bufferDesc.ByteWidth = 5 * sizeof(float)*(UINT)Positionsochtexture.size();
+	D3D11_SUBRESOURCE_DATA data;
+	data.pSysMem = Positionsochtexture.data();
+	gDevice->CreateBuffer(&bufferDesc, &data, &VertexBuffer);
+	HRESULT hr = gDevice->CreateBuffer(&bufferDesc, &data, &this->VertexBuffer);
+	if (FAILED(hr))
+		std::cout << "Failed to create vertex buffer!" << std::endl;
+
+	amountToDraw = Indexdata.size();
+
+	//creates indexbuffer
+	D3D11_BUFFER_DESC bufferIndex;
+	bufferIndex.Usage = D3D11_USAGE_DEFAULT;
+	bufferIndex.ByteWidth = sizeof(unsigned int) * Indexdata.size();
+	bufferIndex.BindFlags = D3D11_BIND_INDEX_BUFFER;
+	bufferIndex.CPUAccessFlags = 0;
+	bufferIndex.MiscFlags = 0;
+
+	// Define the resource data.
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = Indexdata.data();
+	InitData.SysMemPitch = 0;
+	InitData.SysMemSlicePitch = 0;
+	size = 5;
+	// Create the buffer with the device.
+	hr = gDevice->CreateBuffer(&bufferIndex, &InitData, &IndexBuffer);
+	if (FAILED(hr))
+		std::cout << "Failed to create Index buffer!" << std::endl;
+
+
+}
 GameObject::GameObject(ID3D11Device *& gDevice, PositonColorVertex * Positionsochfergdata)
 {
+	VertexLayoutNumber = 0;
 	typeOfObject = AnObject;
 	D3D11_BUFFER_DESC bufferDesc;
 	memset(&bufferDesc, 0, sizeof(bufferDesc));
@@ -201,7 +255,7 @@ ID3D11Buffer * GameObject::getVertexbuffer()
 
 void GameObject::draw(ID3D11DeviceContext* &gDeviceContext, ID3D11InputLayout* &gVertexLayout)
 {
-	UINT32 vertexSize = sizeof(int) *size;
+	UINT32 vertexSize = sizeof(float) *size;
 	UINT32 offset = 0;
 	gDeviceContext->IASetVertexBuffers(0, 1, &VertexBuffer, &vertexSize, &offset);
 
@@ -311,6 +365,11 @@ void GameObject::setroty(float roty)
 void GameObject::setrotz(float rotz)
 {
 	rotation = XMMatrixRotationZ(rotz);
+}
+
+ID3D11ShaderResourceView *& GameObject::TextureViewenreturn()
+{
+	return TextureViewen;
 }
 
 void GameObject::setTypeOfObject(objectType objectType)
