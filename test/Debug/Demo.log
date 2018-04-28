@@ -1,1 +1,9 @@
-﻿  Demo.vcxproj -> H:\programming\visual studio projekt\spelprojektavdean\test\Debug\Demo.exe
+﻿  Render.cpp
+  c:\program files (x86)\windows kits\10\include\10.0.16299.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+h:\programming\visual studio projekt\spelprojektavdean\test\structs.h(64): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+h:\programming\visual studio projekt\spelprojektavdean\test\structs.h(69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+h:\programming\visual studio projekt\spelprojektavdean\test\render.cpp(19): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
+h:\programming\visual studio projekt\spelprojektavdean\test\render.cpp(20): warning C4244: '=': conversion from 'float' to 'UINT', possible loss of data
+h:\programming\visual studio projekt\spelprojektavdean\test\render.cpp(124): warning C4018: '<': signed/unsigned mismatch
+h:\programming\visual studio projekt\spelprojektavdean\test\render.cpp(168): warning C4018: '<': signed/unsigned mismatch
+  Demo.vcxproj -> H:\programming\visual studio projekt\spelprojektavdean\test\Debug\Demo.exe

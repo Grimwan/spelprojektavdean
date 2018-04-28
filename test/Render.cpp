@@ -145,7 +145,7 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 	//	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
 	//	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
 	//	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
-
+	gDeviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	Cameradata cameradataa;
 	cameradataa.cameraPos = Camera.returncamPosition();
 	//	cameradataa.cameraPos = XMFLOAT3(0, 0, 1);
@@ -270,7 +270,7 @@ void DeansRender::DeferredRenderingFirstPass(objectType Type)
 	{
 		gDeviceContext->ClearRenderTargetView(GBufferRTV[i], clearColor);
 	}
-	gDeviceContext->OMSetRenderTargets(4, GBufferRTV, nullptr);
+	gDeviceContext->OMSetRenderTargets(4, GBufferRTV, depthStencilView);
 	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
 
 
@@ -283,7 +283,7 @@ void DeansRender::DeferredRenderingFirstPass(objectType Type)
 
 void DeansRender::DeferredRenderingSecondPass()
 {
-	gDeviceContext->OMSetRenderTargets(1,&gBackbufferRTV, nullptr);
+	gDeviceContext->OMSetRenderTargets(1,&gBackbufferRTV, depthStencilView);
 	gDeviceContext->PSSetConstantBuffers(0, 1, &ConstantBufferPointLight);
 	gDeviceContext->PSSetConstantBuffers(1, 1, &ConstantBufferCamera);
 	gDeviceContext->PSSetShaderResources(0, 4, GBufferSRV);
