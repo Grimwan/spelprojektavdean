@@ -29,6 +29,7 @@ private:
 	ID3D11VertexShader* VertexPosTexShader = nullptr;
 	ID3D11GeometryShader* GeometryPosTexShader = nullptr;
 	ID3D11PixelShader* PixelPosTexShader = nullptr;
+	ID3D11PixelShader* PixelPosTexFirstpassSHader = nullptr;
 	ID3D11ShaderResourceView * gTextureView;
 
 public:
@@ -36,6 +37,7 @@ public:
 	Shaders();
 	~Shaders();
 	void forwardrenderingHeightmap(ID3D11DeviceContext * &gDeviceContext);
+	void deferedrenderingtexvsgsps(ID3D11DeviceContext * &gDeviceContext, ID3D11ShaderResourceView *& gTextureView);
 	void PosTexVsGsPs(ID3D11DeviceContext * &gDeviceContext, ID3D11ShaderResourceView *& gTextureView);
 	void objectShaderVSandPS(ID3D11DeviceContext * &gDeviceContext);
 	void DeferredRenderingFirstPass(ID3D11DeviceContext * &gDeviceContext);

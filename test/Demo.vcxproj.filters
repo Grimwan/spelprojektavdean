@@ -110,6 +110,9 @@
     <FxCompile Include="PixelPosTex.hlsl">
       <Filter>Source Files\Shaders\Forward rendering\OtherObject</Filter>
     </FxCompile>
+    <FxCompile Include="FirstpassTexture.hlsl">
+      <Filter>Source Files\Shaders\Defered renderer\OtherObjects</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gameobject.h">

@@ -360,9 +360,25 @@ hr =	D3DCompileFromFile(
 	// we do not need anymore this COM object, so we release it.
 	pPSposTex->Release();
 
-	
-	
+		//create pixel shader
+		ID3DBlob* pPSposTexfirstpass = nullptr;
+	D3DCompileFromFile(
+		L"FirstpassTexture.hlsl", // filename
+		nullptr,		// optional macros
+		nullptr,		// optional include files
+		"PS_main",		// entry point
+		"ps_4_0",		// shader model (target)
+		0,				// shader compile options
+		0,				// effect compile options
+		&pPSposTexfirstpass,			// double pointer to ID3DBlob		
+		nullptr			// pointer for Error Blob messages.
+						// how to use the Error blob, see here
+						// https://msdn.microsoft.com/en-us/library/windows/desktop/hh968107(v=vs.85).aspx
+	);
 
+	gDevice->CreatePixelShader(pPSposTexfirstpass->GetBufferPointer(), pPSposTexfirstpass->GetBufferSize(), nullptr, &PixelPosTexFirstpassSHader);
+	// we do not need anymore this COM object, so we release it.
+	pPSposTexfirstpass->Release();
 }
 
 Shaders::Shaders()
@@ -387,6 +403,17 @@ void Shaders::forwardrenderingHeightmap(ID3D11DeviceContext *& gDeviceContext)
 	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
 	gDeviceContext->GSSetShader(nullptr, nullptr, 0);
 	gDeviceContext->PSSetShader(gPixelShaderHeightmapforward, nullptr, 0);
+}
+
+void Shaders::deferedrenderingtexvsgsps(ID3D11DeviceContext *& gDeviceContext, ID3D11ShaderResourceView *& gTextureView)
+{
+	gDeviceContext->VSSetShader(VertexPosTexShader, nullptr, 0);
+	gDeviceContext->HSSetShader(nullptr, nullptr, 0);
+	gDeviceContext->DSSetShader(nullptr, nullptr, 0);
+
+	gDeviceContext->GSSetShader(GeometryPosTexShader, nullptr, 0);
+	gDeviceContext->PSSetShaderResources(0, 1, &gTextureView);
+	gDeviceContext->PSSetShader(PixelPosTexFirstpassSHader, nullptr, 0);
 }
 
 void Shaders::PosTexVsGsPs(ID3D11DeviceContext *& gDeviceContext, ID3D11ShaderResourceView *& gTextureView)

@@ -18,13 +18,13 @@ cbuffer Cameradata : register(b1)
 	float something;
 };
 
-void GetGBuffer(in float2 screenPos, out float3 normal, out float3 position, out float3 diffuse, out float3 specular, out float specularPower)
+void GetGBuffer(in float2 screenPos, out float3 normal, out float3 position, out float4 diffuse, out float3 specular, out float specularPower)
 {
 	int3 sampleIndices = int3(screenPos.xy, 0);
 
 	normal = normalTexture.Load(sampleIndices).xyz;
 	position = positionTexture.Load(sampleIndices).xyz;
-	diffuse = diffuseTexture.Load(sampleIndices).xyz;
+	diffuse = diffuseTexture.Load(sampleIndices).xyzw;
 	float4 spec = specularTexture.Load(sampleIndices).xyzw;
 
 	specular = spec.xyz;
@@ -79,7 +79,7 @@ float4 PS_main(float4 screenPos : SV_POSITION) : SV_Target
 {
 	float3 normal;
 	float3 position;
-	float3 diffuse;
+	float4 diffuse;
 	float3 specular;
 	float specularPower;
 
@@ -111,9 +111,9 @@ GetGBuffer(screenPos.xy, normal, position, diffuse, specular, specularPower);
 	//	return float4(input.Color, 1.0f);
 	//	return float4(cameraPos,1.0f);
 	//	return float4((ambientLight*diffuse + (diffuseLight*diffuse + specularLight)),1.0f);
-		return float4(diffuse*procentoflight + specfactor, 1.0f);
+		return float4(diffuse.xyz*procentoflight + specfactor,diffuse.w);
 	//	return float4(normal, 1.0f);
-	//	return float4(diffuse, 1.0f);
+//	return diffuse;
 	//	return float4(position, 1.0f);
 	//	return float4(specfactor, specfactor, specfactor, 1.0f);
 	//	return float4(procentoflight, procentoflight, procentoflight, 1.0f);// kolla färgdjupet

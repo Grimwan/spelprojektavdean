@@ -6,7 +6,7 @@ DeansRender::DeansRender()
 	mProjection = XMMatrixPerspectiveLH(3.141592f*0.45f, (float)640 / (float)480, 0.5f, 200.0f);
 	forwardordefered = false;
 
-
+	blendFactor[0] = 1; blendFactor[1] = 1; blendFactor[2] = 1; blendFactor[3] = 1;
 
 
 
@@ -78,6 +78,30 @@ void DeansRender::update(HWND wndHandle)
 	GbufferCreation(GBufferSRV, GBufferRTV, gDevice, gDeviceContext);
 	//testfunctionGbuffer();
 	
+
+	//shit
+	HRESULT hr;
+
+	//Creation of Lightpass blendstate
+	D3D11_BLEND_DESC BlendDesc;
+	ZeroMemory(&BlendDesc, sizeof(BlendDesc));
+	BlendDesc.AlphaToCoverageEnable = true;
+	BlendDesc.IndependentBlendEnable = false;
+	BlendDesc.RenderTarget[0].BlendEnable = true;
+	BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	BlendDesc.AlphaToCoverageEnable = true;
+	hr = gDevice->CreateBlendState(&BlendDesc, &BlendState);
+	if (FAILED(hr))
+		std::cout << "Failed with Blendstate" << std::endl;
+	//shit
+
+
 	}
 	if(getfps())
 	{
@@ -90,12 +114,17 @@ void DeansRender::update(HWND wndHandle)
 
 void DeansRender::forwardRendering(objectType Type, ID3D11ShaderResourceView *& gTextureView)
 {
+	gDeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
+
 	if (Type == AnObject)
 		shader.objectShaderVSandPS(gDeviceContext);
 	else if (Type == heightMapObject)
 		shader.forwardrenderingHeightmap(gDeviceContext);
 	else if (Type == PosTxtShader)
+	{
+		gDeviceContext->OMSetBlendState(BlendState, nullptr, 0xffffffff);
 		shader.PosTexVsGsPs(gDeviceContext, gTextureView);
+	}
 }
 
 void DeansRender::pureForwardrendering(HWND wndHandle)
@@ -153,7 +182,7 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 	// clear the back buffer to a deep blue
 	float clearColor[] = { 0, 0, 0, 1 };
 	gDeviceContext->ClearRenderTargetView(gBackbufferRTV, clearColor);
-
+	 
 
 	//	test[0]->setrotx(25);
 	//	test[0]->settranslation(2, 0, 0);
@@ -164,10 +193,15 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 	//	forwardRendering();
 
 	
-	
+	memset(&clearColor, 0, sizeof(clearColor));
+	for (int i = 0; i < 4; i++)
+	{
+		gDeviceContext->ClearRenderTargetView(GBufferRTV[i], clearColor);
+	}
 	for (int i = 0; i < test.size(); i++)
 	{
-		DeferredRenderingFirstPass(test[i]->getTypeOfObject());
+		
+		DeferredRenderingFirstPass(test[i]->getTypeOfObject(), test[i]->TextureViewenreturn());	
 		test[i]->animation();
 		test[i]->updateworldmatrix();
 		Camera.DetectInput(dt, wndHandle);
@@ -180,14 +214,13 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 		//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext,test[i]->getWorldMatrixXMFLOAT4x4());
 		//	updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, Camera.camview());
 		updateBufferMatrix(worldMatrix, gDevice, gDeviceContext, yes);
-		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn(0));
+		test[i]->draw(gDeviceContext, shader.gVertexLayoutReturn(test[i]->getVertexLayoutNumber()));
 	}
 
 
-
+//	gDeviceContext->OMSetBlendState(BlendState, blendFactor, 0xffffffff);
 
 	DeferredRenderingSecondPass();
-
 	gDeviceContext->IASetInputLayout(shader.gVertexLayoutReturn(1));
 	if (testet == true)
 	{
@@ -222,7 +255,6 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 		};
 		Cubeinfrontofcamera.push_back(Cube);
 
-
 		D3D11_BUFFER_DESC bufferDesc;
 		memset(&bufferDesc, 0, sizeof(bufferDesc));
 		bufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
@@ -247,8 +279,9 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 	gDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	gDeviceContext->IASetInputLayout(shader.gVertexLayoutReturn(1));
 
-
+//	gDeviceContext->OMSetBlendState(BlendState, nullptr, 0xffffffff);
 	gDeviceContext->Draw(6, 0);
+
 	//	GameObject * triangletest = new GameObject(gDevice, testtriangle);
 	//	Gameobjectpush(triangletest);
 
@@ -262,23 +295,21 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 
 }
 
-void DeansRender::DeferredRenderingFirstPass(objectType Type)
+void DeansRender::DeferredRenderingFirstPass(objectType Type, ID3D11ShaderResourceView *& gTextureView)
 {
-	float clearColor[4];
-	memset(&clearColor, 0, sizeof(clearColor));
-	for (int i = 0; i < 4; i++)
-	{
-		gDeviceContext->ClearRenderTargetView(GBufferRTV[i], clearColor);
-	}
 	gDeviceContext->OMSetRenderTargets(4, GBufferRTV, depthStencilView);
 	gDeviceContext->VSSetConstantBuffers(0, 1, &worldMatrix);
-
+	gDeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 
 	if (Type == AnObject)
 		shader.DeferredRenderingFirstPass(gDeviceContext);
 	else if (Type == heightMapObject)
 		shader.DeferredRenderingFirstPass(gDeviceContext);
-
+	else if (Type == PosTxtShader)
+	{
+		gDeviceContext->OMSetBlendState(BlendState, nullptr, 0xffffffff);
+		shader.deferedrenderingtexvsgsps(gDeviceContext, gTextureView);
+	}
 }
 
 void DeansRender::DeferredRenderingSecondPass()

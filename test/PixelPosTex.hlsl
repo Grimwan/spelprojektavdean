@@ -55,6 +55,7 @@ float4 PS_main(GS_OUT input) : SV_Target
 	float4 diffuseu = tex.Sample(sampAni, input.Tex);
 
 
-//	return float4(diffuseu*procentoflight + specfactor, 1.0f);
-	return float4(diffuseu);
+	return float4(diffuseu.xyz*procentoflight + specfactor, diffuseu.w);
+//	return float4(diffuseu);
+//	return float4(diffuseu.w, diffuseu.w, diffuseu.w, 0);
 }

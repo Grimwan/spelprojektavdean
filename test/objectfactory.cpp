@@ -91,7 +91,7 @@ void GameObjectCreationTriangle::GameObjectCreationHeightMap(DeansRender *& rend
 void GameObjectCreationTriangle::GameObjectCreationTriangleTextureTest(DeansRender *& renderingsfuntionen)
 {
 	int height, width, channels;
-	float* pictureData = stbi_loadf("Testimage.png", &height, &width, &channels, STBI_rgb_alpha);
+	float* pictureData = stbi_loadf("Timmy.png", &height, &width, &channels, STBI_rgb_alpha);
 
 
 	D3D11_TEXTURE2D_DESC bthTexDesc;

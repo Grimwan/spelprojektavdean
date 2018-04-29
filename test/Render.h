@@ -36,6 +36,12 @@ private:
 	bool forwardordefered;
 	bool testet = true;
 	camera Camera;
+	float blendFactor[4];
+
+
+	D3D11_BLEND_DESC BlendDesc;
+	ID3D11BlendState* BlendState = { nullptr };
+
 public:
 
 	DeansRender();
@@ -44,7 +50,7 @@ public:
 	void forwardRendering(objectType Type, ID3D11ShaderResourceView *& gTextureView);
 	void pureForwardrendering(HWND wndHandle);
 	void pureDefferedrendering(HWND wndHandle);
-	void DeferredRenderingFirstPass(objectType Type);
+	void DeferredRenderingFirstPass(objectType Type, ID3D11ShaderResourceView *& gTextureView);
 	void DeferredRenderingSecondPass();
 	bool getfps();
 //	void setdepthStencilView(ID3D11DepthStencilView* depthStencilView);
