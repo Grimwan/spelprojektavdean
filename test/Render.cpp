@@ -4,7 +4,7 @@ DeansRender::DeansRender()
 {
 	Lasttime=std::chrono::system_clock::now();
 	mProjection = XMMatrixPerspectiveLH(3.141592f*0.45f, (float)640 / (float)480, 0.5f, 200.0f);
-	forwardordefered = false;
+	forwardordefered = true;
 
 	blendFactor[0] = 1; blendFactor[1] = 1; blendFactor[2] = 1; blendFactor[3] = 1;
 
@@ -85,26 +85,29 @@ void DeansRender::update(HWND wndHandle)
 	//Creation of Lightpass blendstate
 	D3D11_BLEND_DESC BlendDesc;
 	ZeroMemory(&BlendDesc, sizeof(BlendDesc));
-	BlendDesc.AlphaToCoverageEnable = true;
-	BlendDesc.IndependentBlendEnable = false;
-	BlendDesc.RenderTarget[0].BlendEnable = true;
-	BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-	BlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	BlendDesc.IndependentBlendEnable = true;
+	BlendDesc.RenderTarget[0].BlendEnable = false;
+	BlendDesc.RenderTarget[1].BlendEnable = false;
+	BlendDesc.RenderTarget[3].BlendEnable = false;
+	BlendDesc.RenderTarget[2].BlendEnable = true;
+	BlendDesc.RenderTarget[2].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	BlendDesc.RenderTarget[2].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	BlendDesc.RenderTarget[2].BlendOp = D3D11_BLEND_OP_ADD;
+	BlendDesc.RenderTarget[2].SrcBlendAlpha = D3D11_BLEND_ONE;
+	BlendDesc.RenderTarget[2].DestBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc.RenderTarget[2].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendDesc.RenderTarget[2].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 	BlendDesc.AlphaToCoverageEnable = true;
 	hr = gDevice->CreateBlendState(&BlendDesc, &BlendState);
 	if (FAILED(hr))
 		std::cout << "Failed with Blendstate" << std::endl;
 	//shit
-
-
 	}
 	if(getfps())
 	{
+		
+		
+
 		if(forwardordefered)
 	pureDefferedrendering(wndHandle);
 		else
@@ -186,7 +189,7 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 
 	//	test[0]->setrotx(25);
 	//	test[0]->settranslation(2, 0, 0);
-//	test[1]->settranslation(0, 0, 20);
+	test[2]->settranslation(10, 0, 0);
 
 	//	Camera.DetectInput(1);
 
@@ -218,8 +221,8 @@ void DeansRender::pureDefferedrendering(HWND wndHandle)
 	}
 
 
-//	gDeviceContext->OMSetBlendState(BlendState, blendFactor, 0xffffffff);
-
+//	gDeviceContext->OMSetBlendState(BlendState, nullptr, 0xffffffff);
+	gDeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 	DeferredRenderingSecondPass();
 	gDeviceContext->IASetInputLayout(shader.gVertexLayoutReturn(1));
 	if (testet == true)
@@ -302,7 +305,10 @@ void DeansRender::DeferredRenderingFirstPass(objectType Type, ID3D11ShaderResour
 	gDeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 
 	if (Type == AnObject)
+	{
+	//	gDeviceContext->OMSetBlendState(BlendState, nullptr, 0xffffffff);
 		shader.DeferredRenderingFirstPass(gDeviceContext);
+	}
 	else if (Type == heightMapObject)
 		shader.DeferredRenderingFirstPass(gDeviceContext);
 	else if (Type == PosTxtShader)

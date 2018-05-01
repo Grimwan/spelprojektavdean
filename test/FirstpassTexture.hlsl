@@ -21,10 +21,10 @@ PS_OUT PS_main(GS_OUT input) : SV_Target
 
 PS_OUT output;
 float4 diffuseu = tex.Sample(sampAni, input.Tex);
-output.Normal = float4(input.normal, 1.0f);
+output.Normal = float4(input.normal, 4);
 output.Position = input.wPos;
-//output.Diffuse = float4(diffuseu.x, diffuseu.y, diffuseu.z, diffuseu.w);
-output.Specular = float4(0.3f, 0.3f, 0.3f, 1);
-output.Diffuse = float4(diffuseu.w, diffuseu.w, diffuseu.w,1);
+output.Diffuse = float4(diffuseu.x, diffuseu.y, diffuseu.z, diffuseu.w);
+output.Specular = float4(0.1f, 0.1f, 0.1f, 2);
+//output.Diffuse = float4(diffuseu.w, diffuseu.w, diffuseu.w,1);
 return output;
 }

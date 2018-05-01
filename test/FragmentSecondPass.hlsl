@@ -111,7 +111,7 @@ GetGBuffer(screenPos.xy, normal, position, diffuse, specular, specularPower);
 	//	return float4(input.Color, 1.0f);
 	//	return float4(cameraPos,1.0f);
 	//	return float4((ambientLight*diffuse + (diffuseLight*diffuse + specularLight)),1.0f);
-		return float4(diffuse.xyz*procentoflight + specfactor,diffuse.w);
+		return float4(diffuse.xyz*procentoflight + specfactor, diffuse.w);
 	//	return float4(normal, 1.0f);
 //	return diffuse;
 	//	return float4(position, 1.0f);

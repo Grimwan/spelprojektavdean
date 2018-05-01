@@ -75,6 +75,9 @@ int wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, in
 		GameObjectCreationTriangle test;
 		test.GameObjectCreationTriangleTextureTest(renderingsfuntionen);
 
+
+		GameObjectCreationTriangle test2;
+		test2.Indexbuffertest(renderingsfuntionen);
 	//	GameObjectCreationTriangle secondobject(renderingsfuntionen,2);
 
 		ShowWindow(wndHandle, nCmdShow);
